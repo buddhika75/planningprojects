@@ -5,10 +5,14 @@
  */
 package com.divudi.entity;
 
+import java.util.List;
+
 /**
  *
  * @author Windhelm
  */
-class PPreliminaryActivities {
+class ProjectOperationMaintananceCost {
+    List<ComponentCapital> componentCapital;
+    List<ComponentRecurrent> componentRecurrent;
     
 }
