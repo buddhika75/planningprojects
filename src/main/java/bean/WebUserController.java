@@ -87,6 +87,7 @@ public class WebUserController implements Serializable {
     private WebUser current;
     private Project currentProject;
     private Upload currentUpload;
+    private Institution institution;
 
     private WebUser loggedUser;
     private String userName;
@@ -456,14 +457,14 @@ public class WebUserController implements Serializable {
 
     public String prepareRegisterAsClient() {
         current = new WebUser();
-        current.setWebUserRole(WebUserRole.Client);
+        current.setWebUserRole(WebUserRole.Institution_User);
         currentProject = null;
         currentProjectUploads = null;
         companyUploads = null;
         clientUploads = null;
         currentUpload = null;
         currentProjectBids=null;
-        return "/register_as_a_client";
+        return "/register";
     }
 
     public String updateWebUserAndToMarkLocation() {
@@ -481,7 +482,7 @@ public class WebUserController implements Serializable {
             ins.setEmail(current.getEmail());
             ins.setPhone(current.getTelNo());
             ins.setAddress(current.getWebUserPerson().getAddress());
-            ins.setInstitutionType(InstitutionType.Client);
+            ins.setInstitutionType(InstitutionType.Regional_Department_of_Health_Department);
             getInstitutionFacade().create(ins);
             current.setInstitution(ins);
         } else {
@@ -489,7 +490,7 @@ public class WebUserController implements Serializable {
             ins.setEmail(current.getEmail());
             ins.setPhone(current.getTelNo());
             ins.setAddress(current.getWebUserPerson().getAddress());
-            ins.setInstitutionType(InstitutionType.Client);
+            ins.setInstitutionType(InstitutionType.Regional_Department_of_Health_Department);
             getInstitutionFacade().edit(ins);
         }
         getFacade().edit(current);
@@ -497,14 +498,12 @@ public class WebUserController implements Serializable {
         return "/location_of_a_client";
     }
 
-    public String createWebUserAndToMarkLocation() {
-        if (current.getId() != null) {
-            return updateWebUserAndToMarkLocation();
-        }
+    public String registerUser() {
         if (!current.getWebUserPassword().equals(password)) {
             JsfUtil.addErrorMessage("Passwords are not matching. Please retry.");
             return "";
         }
+        current.setWebUserRole(WebUserRole.Institution_User);
         try {
             getFacade().create(current);
         } catch (Exception e) {
@@ -512,18 +511,10 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Username already taken. Please enter a different username");
             return "";
         }
-        Institution ins = new Institution();
-        ins.setName(current.getName());
-        ins.setEmail(current.getEmail());
-        ins.setPhone(current.getTelNo());
-        ins.setAddress(current.getWebUserPerson().getAddress());
-        ins.setInstitutionType(InstitutionType.Client);
-        getInstitutionFacade().create(ins);
-        current.setInstitution(ins);
-        getFacade().edit(current);
+        
         setLoggedUser(current);
-        JsfUtil.addSuccessMessage("Your Details Added. Please add Your Location Details.");
-        return "/location_of_a_client";
+        JsfUtil.addSuccessMessage("Your Details Added as an institution user. Please contact us for changes");
+        return "/index";
     }
 
     public String logOut() {
@@ -582,14 +573,14 @@ public class WebUserController implements Serializable {
             JsfUtil.addSuccessMessage("First Visit");
             Institution ins = new Institution();
             ins.setName("Solar Bid, Inc");
-            ins.setInstitutionType(InstitutionType.Company);
+            ins.setInstitutionType(InstitutionType.Ministry_of_Health);
             getInstitutionFacade().create(ins);
             WebUser wu = new WebUser();
             wu.getWebUserPerson().setName(userName);
             wu.setName(userName);
             wu.setWebUserPassword(password);
             wu.setInstitution(ins);
-            wu.setWebUserRole(WebUserRole.CompanyAdmin);
+            wu.setWebUserRole(WebUserRole.System_Administrator);
             getFacade().create(wu);
             loggedUser = wu;
             return true;
@@ -930,6 +921,16 @@ public class WebUserController implements Serializable {
     public BidFacade getBidFacade() {
         return bidFacade;
     }
+
+    public Institution getInstitution() {
+        return institution;
+    }
+
+    public void setInstitution(Institution institution) {
+        this.institution = institution;
+    }
+    
+    
 
     @FacesConverter(forClass = WebUser.class)
     public static class WebUserControllerConverter implements Converter {

@@ -9,8 +9,7 @@ package entity;
  *
  * @author User
  */
-public enum ItemType {
-    Sector,
-    ReturnCategory,
-    ReturnFormatCategory,
+public enum BeneficiaryType {
+    Direct,
+    Indirect,
 }

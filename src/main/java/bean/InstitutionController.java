@@ -49,6 +49,17 @@ public class InstitutionController implements Serializable {
         m.put("t", type);
         return getFacade().findBySQL(j, m);
     }
+    
+    
+     public List<Institution> completeInstitutions(String qry) {
+        String j = "Select i from Institution i where "
+                + " i.retired=false "
+                + " and lower(i.name) like :t "
+                + " order by i.name";
+        Map m = new HashMap();
+        m.put("t", "%" + qry.trim().toLowerCase() + "%");
+        return getFacade().findBySQL(j, m);
+    }
 
     private InstitutionFacade getFacade() {
         return ejbFacade;
@@ -75,7 +86,7 @@ public class InstitutionController implements Serializable {
 
     public String createProvider() {
         try {
-            current.setInstitutionType(InstitutionType.Provider);
+            current.setInstitutionType(InstitutionType.Provincial_Department_of_Health_Services);
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("InstitutionCreated"));
             return prepareListOfProviders();
@@ -87,7 +98,7 @@ public class InstitutionController implements Serializable {
 
     public String createClient() {
         try {
-            current.setInstitutionType(InstitutionType.Client);
+            current.setInstitutionType(InstitutionType.Regional_Department_of_Health_Department);
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("InstitutionCreated"));
             return prepareListOfClients();
@@ -107,11 +118,11 @@ public class InstitutionController implements Serializable {
                 + " and i.institutionType=:t "
                 + " order by i.name";
         Map m = new HashMap();
-        m.put("t", InstitutionType.Company);
+        m.put("t", InstitutionType.Ministry_of_Health);
         current = getFacade().findFirstBySQL(j, m);
         if (current == null) {
             current = new Institution();
-            current.setInstitutionType(InstitutionType.Company);
+            current.setInstitutionType(InstitutionType.Ministry_of_Health);
             current.setName("");
             getFacade().create(current);
         }
@@ -193,7 +204,7 @@ public class InstitutionController implements Serializable {
 
     public List<Institution> getProviders() {
         if (providers == null) {
-            providers = getInstitutions(InstitutionType.Provider);
+            providers = getInstitutions(InstitutionType.Provincial_Department_of_Health_Services);
         }
         return providers;
     }
@@ -204,7 +215,7 @@ public class InstitutionController implements Serializable {
 
     public List<Institution> getClients() {
         if (clients == null) {
-            clients = getInstitutions(InstitutionType.Client);
+            clients = getInstitutions(InstitutionType.Regional_Department_of_Health_Department);
         }
         return clients;
     }

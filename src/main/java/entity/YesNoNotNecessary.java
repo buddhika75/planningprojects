@@ -9,8 +9,8 @@ package entity;
  *
  * @author User
  */
-public enum ItemType {
-    Sector,
-    ReturnCategory,
-    ReturnFormatCategory,
+public enum YesNoNotNecessary {
+    Yes,
+    No,
+    NotNecessary,
 }

@@ -5,115 +5,83 @@
  */
 package entity;
 
+import java.util.List;
+import javax.persistence.Lob;
+
 /**
  *
  * @author Windhelm
  */
-class ProjectOutputs {
-    private int OutputNo;
+class ProjectOutcome {
+    private int outcomeNo;
+    @Lob
     private String outcome;
+    @Lob
     private String indicatorOrKPI;
+    
     private String unitOfMeasure;
     private String sourceOfData;
     private String baselineData;
-    private int year;
-    private String[] targets;
+    
 
-    /**
-     * @return the outcome
-     */
+    private List<YearData> targets;
+
+    public int getOutcomeNo() {
+        return outcomeNo;
+    }
+
+    public void setOutcomeNo(int outcomeNo) {
+        this.outcomeNo = outcomeNo;
+    }
+
     public String getOutcome() {
         return outcome;
     }
 
-    /**
-     * @param outcome the outcome to set
-     */
     public void setOutcome(String outcome) {
         this.outcome = outcome;
     }
 
-    /**
-     * @return the indicatorOrKPI
-     */
     public String getIndicatorOrKPI() {
         return indicatorOrKPI;
     }
 
-    /**
-     * @param indicatorOrKPI the indicatorOrKPI to set
-     */
     public void setIndicatorOrKPI(String indicatorOrKPI) {
         this.indicatorOrKPI = indicatorOrKPI;
     }
 
-    /**
-     * @return the unitOfMeasure
-     */
     public String getUnitOfMeasure() {
         return unitOfMeasure;
     }
 
-    /**
-     * @param unitOfMeasure the unitOfMeasure to set
-     */
     public void setUnitOfMeasure(String unitOfMeasure) {
         this.unitOfMeasure = unitOfMeasure;
     }
 
-    /**
-     * @return the sourceOfData
-     */
     public String getSourceOfData() {
         return sourceOfData;
     }
 
-    /**
-     * @param sourceOfData the sourceOfData to set
-     */
     public void setSourceOfData(String sourceOfData) {
         this.sourceOfData = sourceOfData;
     }
 
-    /**
-     * @return the baselineData
-     */
     public String getBaselineData() {
         return baselineData;
     }
 
-    /**
-     * @param baselineData the baselineData to set
-     */
     public void setBaselineData(String baselineData) {
         this.baselineData = baselineData;
     }
 
-    /**
-     * @return the year
-     */
-    public int getYear() {
-        return year;
-    }
-
-    /**
-     * @param year the year to set
-     */
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    /**
-     * @return the targets
-     */
-    public String[] getTargets() {
+    public List<YearData> getTargets() {
         return targets;
     }
 
-    /**
-     * @param targets the targets to set
-     */
-    public void setTargets(String[] targets) {
+    public void setTargets(List<YearData> targets) {
         this.targets = targets;
     }
-   }
+    
+    
+    
+}

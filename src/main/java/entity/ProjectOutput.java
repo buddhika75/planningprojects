@@ -5,32 +5,33 @@
  */
 package entity;
 
+import java.util.List;
+
 /**
  *
  * @author Windhelm
  */
-class ProjectOutcomes {
-    private int outcomeNo;
-    private String outcome;
+class ProjectOutput {
+    private int outputNo;
+    private String output;
     private String indicatorOrKPI;
     private String unitOfMeasure;
     private String sourceOfData;
     private String baselineData;
-    private int year;
-    private String[] targets;
+    private List<YearData> targets;
 
     /**
-     * @return the outcome
+     * @return the output
      */
-    public String getOutcome() {
-        return outcome;
+    public String getOutput() {
+        return output;
     }
 
     /**
-     * @param outcome the outcome to set
+     * @param output the output to set
      */
-    public void setOutcome(String outcome) {
-        this.outcome = outcome;
+    public void setOutput(String output) {
+        this.output = output;
     }
 
     /**
@@ -89,47 +90,24 @@ class ProjectOutcomes {
         this.baselineData = baselineData;
     }
 
-    /**
-     * @return the year
-     */
-    public int getYear() {
-        return year;
-    }
-
-    /**
-     * @param year the year to set
-     */
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    /**
-     * @return the targets
-     */
-    public String[] getTargets() {
+    public List<YearData> getTargets() {
         return targets;
     }
 
-    /**
-     * @param targets the targets to set
-     */
-    public void setTargets(String[] targets) {
+    public void setTargets(List<YearData> targets) {
         this.targets = targets;
     }
 
-    /**
-     * @return the outcomeNo
-     */
-    public int getOutcomeNo() {
-        return outcomeNo;
+    public int getOutputNo() {
+        return outputNo;
     }
 
-    /**
-     * @param outcomeNo the outcomeNo to set
-     */
-    public void setOutcomeNo(int outcomeNo) {
-        this.outcomeNo = outcomeNo;
+    public void setOutputNo(int outputNo) {
+        this.outputNo = outputNo;
     }
+
     
     
-}
+    
+   
+   }

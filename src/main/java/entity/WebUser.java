@@ -79,19 +79,19 @@ public class WebUser implements Serializable {
     String code;
 
     @Transient
-    private boolean CompanyAdmin;
+    private boolean systemAdministrator;
     @Transient
-    private boolean CompanySuperUser;
+    private boolean superUser;
     @Transient
-    private boolean CompanyUser;
+    private boolean user;
     @Transient
-    private boolean Client;
+    private boolean institutionUser;
     @Transient
-    private boolean ProviderAdmin;
+    private boolean institutionAdministrator;
     @Transient
-    private boolean ProviderSuperUser;
+    private boolean authorityUser;
     @Transient
-    private boolean ProviderUser;
+    private boolean authorityAdministrator;
 
     public WebUser() {
     }
@@ -300,25 +300,16 @@ public class WebUser implements Serializable {
         this.code = code;
     }
 
-    public boolean isCompanyAdmin() {
-        if (webUserRole == WebUserRole.CompanyAdmin) {
+    public boolean isSystemAdministrator() {
+        if (webUserRole == WebUserRole.System_Administrator) {
             return true;
         } else {
             return false;
         }
     }
 
-    public boolean isCompanySuperUser() {
-        if (webUserRole == WebUserRole.CompanySuperUser) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
-    public boolean isCompanyUser() {
-        if (webUserRole == WebUserRole.CompanyUser) {
+    public boolean isSuperUser() {
+        if (webUserRole == WebUserRole.Super_User) {
             return true;
         } else {
             return false;
@@ -326,8 +317,8 @@ public class WebUser implements Serializable {
 
     }
 
-    public boolean isClient() {
-        if (webUserRole == WebUserRole.Client) {
+    public boolean isUser() {
+        if (webUserRole == WebUserRole.User) {
             return true;
         } else {
             return false;
@@ -335,8 +326,8 @@ public class WebUser implements Serializable {
 
     }
 
-    public boolean isProviderAdmin() {
-        if (webUserRole == WebUserRole.ProviderAdmin) {
+    public boolean isInstitutionUser() {
+        if (webUserRole == WebUserRole.Institution_User) {
             return true;
         } else {
             return false;
@@ -344,8 +335,8 @@ public class WebUser implements Serializable {
 
     }
 
-    public boolean isProviderSuperUser() {
-        if (webUserRole == WebUserRole.ProviderSuperUser) {
+    public boolean isInstitutionAdministrator() {
+        if (webUserRole == WebUserRole.Institution_Administrator) {
             return true;
         } else {
             return false;
@@ -353,8 +344,17 @@ public class WebUser implements Serializable {
 
     }
 
-    public boolean isProviderUser() {
-        if (webUserRole == WebUserRole.CompanyUser) {
+    public boolean isAuthorityUser() {
+        if (webUserRole == WebUserRole.Authority_User) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public boolean isAuthorityAdministrator() {
+        if (webUserRole == WebUserRole.Authority_Admin) {
             return true;
         } else {
             return false;

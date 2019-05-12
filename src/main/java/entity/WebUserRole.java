@@ -5,12 +5,12 @@ package entity;
  * @author Dr M H B Ariyaratne
  */
 public enum WebUserRole {
-    CompanyAdmin,
-    CompanySuperUser,
-    CompanyUser,
-    Client,
-    ProviderAdmin,
-    ProviderSuperUser,
-    ProviderUser,
+    System_Administrator,
+    Super_User,
+    User,
+    Institution_User,
+    Institution_Administrator,
+    Authority_User,
+    Authority_Admin,
 
 }

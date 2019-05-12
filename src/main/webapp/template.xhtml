@@ -14,105 +14,150 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
               rel="stylesheet"></link>
         <h:outputStylesheet library="css" name="tem1.css"/>
-        <title>The best way for Solar Solutions</title>
+        <title>Management Development and Planning Unit</title>
+        <style>
+            ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                border: 1px solid #e7e7e7;
+                background-color: #f3f3f3;
+            }
+
+            li {
+                float: left;
+            }
+
+            li a {
+                display: block;
+                color: #666;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+            li a:hover:not(.active) {
+                background-color: #ddd;
+            }
+
+            li a.active {
+                color: white;
+                background-color: #4CAF50;
+            }
+        </style>
     </h:head>
 
     <h:body>
 
-        <div class="w3-container">
-            <div class="w3-quarter">
-                <h:outputLabel  styleClass="logoFont1" value="Solar" ></h:outputLabel>
-                <h:outputLabel  styleClass="logoFont2" value="Bid," ></h:outputLabel>
-                <h:outputLabel  styleClass="logoFont3" value="Inc." ></h:outputLabel>
-            </div>
-            <div class="w3-rest menuContainer" >
-                <h:form>
-                    <div class="menuSpaceLeft menuText">
+        <div class="w3-row w3-center">
+            <h:outputLabel  styleClass="logoFont1" value="Management Development and Planning Unit" ></h:outputLabel>
+        </div>
+        <div class="w3-row w3-center">
+            <h:outputLabel  styleClass="logoFont2" value="Project Management System" ></h:outputLabel>
+        </div>
+
+        <div class="w3-row" >
+            <h:form>
+                <ul>
+                    <li>
                         <h:commandLink class="nonUnderline"  value="Home" action="#{webUserController.logOut()}"></h:commandLink>
-                    </div>
-                    <h:panelGroup rendered="#{webUserController.loggedUser.companyAdmin}" >
-                        <div class="menuSpaceLeft menuText">
-                            <h:commandLink value="CLIENT REQUESTS" action="#{webUserController.listProjectsToSubmitProposals}"></h:commandLink>
-                        </div>
-                        <div  class="menuSpaceLeft menuText">
-                            <h:commandLink  value="ADVERTISEMENT MANAGEMENT" action="/advertisement_management"></h:commandLink>
-                        </div>
-                        <div  class="menuSpaceLeft menuText">
+                    </li>
+                    <h:panelGroup rendered="#{webUserController.loggedUser.systemAdministrator}" >
+                        <li>
+                            <h:commandLink value="VIEW PROJECTS" action="#{webUserController.listProjectsToSubmitProposals}"></h:commandLink>
+                        </li>
+                        <li>
                             <h:commandLink  value="SYSTEM MANAGEMENT" action="/system_management"></h:commandLink>
-                        </div>
+                        </li>
                     </h:panelGroup>
 
-                    <h:panelGroup rendered="#{webUserController.loggedUser.client}" >
-                        <div class="menuSpaceLeft menuText">
-                            <h:commandLink  class="spacer1x boldedText" value="VIEW PROJECT" action="#{webUserController.viewMyProject()}"></h:commandLink>
-                        </div>
-                        <div  class="menuSpaceLeft menuText">
-                            <h:commandLink  class="spacer1x boldedText" value="CHANGE PASSWORD" action="/advertisement_management"></h:commandLink>
-                        </div>
-                        <div  class="menuSpaceLeft menuText">
-                            <h:commandLink  class="spacer1x boldedText" value="CHANGE MY DETAILS" action="/system_management"></h:commandLink>
-                        </div>
+                    <h:panelGroup rendered="#{webUserController.loggedUser.superUser}" >
+                        <li>
+                            <h:commandLink value="VIEW PROJECTS" action="#{webUserController.listProjectsToSubmitProposals}"></h:commandLink>
+                        </li>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{webUserController.loggedUser.user}" >
+                        <li>
+                            <h:commandLink value="ADD PROJECT" action="#{webUserController.listProjectsToSubmitProposals}"></h:commandLink>
+                        </li>
+                        <li>
+                            <h:commandLink value="VIEW PROJECTS" action="#{webUserController.listProjectsToSubmitProposals}"></h:commandLink>
+                        </li>
                     </h:panelGroup>
 
-                    <h:panelGroup rendered="#{webUserController.loggedUser.providerAdmin}" >
-                        <div class="menuSpaceLeft menuText">
-                            <h:commandLink  class="spacer1x boldedText" value="BIDDING" action="#{webUserController.listProjectsToSubmitBids()}"></h:commandLink>
-                        </div>
-                        <div  class="menuSpaceLeft menuText">
-                            <h:commandLink  class="spacer1x boldedText" value="ADVERTISEMENT MANAGEMENT" action="/advertisement_management"></h:commandLink>
-                        </div>
-                        <div  class="menuSpaceLeft menuText">
-                            <h:commandLink  class="spacer1x boldedText" value="SYSTEM MANAGEMENT" action="/system_management"></h:commandLink>
-                        </div>
+                    <h:panelGroup rendered="#{webUserController.loggedUser.institutionUser}" >
+                        <li>
+                            <h:commandLink value="SUBMIT PROJECT" action="#{webUserController.listProjectsToSubmitProposals}"></h:commandLink>
+                        </li>
+                        <li>
+                            <h:commandLink  class="spacer1x boldedText" value="VIEW MY PROJECTS" action="#{webUserController.viewMyProject()}"></h:commandLink>
+                        </li>
+                        
+                    </h:panelGroup>
+
+                    <h:panelGroup rendered="#{webUserController.loggedUser.institutionAdministrator}" >
+                       <li>
+                            <h:commandLink value="SUBMIT PROJECT" action="#{webUserController.listProjectsToSubmitProposals}"></h:commandLink>
+                        </li>
+                        <li>
+                            <h:commandLink  class="spacer1x boldedText" value="VIEW MY PROJECTS" action="#{webUserController.viewMyProject()}"></h:commandLink>
+                        </li>
+                        <li>
+                            <h:commandLink  class="spacer1x boldedText" value="USER MANAGEMENT" action="/system_management"></h:commandLink>
+                        </li>
                     </h:panelGroup>
 
 
                     <h:panelGroup rendered="#{webUserController.loggedUser ne null}" >
-                        <div class="menuSpaceRight menuText">
+                        <li>
+                            <h:commandLink  class="spacer1x boldedText" value="CHANGE PASSWORD" action="/advertisement_management"></h:commandLink>
+                        </li>
+                        <li>
+                            <h:commandLink  class="spacer1x boldedText" value="CHANGE MY DETAILS" action="/system_management"></h:commandLink>
+                        </li>
+                        <li>
                             <h:commandLink  value="Sing out" action="#{webUserController.logOut()}"></h:commandLink>
-                        </div>
+                        </li>
                     </h:panelGroup>
 
                     <h:panelGroup rendered="#{webUserController.loggedUser eq null}" >
-                        <div class="menuSpaceLeft menuText">
+                        <li>
                             <h:commandLink class="nonUnderline"  value="How it works" action="#{webUserController.logOut()}"></h:commandLink>
-                        </div>
-                        <div class="menuSpaceLeft menuText">
-                            <h:commandLink class="nonUnderline"  value="News &amp; Blog" action="#{webUserController.logOut()}"></h:commandLink>
-                        </div>
-                        <div class="menuSpaceLeft menuText">
-                            <h:commandLink class="nonUnderline"  value="About us" action="#{webUserController.logOut()}"></h:commandLink>
-                        </div>
-                        <div class="menuSpaceRight">
-                            <h:commandLink class="w3-button w3-white w3-border w3-border-green w3-round-large" value="Sign in" action="#{webUserController.toLogin()}"></h:commandLink>
-                        </div>
-                        <div class="menuSpaceRight">
-                            <h:commandLink class="w3-button w3-white w3-border w3-border-green w3-round-large"  value="Sign up" action="#{webUserController.prepareRegisterAsClient()}"></h:commandLink>
-                        </div>
+                        </li>
+                        <li>
+                            <h:commandLink class="nonUnderline"  value="Sign up" action="#{webUserController.prepareRegisterAsClient()}"></h:commandLink>
+                        </li>
+                        <li>
+                            <h:commandLink class="nonUnderline" value="Sign in" action="#{webUserController.toLogin()}"></h:commandLink>
+                        </li>
                     </h:panelGroup>
-
-                </h:form>
-            </div>
+                </ul>
+            </h:form>
         </div>
+
+
 
         <p:growl autoUpdate="true" ></p:growl>
 
 
         <ui:insert name="content">
-            <div class="w3-container">
 
-                The best way to explore solar solutions !!!
+            <div class="w3-row" style="height: 80vh;">
+
             </div>
+
+
         </ui:insert>
 
-
-        <div class="w3-container">
-            <div class="w3-row" >
+        <div class="w3-container" >
+            <div class="w3-row" style="top: 80vh;" >
                 <ui:insert name="bottom">
-                    &copy; Sunila Software Solutions, 2019
+                    &copy; Health Information Unit, 2019
                 </ui:insert>
             </div>
         </div>
+
     </h:body>
 
 </html>
