@@ -113,7 +113,7 @@ public class WebUserController implements Serializable {
     }
 
     public void listProjectsToSubmitBids(Institution provider) {
-        List<Project> ps = listProjects(ProjectStageType.Awaiting_Biding);
+        List<Project> ps = listProjects(ProjectStageType.Approved_Subjected_To_Changes);
         listOfProjects = new ArrayList<>();
         for(Project p : ps){
             if(!hasBidded(p, provider)){
@@ -137,27 +137,27 @@ public class WebUserController implements Serializable {
     }
 
     public String listProjectsToSubmitProposals() {
-        listOfProjects = listProjects(ProjectStageType.Awaiting_Proposal);
+        listOfProjects = listProjects(ProjectStageType.Awaiting_Authority_Approval);
         return "/client_requests";
     }
 
     public String listProjectsAwaitingCustomerApproval() {
-        listOfProjects = listProjects(ProjectStageType.Awaiting_Customer_Approval);
+        listOfProjects = listProjects(ProjectStageType.Awaiting_Resubmission);
         return "/client_requests";
     }
 
     public String listProjectsAwaitingBidding() {
-        listOfProjects = listProjects(ProjectStageType.Awaiting_Biding);
+        listOfProjects = listProjects(ProjectStageType.Approved_Subjected_To_Changes);
         return "/client_requests";
     }
 
     public String listProjectsAwaitingBidSelection() {
-        listOfProjects = listProjects(ProjectStageType.Awaiting_Bid_Selection);
+        listOfProjects = listProjects(ProjectStageType.Approved);
         return "/client_requests";
     }
 
     public String listProjectsBidSelected() {
-        listOfProjects = listProjects(ProjectStageType.Bidder_Selected);
+        listOfProjects = listProjects(ProjectStageType.Rejected);
         return "/client_requests";
     }
 
@@ -259,7 +259,7 @@ public class WebUserController implements Serializable {
             return "";
         }
         currentProject.setRequestSubmittedAt(new Date());
-        currentProject.setCurrentStageType(ProjectStageType.Awaiting_Proposal);
+        currentProject.setCurrentStageType(ProjectStageType.Awaiting_Authority_Approval);
         getProjectFacade().edit(currentProject);
         sendSubmitClientRequestConfirmationEmail();
         JsfUtil.addSuccessMessage("Project Successfully Submitted");
@@ -294,12 +294,12 @@ public class WebUserController implements Serializable {
 
     public String addNewProject() {
         currentProject = new Project();
-        currentProject.setClient(current.getInstitution());
+        
         currentProject.setCreater(current);
         currentProject.setCreatedAt(new Date());
-        currentProject.setCurrentStageType(ProjectStageType.Initial_Request);
+        currentProject.setCurrentStageType(ProjectStageType.Adding_Details_To_Project);
         getProjectFacade().create(currentProject);
-        return "add_photos_to_project_by_client";
+        return "add_project";
     }
 
     public void updateProject() {
@@ -316,7 +316,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to finalize");
             return;
         }
-        getCurrentProject().setCurrentStageType(ProjectStageType.Awaiting_Customer_Approval);
+        getCurrentProject().setCurrentStageType(ProjectStageType.Awaiting_Resubmission);
         getCurrentProject().setProposalSubmittedAt(new Date());
         getCurrentProject().setProposalSubmittedBy(loggedUser);
         getProjectFacade().edit(currentProject);
@@ -328,7 +328,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to accept");
             return;
         }
-        getCurrentProject().setCurrentStageType(ProjectStageType.Awaiting_Biding);
+        getCurrentProject().setCurrentStageType(ProjectStageType.Approved_Subjected_To_Changes);
         getCurrentProject().setProposalAcceptedAt(new Date());
 
         getProjectFacade().edit(currentProject);

@@ -8,20 +8,21 @@
 
     <ui:composition>
 
-        <p:dialog id="ItemCreateDlg" widgetVar="ItemCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleItems.CreateItemTitle}">
+        <p:dialog id="ItemCreateDlg" widgetVar="ItemCreateDialog" modal="true" resizable="false" appendTo="@(body)" 
+                  header="Create Item" style="background-color: yellow;">
             <h:form id="ItemCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{itemController.selected != null}">
-                        <p:outputLabel value="#{bundleItems.CreateItemLabel_name}" for="name" />
-                        <p:inputText id="name" value="#{itemController.selected.name}" title="#{bundleItems.CreateItemTitle_name}" />
+                        <p:outputLabel value="Name" for="name" />
+                        <p:inputText id="name" value="#{itemController.selected.name}" title="Name" />
 
-                        <p:outputLabel value="#{bundleItems.CreateItemLabel_type}" for="type" />
-                        <p:selectOneMenu id="type" value="#{itemController.selected.type}" >
-                            <f:selectItems value="#{enumController.itemTypes}" ></f:selectItems>
-                        </p:selectOneMenu>
+                        <p:outputLabel value="Type" for="type" />
+                        <h:selectOneMenu id="type" value="#{itemController.selected.type}" >
+                            <f:selectItems value="#{commonController.itemTypes}" ></f:selectItems>
+                        </h:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{itemController.create}" value="#{bundleItems.Save}" update="display,:ItemListForm:datalist,:growl" oncomplete="handleSubmit(args,'ItemCreateDialog');"/>
-                    <p:commandButton value="#{bundleItems.Cancel}" onclick="ItemCreateDialog.hide()"/>
+                    <p:commandButton actionListener="#{itemController.create}" value="Save" update="display,:ItemListForm:datalist" oncomplete="handleSubmit(args,'ItemCreateDialog');"/>
+                    <p:commandButton value="Cancel" onclick="ItemCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

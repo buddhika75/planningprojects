@@ -10,6 +10,7 @@ package bean;
 import entity.AreaType;
 import entity.Institution;
 import entity.InstitutionType;
+import entity.ItemType;
 import entity.WebUserRole;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
@@ -78,6 +79,11 @@ public class CommonController implements Serializable {
     
     public AreaType[] getAreaTypes(){
         return AreaType.values();
+    }
+    
+    
+    public ItemType[] getItemTypes(){
+        return ItemType.values();
     }
 
 }

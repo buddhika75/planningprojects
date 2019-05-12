@@ -57,18 +57,18 @@ public class ItemController implements Serializable {
     }
 
     public void create() {
-        persist(JsfUtil.PersistAction.CREATE, ResourceBundle.getBundle("/BundleItems").getString("ItemCreated"));
+        persist(JsfUtil.PersistAction.CREATE, "Item Created");
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(JsfUtil.PersistAction.UPDATE, ResourceBundle.getBundle("/BundleItems").getString("ItemUpdated"));
+        persist(JsfUtil.PersistAction.UPDATE, "Updated");
     }
 
     public void destroy() {
-        persist(JsfUtil.PersistAction.DELETE, ResourceBundle.getBundle("/BundleItems").getString("ItemDeleted"));
+        persist(JsfUtil.PersistAction.DELETE, "Deleted");
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
@@ -101,11 +101,11 @@ public class ItemController implements Serializable {
                 if (msg.length() > 0) {
                     JsfUtil.addErrorMessage(msg);
                 } else {
-                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/BundleItems").getString("PersistenceErrorOccured"));
+                    JsfUtil.addErrorMessage(ex,"Error");
                 }
             } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/BundleItems").getString("PersistenceErrorOccured"));
+                JsfUtil.addErrorMessage(ex, "Error");
             }
         }
     }

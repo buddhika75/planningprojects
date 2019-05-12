@@ -1,7 +1,10 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -10,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 @Entity
@@ -20,6 +24,23 @@ public class Project implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private String projectTitle;
+    
+    @ManyToOne
+    private Item sector;
+    private Boolean allIsland;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<ProjectArea> provinces;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<ProjectArea> districts;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<ProjectArea> dsDivisions;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<ProjectArea> gnDivisions;
+    @ManyToOne
+    
+    
+    
     @Lob
     private String comments;
 
@@ -27,13 +48,13 @@ public class Project implements Serializable {
     private ProjectStageType currentStageType;
 
     @ManyToOne
-    private Institution client;
+    private Institution originatingInstitution;
 
     private String referenceNo;
 
     //Booleans
     private boolean cancelled;
-    private boolean refunded;
+    private boolean rejected;
     private boolean reactivated;
     //Created Properties
     @ManyToOne
@@ -70,12 +91,93 @@ public class Project implements Serializable {
     private String retireComments;
     ////////////////
     @Lob
-    private String twelveMonthsElectricityUsage;
+    private String notes;
     @Lob
     private String specialNotes;
     @Lob
     private String proposal;
 
+    public String getProjectTitle() {
+        return projectTitle;
+    }
+
+    public void setProjectTitle(String projectTitle) {
+        this.projectTitle = projectTitle;
+    }
+
+    public Item getSector() {
+        return sector;
+    }
+
+    public void setSector(Item sector) {
+        this.sector = sector;
+    }
+
+    public Boolean getAllIsland() {
+        return allIsland;
+    }
+
+    public void setAllIsland(Boolean allIsland) {
+        this.allIsland = allIsland;
+    }
+
+    public List<ProjectArea> getProvinces() {
+        if(provinces==null){
+            provinces = new ArrayList<>();
+        }
+        return provinces;
+    }
+
+    public void setProvinces(List<ProjectArea> provinces) {
+        this.provinces = provinces;
+    }
+
+    public List<ProjectArea> getDistricts() {
+         if(districts==null){
+            districts = new ArrayList<>();
+        }
+        return districts;
+    }
+
+    public void setDistricts(List<ProjectArea> districts) {
+        this.districts = districts;
+    }
+
+    public List<ProjectArea> getDsDivisions() {
+         if(dsDivisions==null){
+            dsDivisions = new ArrayList<>();
+        }
+        return dsDivisions;
+    }
+
+    public void setDsDivisions(List<ProjectArea> dsDivisions) {
+        this.dsDivisions = dsDivisions;
+    }
+
+    public List<ProjectArea> getGnDivisions() {
+         if(gnDivisions==null){
+            gnDivisions = new ArrayList<>();
+        }
+        return gnDivisions;
+    }
+
+    public void setGnDivisions(List<ProjectArea> gnDivisions) {
+        this.gnDivisions = gnDivisions;
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -125,12 +227,12 @@ public class Project implements Serializable {
         this.currentStageType = currentStageType;
     }
 
-    public Institution getClient() {
-        return client;
+    public Institution getOriginatingInstitution() {
+        return originatingInstitution;
     }
 
-    public void setClient(Institution client) {
-        this.client = client;
+    public void setOriginatingInstitution(Institution originatingInstitution) {
+        this.originatingInstitution = originatingInstitution;
     }
 
     public String getReferenceNo() {
@@ -149,12 +251,12 @@ public class Project implements Serializable {
         this.cancelled = cancelled;
     }
 
-    public boolean isRefunded() {
-        return refunded;
+    public boolean isRejected() {
+        return rejected;
     }
 
-    public void setRefunded(boolean refunded) {
-        this.refunded = refunded;
+    public void setRejected(boolean rejected) {
+        this.rejected = rejected;
     }
 
     public boolean isReactivated() {
@@ -245,12 +347,12 @@ public class Project implements Serializable {
         this.checkeAt = checkeAt;
     }
 
-    public String getTwelveMonthsElectricityUsage() {
-        return twelveMonthsElectricityUsage;
+    public String getNotes() {
+        return notes;
     }
 
-    public void setTwelveMonthsElectricityUsage(String twelveMonthsElectricityUsage) {
-        this.twelveMonthsElectricityUsage = twelveMonthsElectricityUsage;
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public String getSpecialNotes() {
