@@ -7,6 +7,7 @@
  */
 package bean;
 
+import entity.AreaType;
 import entity.Institution;
 import entity.InstitutionType;
 import entity.WebUserRole;
@@ -73,6 +74,10 @@ public class CommonController implements Serializable {
 
     public InstitutionType[] getInstitutionTypes() {
         return InstitutionType.values();
+    }
+    
+    public AreaType[] getAreaTypes(){
+        return AreaType.values();
     }
 
 }

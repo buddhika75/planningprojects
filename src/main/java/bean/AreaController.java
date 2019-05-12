@@ -66,6 +66,8 @@ public class AreaController implements Serializable {
     WebUserController webUserController;
 
     private MapModel polygonModel;
+    
+    
 
     public List<Area> getMohAreas() {
         if (mohAreas == null) {

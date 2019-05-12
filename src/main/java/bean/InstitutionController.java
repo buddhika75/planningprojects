@@ -41,17 +41,21 @@ public class InstitutionController implements Serializable {
     }
 
     public List<Institution> getInstitutions(InstitutionType type) {
-        String j = "Select i from Institution i where "
-                + " i.retired=false "
-                + " and i.institutionType=:t "
-                + " order by i.name";
         Map m = new HashMap();
-        m.put("t", type);
+        String j = "Select i from Institution i where "
+                + " i.retired=false ";
+
+        if (type != null) {
+            m.put("t", type);
+            j += " and i.institutionType=:t ";
+        }
+
+        j += " order by i.name";
+
         return getFacade().findBySQL(j, m);
     }
-    
-    
-     public List<Institution> completeInstitutions(String qry) {
+
+    public List<Institution> completeInstitutions(String qry) {
         String j = "Select i from Institution i where "
                 + " i.retired=false "
                 + " and lower(i.name) like :t "
@@ -139,9 +143,6 @@ public class InstitutionController implements Serializable {
             return null;
         }
     }
-    
-    
-    
 
     public String updateCompany() {
         try {
@@ -171,7 +172,7 @@ public class InstitutionController implements Serializable {
 
     public List<Institution> getItems() {
         if (items == null) {
-            items = getFacade().findAll();
+            items = getInstitutions(null);
         }
         return items;
     }

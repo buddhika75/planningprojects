@@ -68,7 +68,7 @@
 
 
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{areaController.update}" value="#{bundle.Save}" update="display,:AreaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'AreaEditDialog');"/>
+                    <p:commandButton actionListener="#{areaController.update}" value="#{bundle.Save}" update="display,:AreaListForm:datalist" oncomplete="handleSubmit(args, 'AreaEditDialog');"/>
 
                     <p:commandButton ajax="false" action="#{areaController.drawArea()}" value="Map" />
 

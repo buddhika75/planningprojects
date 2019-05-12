@@ -669,11 +669,11 @@ public class WebUserController implements Serializable {
         try {
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("WebUserCreated"));
-            return "system_management";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            return null;
+            return "";
         }
+        return prepareCreate();
     }
 
     public String prepareEdit() {

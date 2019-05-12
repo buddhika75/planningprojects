@@ -12,9 +12,9 @@
             <h:form id="AreaCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{areaController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateAreaLabel_type}" for="type" />
+                        <p:outputLabel value="Type" for="type" />
                         <p:selectOneMenu id="type" value="#{areaController.selected.type}" > \
-                            <f:selectItems value="#{enumController.areaTypes}" ></f:selectItems>
+                            <f:selectItems value="#{commonController.areaTypes}" ></f:selectItems>
                         </p:selectOneMenu>
 
                         <p:outputLabel value="#{bundle.CreateAreaLabel_name}" for="name" />
@@ -59,7 +59,7 @@
                         </p:selectOneMenu>
 
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{areaController.create}" value="#{bundle.Save}" update="display,:AreaListForm:datalist,:growl" oncomplete="handleSubmit(args,'AreaCreateDialog');"/>
+                    <p:commandButton actionListener="#{areaController.create}" value="#{bundle.Save}" update="display,:AreaListForm:datalist" oncomplete="handleSubmit(args,'AreaCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="AreaCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
