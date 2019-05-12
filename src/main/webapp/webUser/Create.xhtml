@@ -24,37 +24,44 @@
                     <p:panelGrid columns="2" columnClasses="alignLeft alignLeft" class="pageCenter">
 
                         <f:facet name="header" >
-                            Edit User Details
+                            Add New User
                         </f:facet>
 
 
                         <h:outputLabel value="#{bundle.EditWebUserLabel_name}" for="name" />
-                        <h:inputText id="name" value="#{webUserController.selected.name}" title="#{bundle.EditWebUserTitle_name}" required="true" requiredMessage="#{bundle.EditWebUserRequiredMessage_name}"/>
+                        <p:inputText id="name" value="#{webUserController.selected.name}" 
+                                     title="#{bundle.EditWebUserTitle_name}" 
+                                     required="true" 
+                                     requiredMessage="#{bundle.EditWebUserRequiredMessage_name}"
+                                     autocomplete="off"
+                                     
+                                     />
 
                         <h:outputLabel value="#{bundle.EditWebUserLabel_webUserPerson}" for="webUserPerson" />
-                        <h:inputText id="webUserPerson" value="#{webUserController.selected.webUserPerson.name}" title="#{bundle.EditWebUserTitle_webUserPerson}" >
-                        </h:inputText>
+                        <p:inputText id="webUserPerson" value="#{webUserController.selected.webUserPerson.name}" title="#{bundle.EditWebUserTitle_webUserPerson}" >
+                        </p:inputText>
 
                         <h:outputLabel value="Password"  />
-                        <h:inputSecret value="#{webUserController.selected.webUserPassword}" ></h:inputSecret>
+                        <p:password value="#{webUserController.selected.webUserPassword}" ></p:password>
 
 
                         <h:outputLabel value="Re-enter Password"  />
-                        <h:inputSecret value="#{webUserController.password}" ></h:inputSecret>
+                        <p:password value="#{webUserController.password}" ></p:password>
 
 
                         <h:outputLabel value="#{bundle.EditWebUserLabel_email}" for="email" />
-                        <h:inputText id="email" value="#{webUserController.selected.email}" title="#{bundle.EditWebUserTitle_email}" />
+                        <p:inputText id="email" value="#{webUserController.selected.email}" title="#{bundle.EditWebUserTitle_email}" />
                         <h:outputLabel value="#{bundle.EditWebUserLabel_telNo}" for="telNo" />
-                        <h:inputText id="telNo" value="#{webUserController.selected.telNo}" title="#{bundle.EditWebUserTitle_telNo}" />
+                        <p:inputText id="telNo" value="#{webUserController.selected.telNo}" title="#{bundle.EditWebUserTitle_telNo}" />
 
 
-                        <h:outputLabel value="#{bundle.EditWebUserLabel_institution}" for="institution" />
-                        <h:selectOneMenu id="institution" value="#{webUserController.selected.institution}" title="#{bundle.EditWebUserTitle_institution}" >
-                            <f:selectItem itemLabel="Select" ></f:selectItem>
-                            <f:selectItems value="#{institutionController.items}"/>
-                        </h:selectOneMenu>
-
+                        <h:outputLabel value="#{bundle.EditWebUserLabel_institution}" for="acIns" />
+                        <p:autoComplete id="acIns" value="#{webUserController.selected.institution}"
+                                        completeMethod="#{institutionController.completeInstitutions}"
+                                        var="ins" itemLabel="#{ins.name}" itemValue="#{ins}"
+                                        required="true"
+                                        requiredMessage="Please select your institution"
+                                        ></p:autoComplete>
 
 
                         <h:outputLabel value="#{bundle.EditWebUserLabel_webUserRole}" for="webUserRole" />
