@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
@@ -66,8 +65,6 @@ public class AreaController implements Serializable {
     WebUserController webUserController;
 
     private MapModel polygonModel;
-    
-    
 
     public List<Area> getMohAreas() {
         if (mohAreas == null) {
@@ -800,6 +797,39 @@ public class AreaController implements Serializable {
         return areas;
     }
 
+    public List<Area> completeProvinces(String qry) {
+        return getAreas(qry, AreaType.Province);
+    }
+
+    public List<Area> completeDistricts(String qry) {
+        return getAreas(qry, AreaType.District);
+    }
+
+    public List<Area> completeDsAreas(String qry) {
+        return getAreas(qry, AreaType.DsArea);
+    }
+
+    public List<Area> completeGnAreas(String qry) {
+        return getAreas(qry, AreaType.GN);
+    }
+
+    public List<Area> getAreas(String qry, AreaType areaType) {
+        String j;
+        Map m = new HashMap();
+        j = "select a "
+                + " from Area a "
+                + " where upper(a.name) like :n   ";
+        m.put("n", "%" + qry.toUpperCase() + "%");
+        if (areaType != null) {
+            j += " and a.type=:t";
+            m.put("t", areaType);
+        }
+        j += " order by a.code";
+        System.out.println("m = " + m);
+        System.out.println("j = " + j);
+        return getFacade().findBySQL(j, m);
+    }
+
     public Area getArea(String nameOrCode, AreaType areaType) {
         String j;
         Map m = new HashMap();
@@ -845,7 +875,7 @@ public class AreaController implements Serializable {
     }
 
     public void create() {
-        persist(PersistAction.CREATE,"Created");
+        persist(PersistAction.CREATE, "Created");
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
@@ -916,6 +946,47 @@ public class AreaController implements Serializable {
 
     @FacesConverter(forClass = Area.class)
     public static class AreaControllerConverter implements Converter {
+
+        @Override
+        public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
+            if (value == null || value.length() == 0) {
+                return null;
+            }
+            AreaController controller = (AreaController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "areaController");
+            return controller.getFacade().find(getKey(value));
+        }
+
+        java.lang.Long getKey(String value) {
+            java.lang.Long key;
+            key = Long.valueOf(value);
+            return key;
+        }
+
+        String getStringKey(java.lang.Long value) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(value);
+            return sb.toString();
+        }
+
+        @Override
+        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
+            if (object == null) {
+                return null;
+            }
+            if (object instanceof Area) {
+                Area o = (Area) object;
+                return getStringKey(o.getId());
+            } else {
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Area.class.getName()});
+                return null;
+            }
+        }
+
+    }
+
+    @FacesConverter(value = "areaConverter")
+    public static class AreaConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {

@@ -1,17 +1,20 @@
 package bean;
 
+import entity.Area;
 import entity.WebUser;
 
 import entity.Bid;
 import entity.Institution;
 import entity.InstitutionType;
 import entity.Project;
+import entity.ProjectArea;
 import entity.ProjectStageType;
 import entity.Upload;
 import entity.UploadType;
 import entity.WebUserRole;
 import facade.BidFacade;
 import facade.InstitutionFacade;
+import facade.ProjectAreaFacade;
 import facade.ProjectFacade;
 import facade.UploadFacade;
 import facade.WebUserFacade;
@@ -68,6 +71,9 @@ public class WebUserController implements Serializable {
     private UploadFacade uploadFacade;
     @EJB
     private BidFacade bidFacade;
+    @EJB
+    private ProjectAreaFacade projectAreaFacade;
+    
     /*
     Controllers
      */
@@ -83,6 +89,12 @@ public class WebUserController implements Serializable {
     private List<Upload> companyUploads;
     private List<Project> listOfProjects;
     private List<Bid> currentProjectBids;
+    private Area[] selectedProvinces;
+    private List<Area> selectedDistricts;
+    private List<Area> selectedDsAreas;
+    private List<Area> selectedGnAreas;
+    
+    private ProjectArea selectedProjectArea;
 
     private WebUser current;
     private Project currentProject;
@@ -106,6 +118,183 @@ public class WebUserController implements Serializable {
     public void init() {
         emptyModel = new DefaultMapModel();
     }
+
+    public void removeSelectedProvince(){
+        if(currentProject==null){
+            JsfUtil.addErrorMessage("Nothing to add");
+            return;
+        }
+        if(selectedProjectArea==null){
+            JsfUtil.addErrorMessage("Nothing to add");
+            return;
+        }
+        try{
+            currentProject.getProvinces().remove(selectedProjectArea);
+        } catch(Exception e){
+            JsfUtil.addErrorMessage("Error. " + e.getMessage());
+        }
+    }
+    
+    public void addSelectedProvincesToProject(){
+        System.out.println("addSelectedProvincesToProject");
+        if(currentProject==null){
+            JsfUtil.addErrorMessage("Nothing to add");
+            return;
+        }
+        for(Area a:selectedProvinces){
+            boolean alreadyAdded=false;
+            for(ProjectArea pa: currentProject.getProvinces()){
+                if(pa.getArea().equals(a)){
+                    alreadyAdded= true;
+                }
+            }
+            System.out.println("alreadyAdded = " + alreadyAdded);
+            if(!alreadyAdded){
+                ProjectArea pa = new ProjectArea();
+                pa.setProject(currentProject);
+                pa.setArea(a);
+//                projectAreaFacade.create(pa); 
+                getCurrentProject().getProvinces().add(pa);
+                System.out.println("added");
+            }
+        }
+        selectedProvinces = null;
+    }
+    
+    
+    
+    
+    
+    
+    public void removeSelectedDistrict(){
+        if(currentProject==null){
+            JsfUtil.addErrorMessage("Nothing to add");
+            return;
+        }
+        if(selectedProjectArea==null){
+            JsfUtil.addErrorMessage("Nothing to add");
+            return;
+        }
+        try{
+            currentProject.getDistricts().remove(selectedProjectArea);
+        } catch(Exception e){
+            JsfUtil.addErrorMessage("Error. " + e.getMessage());
+        }
+    }
+    
+    public void addSelectedDistrictToProject(){
+        System.out.println("addSelectedProvincesToProject");
+        if(currentProject==null){
+            JsfUtil.addErrorMessage("Nothing to add");
+            return;
+        }
+        for(Area a:selectedDistricts){
+            boolean alreadyAdded=false;
+            for(ProjectArea pa: currentProject.getDistricts()){
+                if(pa.getArea().equals(a)){
+                    alreadyAdded= true;
+                }
+            }
+            System.out.println("alreadyAdded = " + alreadyAdded);
+            if(!alreadyAdded){
+                ProjectArea pa = new ProjectArea();
+                pa.setProject(currentProject);
+                pa.setArea(a);
+//                projectAreaFacade.create(pa); 
+                getCurrentProject().getDistricts().add(pa);
+                System.out.println("added");
+            }
+        }
+        selectedDistricts = null;
+    }
+    
+    public void removeSelectedDsArea(){
+        if(currentProject==null){
+            JsfUtil.addErrorMessage("Nothing to add");
+            return;
+        }
+        if(selectedProjectArea==null){
+            JsfUtil.addErrorMessage("Nothing to add");
+            return;
+        }
+        try{
+            currentProject.getDsDivisions().remove(selectedProjectArea);
+        } catch(Exception e){
+            JsfUtil.addErrorMessage("Error. " + e.getMessage());
+        }
+    }
+    
+    public void addSelectedDsDivisionToProject(){
+        System.out.println("addSelectedProvincesToProject");
+        if(currentProject==null){
+            JsfUtil.addErrorMessage("Nothing to add");
+            return;
+        }
+        for(Area a:selectedDsAreas){
+            boolean alreadyAdded=false;
+            for(ProjectArea pa: currentProject.getDsDivisions()){
+                if(pa.getArea().equals(a)){
+                    alreadyAdded= true;
+                }
+            }
+            System.out.println("alreadyAdded = " + alreadyAdded);
+            if(!alreadyAdded){
+                ProjectArea pa = new ProjectArea();
+                pa.setProject(currentProject);
+                pa.setArea(a);
+//                projectAreaFacade.create(pa); 
+                getCurrentProject().getDsDivisions().add(pa);
+                System.out.println("added");
+            }
+        }
+        selectedDsAreas = null;
+    }
+    
+    public void removeSelectedGn(){
+        if(currentProject==null){
+            JsfUtil.addErrorMessage("Nothing to add");
+            return;
+        }
+        if(selectedProjectArea==null){
+            JsfUtil.addErrorMessage("Nothing to add");
+            return;
+        }
+        try{
+            currentProject.getGnDivisions().remove(selectedProjectArea);
+        } catch(Exception e){
+            JsfUtil.addErrorMessage("Error. " + e.getMessage());
+        }
+    }
+    
+    public void addSelectedGnAreasToProject(){
+        System.out.println("addSelectedProvincesToProject");
+        if(currentProject==null){
+            JsfUtil.addErrorMessage("Nothing to add");
+            return;
+        }
+        for(Area a:selectedGnAreas){
+            boolean alreadyAdded=false;
+            for(ProjectArea pa: currentProject.getGnDivisions()){
+                if(pa.getArea().equals(a)){
+                    alreadyAdded= true;
+                }
+            }
+            System.out.println("alreadyAdded = " + alreadyAdded);
+            if(!alreadyAdded){
+                ProjectArea pa = new ProjectArea();
+                pa.setProject(currentProject);
+                pa.setArea(a);
+//                projectAreaFacade.create(pa); 
+                getCurrentProject().getGnDivisions().add(pa);
+                System.out.println("added");
+            }
+        }
+        selectedGnAreas = null;
+    }
+    
+    
+    
+    
     
     public String listProjectsToSubmitBids() {
         listProjectsToSubmitBids(getLoggedUser().getInstitution());
@@ -115,14 +304,14 @@ public class WebUserController implements Serializable {
     public void listProjectsToSubmitBids(Institution provider) {
         List<Project> ps = listProjects(ProjectStageType.Approved_Subjected_To_Changes);
         listOfProjects = new ArrayList<>();
-        for(Project p : ps){
-            if(!hasBidded(p, provider)){
+        for (Project p : ps) {
+            if (!hasBidded(p, provider)) {
                 listOfProjects.add(p);
             }
         }
     }
-    
-    public boolean hasBidded(Project p, Institution i){
+
+    public boolean hasBidded(Project p, Institution i) {
         String j = "select b from Bid b "
                 + " where b.bidder=:i "
                 + " and b.project=:p";
@@ -130,7 +319,7 @@ public class WebUserController implements Serializable {
         m.put("p", p);
         m.put("i", i);
         Bid b = getBidFacade().findFirstBySQL(j, m);
-        if(b==null){
+        if (b == null) {
             return false;
         }
         return true;
@@ -138,27 +327,27 @@ public class WebUserController implements Serializable {
 
     public String listProjectsToSubmitProposals() {
         listOfProjects = listProjects(ProjectStageType.Awaiting_Authority_Approval);
-        return "/client_requests";
+        return "/project_lists";
     }
 
     public String listProjectsAwaitingCustomerApproval() {
         listOfProjects = listProjects(ProjectStageType.Awaiting_Resubmission);
-        return "/client_requests";
+        return "/project_lists";
     }
 
     public String listProjectsAwaitingBidding() {
         listOfProjects = listProjects(ProjectStageType.Approved_Subjected_To_Changes);
-        return "/client_requests";
+        return "/project_lists";
     }
 
     public String listProjectsAwaitingBidSelection() {
         listOfProjects = listProjects(ProjectStageType.Approved);
-        return "/client_requests";
+        return "/project_lists";
     }
 
     public String listProjectsBidSelected() {
         listOfProjects = listProjects(ProjectStageType.Rejected);
-        return "/client_requests";
+        return "/project_lists";
     }
 
     public List<Project> listProjects(ProjectStageType type) {
@@ -184,7 +373,7 @@ public class WebUserController implements Serializable {
         companyUploads = null;
         clientUploads = null;
         currentUpload = null;
-        currentProjectBids=null;
+        currentProjectBids = null;
         markLocationOnMap();
         return "/project_company_view_after_submission";
     }
@@ -200,7 +389,7 @@ public class WebUserController implements Serializable {
         companyUploads = null;
         clientUploads = null;
         currentUpload = null;
-        currentProjectBids=null;
+        currentProjectBids = null;
         markLocationOnMap();
         return "/project_client_view_after_submission";
     }
@@ -213,9 +402,8 @@ public class WebUserController implements Serializable {
         LatLng coord1 = new LatLng(current.getInstitution().getCoordinate().getLatitude(), current.getInstitution().getCoordinate().getLongitude());
         emptyModel.addOverlay(new Marker(coord1, current.getInstitution().getAddress()));
     }
-    
-    
-     public void markLocationOnMapForBidders() {
+
+    public void markLocationOnMapForBidders() {
         emptyModel = new DefaultMapModel();
         if (current == null) {
             return;
@@ -247,9 +435,8 @@ public class WebUserController implements Serializable {
         m.put("ins", webUser.getInstitution());
         return getProjectFacade().findFirstBySQL(j, m);
     }
-    
-    
-    public String toSubmitClientRequest(){
+
+    public String toSubmitClientRequest() {
         return "/finalize_client_request";
     }
 
@@ -294,7 +481,7 @@ public class WebUserController implements Serializable {
 
     public String addNewProject() {
         currentProject = new Project();
-        
+
         currentProject.setCreater(current);
         currentProject.setCreatedAt(new Date());
         currentProject.setCurrentStageType(ProjectStageType.Adding_Details_To_Project);
@@ -352,7 +539,7 @@ public class WebUserController implements Serializable {
         currentProjectUploads = null;
         companyUploads = null;
         clientUploads = null;
-        currentProjectBids=null;
+        currentProjectBids = null;
         getUploadFacade().create(u);
         comments = "";
 
@@ -408,7 +595,7 @@ public class WebUserController implements Serializable {
         currentProjectUploads = null;
         clientUploads = null;
         companyUploads = null;
-        currentProjectBids=null;
+        currentProjectBids = null;
         getUploadFacade().create(u);
         comments = "";
 
@@ -463,7 +650,7 @@ public class WebUserController implements Serializable {
         companyUploads = null;
         clientUploads = null;
         currentUpload = null;
-        currentProjectBids=null;
+        currentProjectBids = null;
         return "/register";
     }
 
@@ -511,7 +698,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Username already taken. Please enter a different username");
             return "";
         }
-        
+
         setLoggedUser(current);
         JsfUtil.addSuccessMessage("Your Details Added as an institution user. Please contact us for changes");
         return "/index";
@@ -608,11 +795,9 @@ public class WebUserController implements Serializable {
 
     }
 
-    
     public List<Bid> getBids(Project p) {
         return getBids(p, null);
     }
-    
 
     public List<Bid> getBids(Project p, Institution provider) {
         String j = "select b from Bid b "
@@ -626,8 +811,7 @@ public class WebUserController implements Serializable {
         return getBidFacade().findBySQL(j, m);
 
     }
-    
-    
+
     public UploadedFile getFile() {
         return file;
     }
@@ -861,8 +1045,7 @@ public class WebUserController implements Serializable {
     public void setCurrentProjectBids(List<Bid> currentProjectBids) {
         this.currentProjectBids = currentProjectBids;
     }
-    
-    
+
     public List<Project> getListOfProjects() {
         return listOfProjects;
     }
@@ -929,6 +1112,65 @@ public class WebUserController implements Serializable {
     public void setInstitution(Institution institution) {
         this.institution = institution;
     }
+
+    public Area[] getSelectedProvinces() {
+        return selectedProvinces;
+    }
+
+    public void setSelectedProvinces(Area[] selectedProvinces) {
+        this.selectedProvinces = selectedProvinces;
+    }
+
+   
+    public ProjectArea getSelectedProjectArea() {
+        return selectedProjectArea;
+    }
+
+    public void setSelectedProjectArea(ProjectArea selectedProjectArea) {
+        this.selectedProjectArea = selectedProjectArea;
+    }
+
+    public ProjectAreaFacade getProjectAreaFacade() {
+        return projectAreaFacade;
+    }
+
+    public List<Area> getSelectedDistricts() {
+        if(selectedDistricts==null){
+            selectedDistricts = new ArrayList<>();
+        }
+        return selectedDistricts;
+    }
+
+    public void setSelectedDistricts(List<Area> selectedDistricts) {
+        this.selectedDistricts = selectedDistricts;
+    }
+
+    public List<Area> getSelectedDsAreas() {
+        if(selectedDsAreas==null){
+            selectedDsAreas = new ArrayList<>();
+        }
+        return selectedDsAreas;
+    }
+
+    public void setSelectedDsAreas(List<Area> selectedDsAreas) {
+        this.selectedDsAreas = selectedDsAreas;
+    }
+
+    public List<Area> getSelectedGnAreas() {
+        return selectedGnAreas;
+    }
+
+    public void setSelectedGnAreas(List<Area> selectedGnAreas) {
+        if(selectedGnAreas==null){
+            selectedGnAreas = new ArrayList<>();
+        }
+        this.selectedGnAreas = selectedGnAreas;
+    }
+
+   
+    
+    
+    
     
     
 

@@ -14,6 +14,7 @@ public enum AreaType {
     PHM,
     PHI,
     MOH,
+    DsArea,
     District,
     Province,
     National,

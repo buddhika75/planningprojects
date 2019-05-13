@@ -74,7 +74,7 @@ public class Item implements Serializable {
 
     @Override
     public String toString() {
-        return "lk.gov.health.schoolhealth.Item[ id=" + id + " ]";
+        return "Item[ id=" + id + " ]";
     }
 
 }

@@ -269,7 +269,7 @@ public class Area implements Serializable {
 
     @Override
     public String toString() {
-        return "lk.gov.health.schoolhealth.Area[ id=" + id + " ]";
+        return "Area[ id=" + id + " ]";
     }
 
 }

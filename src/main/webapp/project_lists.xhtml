@@ -23,7 +23,7 @@
                 <table >
                     <tr>
                         <td colspan="2">
-                            <h1>CLIENT REQUESTS</h1>
+                            <h1>List Proposals</h1>
                         </td>
                     </tr>
                     <tr>
@@ -35,35 +35,35 @@
                                     <tr>
                                         <td>
                                             <h:commandButton class="w3-btn w3-yellow btn350"  action="#{webUserController.listProjectsToSubmitProposals()}" 
-                                                             value="List Projects to Upload Proposals" ></h:commandButton>
+                                                             value="List Projects to Complete Data Entry" ></h:commandButton>
 
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <h:commandButton class="w3-btn w3-yellow btn350"  action="#{webUserController.listProjectsAwaitingCustomerApproval() }" 
-                                                             value="List Proposals awaiting client approval" ></h:commandButton>
+                                                             value="List Proposals awaiting approval" ></h:commandButton>
 
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsAwaitingBidding()}" 
-                                                             value="List Proposals awaiting bidding" ></h:commandButton>
+                                                             value="List Proposals approved" ></h:commandButton>
 
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsAwaitingBidSelection() }" 
-                                                             value="List Proposals awaiting client bid Selection" ></h:commandButton>
+                                                             value="List Proposals approved with changes" ></h:commandButton>
 
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsBidSelected()}" 
-                                                             value="List Proposals completed bid Selection" ></h:commandButton>
+                                                             value="List Proposals Rejected" ></h:commandButton>
 
                                         </td>
                                     </tr>
@@ -96,10 +96,6 @@
                                     </p:column>
                                     <p:column headerText="Address" >
                                         <h:outputLabel value="#{p.client.address}" >
-                                        </h:outputLabel>
-                                    </p:column>
-                                    <p:column headerText="Electricity Consumption" >
-                                        <h:outputLabel value="#{p.twelveMonthsElectricityUsage}" >
                                         </h:outputLabel>
                                     </p:column>
                                     <p:column headerText="Special Notes" >
