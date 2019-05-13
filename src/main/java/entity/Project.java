@@ -37,7 +37,6 @@ public class Project implements Serializable {
     private List<ProjectArea> dsDivisions;
     @OneToMany(cascade = CascadeType.ALL)
     private List<ProjectArea> gnDivisions;
-    @ManyToOne
     
     
     
@@ -70,6 +69,13 @@ public class Project implements Serializable {
     @ManyToOne
     private WebUser proposalSubmittedBy;
     
+    private Double projectCost;
+    @ManyToOne
+    private Item projectCostUnit;
+    
+    @ManyToOne
+    private Item sourceOfFunds;
+    
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date proposalAcceptedAt;
 
@@ -82,6 +88,8 @@ public class Project implements Serializable {
     private WebUser checkedBy;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date checkeAt;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date proposalDate;
     //Retairing properties
     private boolean retired;
     @ManyToOne
@@ -406,7 +414,40 @@ public class Project implements Serializable {
         this.proposalAcceptedAt = proposalAcceptedAt;
     }
 
+    public Double getProjectCost() {
+        return projectCost;
+    }
 
+    public void setProjectCost(Double projectCost) {
+        this.projectCost = projectCost;
+    }
+
+    public Item getProjectCostUnit() {
+        return projectCostUnit;
+    }
+
+    public void setProjectCostUnit(Item projectCostUnit) {
+        this.projectCostUnit = projectCostUnit;
+    }
+
+    public Item getSourceOfFunds() {
+        return sourceOfFunds;
+    }
+
+    public void setSourceOfFunds(Item sourceOfFunds) {
+        this.sourceOfFunds = sourceOfFunds;
+    }
+
+    public Date getProposalDate() {
+        return proposalDate;
+    }
+
+    public void setProposalDate(Date proposalDate) {
+        this.proposalDate = proposalDate;
+    }
+
+
+    
     
 
 }

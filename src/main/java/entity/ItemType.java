@@ -11,6 +11,6 @@ package entity;
  */
 public enum ItemType {
     Sector,
-    ReturnCategory,
-    ReturnFormatCategory,
+    Cost_Unit,
+    Source_of_Funds,
 }

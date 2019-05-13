@@ -1,8 +1,7 @@
 package bean;
 
-
-
 import entity.Item;
+import entity.ItemType;
 import facade.ItemFacade;
 import facade.util.JsfUtil;
 import java.io.Serializable;
@@ -19,6 +18,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import facade.util.JsfUtil.PersistAction;
+import java.util.HashMap;
+import java.util.Map;
 
 @Named("itemController")
 @SessionScoped
@@ -28,6 +29,9 @@ public class ItemController implements Serializable {
     private ItemFacade ejbFacade;
     private List<Item> items = null;
     private Item selected;
+    private List<Item> sectors = null;
+    private List<Item> costUnits = null;
+    private List<Item> sourcesOfFunds = null;
 
     public ItemController() {
     }
@@ -59,7 +63,11 @@ public class ItemController implements Serializable {
     public void create() {
         persist(JsfUtil.PersistAction.CREATE, "Item Created");
         if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
+            items = null;
+            sourcesOfFunds = null;
+            costUnits = null;
+            sectors = null;
+
         }
     }
 
@@ -71,8 +79,22 @@ public class ItemController implements Serializable {
         persist(JsfUtil.PersistAction.DELETE, "Deleted");
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
-            items = null;    // Invalidate list of items to trigger re-query.
+            items = null;  
+            sourcesOfFunds = null;
+            costUnits = null;
+            sectors = null;
+// Invalidate list of items to trigger re-query.
         }
+    }
+
+    public List<Item> getItems(ItemType type) {
+        String j;
+        j = "select i from Item i "
+                + " where i.type=:t "
+                + " order by i.name";
+        Map m = new HashMap();
+        m.put("t", type);
+        return getFacade().findBySQL(j, m);
     }
 
     public List<Item> getItems() {
@@ -101,7 +123,7 @@ public class ItemController implements Serializable {
                 if (msg.length() > 0) {
                     JsfUtil.addErrorMessage(msg);
                 } else {
-                    JsfUtil.addErrorMessage(ex,"Error");
+                    JsfUtil.addErrorMessage(ex, "Error");
                 }
             } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
@@ -122,6 +144,52 @@ public class ItemController implements Serializable {
         return getFacade().findAll();
     }
 
+    public List<Item> getSectors() {
+        if(sectors==null){
+            sectors = getItems(ItemType.Sector);
+        }
+        return sectors;
+    }
+
+    public void setSectors(List<Item> sectors) {
+        this.sectors = sectors;
+    }
+
+    public List<Item> getCostUnits() {
+        if(costUnits==null){
+            costUnits = getItems(ItemType.Cost_Unit);
+        }
+        return costUnits;
+    }
+
+    public void setCostUnits(List<Item> costUnits) {
+        this.costUnits = costUnits;
+    }
+
+    public List<Item> getSourcesOfFunds() {
+        if(sourcesOfFunds==null){
+            sourcesOfFunds = getItems(ItemType.Source_of_Funds);
+        }
+        return sourcesOfFunds;
+    }
+
+    public void setSourcesOfFunds(List<Item> sourcesOfFunds) {
+        this.sourcesOfFunds = sourcesOfFunds;
+    }
+
+    public ItemFacade getEjbFacade() {
+        return ejbFacade;
+    }
+
+    public void setEjbFacade(ItemFacade ejbFacade) {
+        this.ejbFacade = ejbFacade;
+    }
+
+    
+    
+    
+    
+    
     @FacesConverter(forClass = Item.class)
     public static class ItemControllerConverter implements Converter {
 

@@ -19,19 +19,16 @@
             <ui:define name="content">
 
 
-                <h:form >
-
-
-                    <table style="width: 99%; top: 0px; margin: auto; margin-top: 0px; vertical-align: top; " >
-                        <tr >
-                            <td colspan="3" >
-                                <h3>Add Project</h3>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" valign="top" style="width: 220px;">
-                                <f:view>
-
+                <table style="width: 99%; top: 0px; margin: auto; margin-top: 0px; vertical-align: top; " >
+                    <tr >
+                        <td colspan="3" >
+                            <h3>Add Project</h3>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" valign="top" style="width: 220px;">
+                            <f:view>
+                                <h:form>
                                     <p:panelGrid columns="2">
                                         <p:outputLabel value="ProjectTitle:" for="projectTitle" />
                                         <p:inputText id="projectTitle" value="#{webUserController.currentProject.projectTitle}" title="ProjectTitle" />
@@ -40,7 +37,7 @@
                                         <p:outputLabel value="Sector:" for="sector" />
                                         <h:selectOneMenu id="sector" value="#{webUserController.currentProject.sector}" >
                                             <f:selectItem itemLabel="Select Sector" ></f:selectItem>
-                                            <f:selectItems value="#{itemController.sectors}" var="i" itemLabel="#{i.name}" itemValue="#{i}"/>
+                                            <f:selectItems value="#{itemController.items}" var="i" itemLabel="#{i.name}" itemValue="#{i}"/>
                                         </h:selectOneMenu>
 
                                         <p:outputLabel value="Location" ></p:outputLabel>
@@ -109,67 +106,63 @@
                                         </h:panelGroup>
 
 
-                                        <p:outputLabel value="File Number" for="fileNo" />
-                                        <p:inputText id="fileNo" value="#{webUserController.currentProject.referenceNo }" title="CurrentStageType" />
 
 
 
 
-                                        <p:outputLabel value="Project Description" for="pd" />
-                                        <p:inputTextarea rows="4" cols="30" id="pd" value="#{webUserController.currentProject.comments}" title="Comments" />
-
-
-
-
-                                        <p:outputLabel value="Project Cost" for="cost" />
-                                        <p:inputText id="cost" value="#{webUserController.currentProject.projectCost}" title="Project Cost" />
-
-
-                                        <p:outputLabel value="Source of Funds" for="sof" />
-                                        <p:selectOneMenu id="sof" value="#{webUserController.currentProject.sourceOfFunds}"
-                                                         title="Source of Funds" >
-                                            <f:selectItem itemLabel="Select" ></f:selectItem>
-                                            <f:selectItems value="#{itemController.sourcesOfFunds}" 
-                                                           var="f" itemLabel="#{f.name}" 
-                                                           itemValue="#{f}" ></f:selectItems>
+                                        <p:outputLabel value="Comments:" for="comments" />
+                                        <p:inputTextarea rows="4" cols="30" id="comments" value="#{webUserController.currentProject.comments}" title="Comments" />
+                                        <p:outputLabel value="CurrentStageType:" for="currentStageType" />
+                                        <p:inputText id="currentStageType" value="#{webUserController.currentProject.currentStageType}" title="CurrentStageType" />
+                                        <p:outputLabel value="OriginatingInstitution:" for="originatingInstitution" />
+                                        <p:selectOneMenu id="originatingInstitution" value="#{webUserController.currentProject.originatingInstitution}" >
+                                            <!-- TODO: update below reference to list of available items-->
+                                            <f:selectItems value="#{fixme}"/>
                                         </p:selectOneMenu>
+                                        <p:outputLabel value="ReferenceNo:" for="referenceNo" />
+                                        <p:inputText id="referenceNo" value="#{webUserController.currentProject.referenceNo}" title="ReferenceNo" />
 
 
-                                        <p:outputLabel value="Proposal Date"  />
-                                        <p:calendar value="#{webUserController.currentProject.proposalDate}" pattern="dd MMMM yyyy" >
-                                        </p:calendar>
+                                        <p:outputLabel value="Notes:" for="notes" />
+                                        <p:inputTextarea rows="4" cols="30" id="notes" value="#{webUserController.currentProject.notes}" title="Notes" />
+                                        <p:outputLabel value="SpecialNotes:" for="specialNotes" />
+                                        <p:inputTextarea rows="4" cols="30" id="specialNotes" value="#{webUserController.currentProject.specialNotes}" title="SpecialNotes" />
+
+
+                                        <p:outputLabel value="Proposal:" for="proposal" />
+                                        <p:inputTextarea rows="4" cols="30" id="proposal" value="#{webUserController.currentProject.proposal}" title="Proposal" />
 
 
                                     </p:panelGrid>
-
-                                </f:view>
-
-
+                                </h:form>
+                            </f:view>
 
 
-                            </td>
 
-                            <td style="vertical-align: top;">
 
+                        </td>
+
+                        <td style="vertical-align: top;">
+                            <h:form >
                                 <h:panelGrid columns="1" >
 
-                                    <h:commandButton value="Submit" action="#{webUserController.updateProject()}" class="w3-btn w3-yellow btn350" ></h:commandButton> 
+                                    <h:commandButton value="Submit" action="#{webUserController.update()}" class="w3-btn w3-yellow btn350" ></h:commandButton> 
 
                                     <h:commandButton value="File Uploads" class="w3-btn w3-yellow btn350"
-                                                     action="/upload_files_to_project_proposal" ></h:commandButton>
+                                                      action="/upload_files_to_project_proposal" ></h:commandButton>
 
 
 
 
                                 </h:panelGrid>
+                            </h:form>
+                        </td>
 
-                            </td>
-
-                        </tr>
-                    </table>
+                    </tr>
+                </table>
 
 
-                </h:form>
+
 
             </ui:define>
 

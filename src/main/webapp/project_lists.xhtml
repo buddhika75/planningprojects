@@ -78,36 +78,27 @@
                                 <p:dataTable class="w3-table-all w3-striped redTable" value="#{webUserController.listOfProjects}" var="p" rowKey="#{p.id}"
                                              >
                                     <p:column headerText="Submitted Date" >
-                                        <h:outputLabel value="#{p.requestSubmittedAt}" >
+                                        <h:outputLabel value="#{p.proposalDate}" >
                                             <f:convertDateTime pattern="MMM/dd/yyyy" ></f:convertDateTime>
                                         </h:outputLabel>
                                     </p:column>
-                                    <p:column headerText="Client" >
-                                        <h:outputLabel value="#{p.client.name}" >
+                                    <p:column headerText="FIle No" >
+                                        <h:outputLabel value="#{p.referenceNo }" >
                                         </h:outputLabel>
                                     </p:column>
-                                    <p:column headerText="Email" >
-                                        <h:outputLabel value="#{p.client.email}" >
+                                    <p:column headerText="Cost" >
+                                        <h:outputLabel value="#{p.projectCost}" >
                                         </h:outputLabel>
                                     </p:column>
-                                    <p:column headerText="Phone" >
-                                        <h:outputLabel value="#{p.client.phone}" >
+                                    <p:column headerText="Description" >
+                                        <h:outputLabel value="#{p.comments}" >
                                         </h:outputLabel>
                                     </p:column>
-                                    <p:column headerText="Address" >
-                                        <h:outputLabel value="#{p.client.address}" >
-                                        </h:outputLabel>
-                                    </p:column>
-                                    <p:column headerText="Special Notes" >
-                                        <h:outputLabel value="#{p.specialNotes}" >
-                                        </h:outputLabel>
-                                    </p:column>
+                                    
                                     <p:column headerText="Actions" >
-                                        <p:commandButton class="w3-btn w3-teal" value="Manage" ajax="false" action="#{webUserController.viewProjectToSubmitProposalsByCompany()}" >
+                                        <p:commandButton class="w3-btn w3-teal" value="Manage" ajax="false" action="#{webUserController.viewProject()}" >
                                             <f:setPropertyActionListener value="#{p}" target="#{webUserController.currentProject}" ></f:setPropertyActionListener>
                                         </p:commandButton>
-                                        <h:outputLabel value="#{p.specialNotes}" >
-                                        </h:outputLabel>
                                     </p:column>
                                 </p:dataTable>
                             </h:form>

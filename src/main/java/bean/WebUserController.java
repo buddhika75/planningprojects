@@ -326,7 +326,7 @@ public class WebUserController implements Serializable {
     }
 
     public String listProjectsToSubmitProposals() {
-        listOfProjects = listProjects(ProjectStageType.Awaiting_Authority_Approval);
+        listOfProjects = listProjects(ProjectStageType.Adding_Details_To_Project);
         return "/project_lists";
     }
 
@@ -363,7 +363,7 @@ public class WebUserController implements Serializable {
 
     }
 
-    public String viewProjectToSubmitProposalsByCompany() {
+    public String viewProject() {
         if (currentProject == null) {
             JsfUtil.addErrorMessage("Please select a project");
             return "";
@@ -375,7 +375,7 @@ public class WebUserController implements Serializable {
         currentUpload = null;
         currentProjectBids = null;
         markLocationOnMap();
-        return "/project_company_view_after_submission";
+        return "/add_project";
     }
 
     public String viewMyProject() {
@@ -484,7 +484,7 @@ public class WebUserController implements Serializable {
 
         currentProject.setCreater(current);
         currentProject.setCreatedAt(new Date());
-        currentProject.setCurrentStageType(ProjectStageType.Adding_Details_To_Project);
+        
         getProjectFacade().create(currentProject);
         return "add_project";
     }
@@ -494,6 +494,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to update");
             return;
         }
+        currentProject.setCurrentStageType(ProjectStageType.Adding_Details_To_Project);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Updated");
     }
@@ -874,7 +875,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("WebUserUpdated"));
             return "manage_users";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, e.getMessage());
             return null;
         }
     }
