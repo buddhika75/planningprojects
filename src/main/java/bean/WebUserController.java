@@ -3,7 +3,7 @@ package bean;
 import entity.Area;
 import entity.WebUser;
 
-import entity.Bid;
+
 import entity.Institution;
 import entity.InstitutionType;
 import entity.Project;
@@ -12,7 +12,6 @@ import entity.ProjectStageType;
 import entity.Upload;
 import entity.UploadType;
 import entity.WebUserRole;
-import facade.BidFacade;
 import facade.InstitutionFacade;
 import facade.ProjectAreaFacade;
 import facade.ProjectFacade;
@@ -70,8 +69,6 @@ public class WebUserController implements Serializable {
     @EJB
     private UploadFacade uploadFacade;
     @EJB
-    private BidFacade bidFacade;
-    @EJB
     private ProjectAreaFacade projectAreaFacade;
     
     /*
@@ -88,7 +85,7 @@ public class WebUserController implements Serializable {
     private List<Upload> clientUploads;
     private List<Upload> companyUploads;
     private List<Project> listOfProjects;
-    private List<Bid> currentProjectBids;
+    
     private Area[] selectedProvinces;
     private List<Area> selectedDistricts;
     private List<Area> selectedDsAreas;
@@ -304,26 +301,9 @@ public class WebUserController implements Serializable {
     public void listProjectsToSubmitBids(Institution provider) {
         List<Project> ps = listProjects(ProjectStageType.Approved_Subjected_To_Changes);
         listOfProjects = new ArrayList<>();
-        for (Project p : ps) {
-            if (!hasBidded(p, provider)) {
-                listOfProjects.add(p);
-            }
-        }
     }
 
-    public boolean hasBidded(Project p, Institution i) {
-        String j = "select b from Bid b "
-                + " where b.bidder=:i "
-                + " and b.project=:p";
-        Map m = new HashMap();
-        m.put("p", p);
-        m.put("i", i);
-        Bid b = getBidFacade().findFirstBySQL(j, m);
-        if (b == null) {
-            return false;
-        }
-        return true;
-    }
+    
 
     public String listProjectsToSubmitProposals() {
         listOfProjects = listProjects(ProjectStageType.Adding_Details_To_Project);
@@ -373,7 +353,6 @@ public class WebUserController implements Serializable {
         companyUploads = null;
         clientUploads = null;
         currentUpload = null;
-        currentProjectBids = null;
         markLocationOnMap();
         return "/add_project";
     }
@@ -389,7 +368,7 @@ public class WebUserController implements Serializable {
         companyUploads = null;
         clientUploads = null;
         currentUpload = null;
-        currentProjectBids = null;
+
         markLocationOnMap();
         return "/project_client_view_after_submission";
     }
@@ -481,10 +460,8 @@ public class WebUserController implements Serializable {
 
     public String addNewProject() {
         currentProject = new Project();
-
         currentProject.setCreater(current);
         currentProject.setCreatedAt(new Date());
-        
         getProjectFacade().create(currentProject);
         return "add_project";
     }
@@ -540,7 +517,7 @@ public class WebUserController implements Serializable {
         currentProjectUploads = null;
         companyUploads = null;
         clientUploads = null;
-        currentProjectBids = null;
+
         getUploadFacade().create(u);
         comments = "";
 
@@ -596,7 +573,7 @@ public class WebUserController implements Serializable {
         currentProjectUploads = null;
         clientUploads = null;
         companyUploads = null;
-        currentProjectBids = null;
+
         getUploadFacade().create(u);
         comments = "";
 
@@ -651,7 +628,7 @@ public class WebUserController implements Serializable {
         companyUploads = null;
         clientUploads = null;
         currentUpload = null;
-        currentProjectBids = null;
+
         return "/register";
     }
 
@@ -796,22 +773,7 @@ public class WebUserController implements Serializable {
 
     }
 
-    public List<Bid> getBids(Project p) {
-        return getBids(p, null);
-    }
-
-    public List<Bid> getBids(Project p, Institution provider) {
-        String j = "select b from Bid b "
-                + " where b.project=:p ";
-        Map m = new HashMap();
-        m.put("p", currentProject);
-        if (provider != null) {
-            j += " and u.bidder=:b ";
-            m.put("b", provider);
-        }
-        return getBidFacade().findBySQL(j, m);
-
-    }
+   
 
     public UploadedFile getFile() {
         return file;
@@ -1036,16 +998,7 @@ public class WebUserController implements Serializable {
         this.currentProjectUploads = currentProjectUploads;
     }
 
-    public List<Bid> getCurrentProjectBids() {
-        if (currentProjectBids == null) {
-            currentProjectBids = getBids(currentProject);
-        }
-        return currentProjectBids;
-    }
-
-    public void setCurrentProjectBids(List<Bid> currentProjectBids) {
-        this.currentProjectBids = currentProjectBids;
-    }
+  
 
     public List<Project> getListOfProjects() {
         return listOfProjects;
@@ -1102,9 +1055,6 @@ public class WebUserController implements Serializable {
         this.companyUploads = companyUploads;
     }
 
-    public BidFacade getBidFacade() {
-        return bidFacade;
-    }
 
     public Institution getInstitution() {
         return institution;

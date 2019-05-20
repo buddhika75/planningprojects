@@ -25,7 +25,7 @@ public class Project implements Serializable {
     private Long id;
 
     private String projectTitle;
-    
+
     @ManyToOne
     private Item sector;
     private Boolean allIsland;
@@ -37,11 +37,9 @@ public class Project implements Serializable {
     private List<ProjectArea> dsDivisions;
     @OneToMany(cascade = CascadeType.ALL)
     private List<ProjectArea> gnDivisions;
-    
-    
-    
+
     @Lob
-    private String comments;
+    private String projectDescription;
 
     @Enumerated(EnumType.STRING)
     private ProjectStageType currentStageType;
@@ -49,8 +47,20 @@ public class Project implements Serializable {
     @ManyToOne
     private Institution originatingInstitution;
 
-    private String referenceNo;
+    private String fileNumber;
 
+    private Double projectCost;
+    @ManyToOne
+    private Item projectCostUnit;
+
+    @ManyToOne
+    private Item sourceOfFunds;
+
+    
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date requestSubmittedAt;
+
+    
     //Booleans
     private boolean cancelled;
     private boolean rejected;
@@ -60,22 +70,13 @@ public class Project implements Serializable {
     private WebUser creater;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date createdAt;
-    //Edited Properties
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date requestSubmittedAt;
 
+    
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date proposalSubmittedAt;
     @ManyToOne
     private WebUser proposalSubmittedBy;
-    
-    private Double projectCost;
-    @ManyToOne
-    private Item projectCostUnit;
-    
-    @ManyToOne
-    private Item sourceOfFunds;
-    
+
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date proposalAcceptedAt;
 
@@ -130,7 +131,7 @@ public class Project implements Serializable {
     }
 
     public List<ProjectArea> getProvinces() {
-        if(provinces==null){
+        if (provinces == null) {
             provinces = new ArrayList<>();
         }
         return provinces;
@@ -141,7 +142,7 @@ public class Project implements Serializable {
     }
 
     public List<ProjectArea> getDistricts() {
-         if(districts==null){
+        if (districts == null) {
             districts = new ArrayList<>();
         }
         return districts;
@@ -152,7 +153,7 @@ public class Project implements Serializable {
     }
 
     public List<ProjectArea> getDsDivisions() {
-         if(dsDivisions==null){
+        if (dsDivisions == null) {
             dsDivisions = new ArrayList<>();
         }
         return dsDivisions;
@@ -163,7 +164,7 @@ public class Project implements Serializable {
     }
 
     public List<ProjectArea> getGnDivisions() {
-         if(gnDivisions==null){
+        if (gnDivisions == null) {
             gnDivisions = new ArrayList<>();
         }
         return gnDivisions;
@@ -173,19 +174,6 @@ public class Project implements Serializable {
         this.gnDivisions = gnDivisions;
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -208,7 +196,7 @@ public class Project implements Serializable {
 
     @Override
     public String toString() {
-        return "Ref No " + referenceNo + " ";
+        return "Ref No " + fileNumber + " ";
     }
 
     public Long getId() {
@@ -219,12 +207,12 @@ public class Project implements Serializable {
         this.id = id;
     }
 
-    public String getComments() {
-        return comments;
+    public String getProjectDescription() {
+        return projectDescription;
     }
 
-    public void setComments(String comments) {
-        this.comments = comments;
+    public void setProjectDescription(String projectDescription) {
+        this.projectDescription = projectDescription;
     }
 
     public ProjectStageType getCurrentStageType() {
@@ -243,12 +231,12 @@ public class Project implements Serializable {
         this.originatingInstitution = originatingInstitution;
     }
 
-    public String getReferenceNo() {
-        return referenceNo;
+    public String getFileNumber() {
+        return fileNumber;
     }
 
-    public void setReferenceNo(String referenceNo) {
-        this.referenceNo = referenceNo;
+    public void setFileNumber(String fileNumber) {
+        this.fileNumber = fileNumber;
     }
 
     public boolean isCancelled() {
@@ -445,9 +433,5 @@ public class Project implements Serializable {
     public void setProposalDate(Date proposalDate) {
         this.proposalDate = proposalDate;
     }
-
-
-    
-    
 
 }
