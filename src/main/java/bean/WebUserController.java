@@ -150,7 +150,7 @@ public class WebUserController implements Serializable {
                 ProjectArea pa = new ProjectArea();
                 pa.setProject(currentProject);
                 pa.setArea(a);
-//                projectAreaFacade.create(pa); 
+                projectAreaFacade.create(pa); 
                 getCurrentProject().getProvinces().add(pa);
                 System.out.println("added");
             }
@@ -197,7 +197,7 @@ public class WebUserController implements Serializable {
                 ProjectArea pa = new ProjectArea();
                 pa.setProject(currentProject);
                 pa.setArea(a);
-//                projectAreaFacade.create(pa); 
+                projectAreaFacade.create(pa); 
                 getCurrentProject().getDistricts().add(pa);
                 System.out.println("added");
             }
@@ -239,7 +239,7 @@ public class WebUserController implements Serializable {
                 ProjectArea pa = new ProjectArea();
                 pa.setProject(currentProject);
                 pa.setArea(a);
-//                projectAreaFacade.create(pa); 
+                projectAreaFacade.create(pa); 
                 getCurrentProject().getDsDivisions().add(pa);
                 System.out.println("added");
             }

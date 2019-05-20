@@ -59,6 +59,8 @@ public class AreaController implements Serializable {
     List<Area> phiAreas = null;
     List<Area> rdhsAreas = null;
     List<Area> pdhsAreas = null;
+    private List<Area> dsAreas= null;
+    private List<Area> provinces = null;
     private Area selected;
 
     @Inject
@@ -109,6 +111,8 @@ public class AreaController implements Serializable {
     public void setPdhsAreas(List<Area> pdhsAreas) {
         this.pdhsAreas = pdhsAreas;
     }
+    
+    
 
     public Area getAreaById(Long id) {
         return getFacade().find(id);
@@ -878,6 +882,7 @@ public class AreaController implements Serializable {
         persist(PersistAction.CREATE, "Created");
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
+            provinces = null;
         }
     }
 
@@ -890,6 +895,7 @@ public class AreaController implements Serializable {
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
+            provinces = null;
         }
     }
 
@@ -944,6 +950,31 @@ public class AreaController implements Serializable {
         JsfUtil.addSuccessMessage("Selected");
     }
 
+    public List<Area> getProvinces() {
+        if(provinces==null){
+            provinces = getAreas(AreaType.Province, null);
+        }
+        return provinces;
+    }
+
+    public void setProvinces(List<Area> provinces) {
+        this.provinces = provinces;
+    }
+
+    public List<Area> getDsAreas() {
+        if(dsAreas==null){
+            dsAreas= getAreas(AreaType.DsArea, null);
+        }
+        return dsAreas;
+    }
+
+    public void setDsAreas(List<Area> dsAreas) {
+        this.dsAreas = dsAreas;
+    }
+
+    
+    
+    
     @FacesConverter(forClass = Area.class)
     public static class AreaControllerConverter implements Converter {
 

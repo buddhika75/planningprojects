@@ -29,6 +29,13 @@ public class Project implements Serializable {
     @ManyToOne
     private Item sector;
     private Boolean allIsland;
+    
+    private Area province;
+    private Area district;
+    private Area dsArea;
+    private Area gnArea;
+    
+    
     @OneToMany(cascade = CascadeType.ALL)
     private List<ProjectArea> provinces;
     @OneToMany(cascade = CascadeType.ALL)
@@ -434,4 +441,38 @@ public class Project implements Serializable {
         this.proposalDate = proposalDate;
     }
 
+    public Area getProvince() {
+        return province;
+    }
+
+    public void setProvince(Area province) {
+        this.province = province;
+    }
+
+    public Area getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(Area district) {
+        this.district = district;
+    }
+
+    public Area getDsArea() {
+        return dsArea;
+    }
+
+    public void setDsArea(Area dsArea) {
+        this.dsArea = dsArea;
+    }
+
+    public Area getGnArea() {
+        return gnArea;
+    }
+
+    public void setGnArea(Area gnArea) {
+        this.gnArea = gnArea;
+    }
+
+    
+    
 }
