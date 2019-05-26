@@ -9,128 +9,294 @@
 
 
     <h:head>
-        <h:outputStylesheet library="css" name="main.css" ></h:outputStylesheet>
+        <h:outputStylesheet library="css" name="tem1.css" ></h:outputStylesheet>
+
     </h:head>
 
     <h:body>
 
         <ui:composition template="./template.xhtml">
 
+            <ui:define name="addProject" >
+                <li>
+                    <h:commandLink value="ADD PROJECT" action="#{webUserController.addNewProject()}"></h:commandLink>
+                </li>
+                <li>
+                    <h:commandLink class="w3-theme-d2" value="PROJECT DETAILS" action="#{webUserController.addNewProject()}"></h:commandLink>
+                </li>
+            </ui:define>
+
             <ui:define name="content">
 
 
-                <style> 
-                    input[type=text] {
-                        width: 100%;
-                        padding: 12px 20px;
-                        margin: 8px 0;
+                <style>
+                    * {
                         box-sizing: border-box;
-                        border: none;
-                        border-bottom: 2px solid red;
                     }
-                    select {
+
+                    input[type=text], select, textarea, checkbox, text {
                         width: 100%;
-                        padding: 16px 20px;
+                        padding: 12px;
+                        border: 1px solid #ccc;
+                        border-radius: 4px;
+                        resize: vertical;
+                    }
+
+                    label {
+                        padding: 12px 12px 12px 0;
+                        display: inline-block;
+                    }
+
+                    input[type=submit] {
+                        background-color: #4CAF50;
+                        color: white;
+                        padding: 12px 20px;
                         border: none;
                         border-radius: 4px;
-                        background-color: #f1f1f1;
+                        cursor: pointer;
+                        float: right;
+                    }
+
+                    input[type=submit]:hover {
+                        background-color: #45a049;
+                    }
+
+                    .container {
+                        border-radius: 5px;
+                        background-color: #f2f2f2;
+                        padding: 20px;
+                    }
+
+                    .col-25 {
+                        float: left;
+                        width: 25%;
+                        margin-top: 6px;
+                    }
+
+                    .col-75 {
+                        float: left;
+                        width: 75%;
+                        margin-top: 6px;
+                    }
+
+                    /* Clear floats after the columns */
+                    .row:after {
+                        content: "";
+                        display: table;
+                        clear: both;
+                    }
+
+                    /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+                    @media screen and (max-width: 600px) {
+                        .col-25, .col-75, input[type=submit] {
+                            width: 100%;
+                            margin-top: 0;
+                        }
                     }
                 </style>
 
-                <div class="w3-row w3-red w3-center">
-                    <h3>Project</h3>
-                </div>
 
 
                 <div class="w3-row" >
 
 
+
+
                     <h:form >
 
 
-                        <div class="w3-third redgay" >
-                            <f:view>
-
-                                <h:panelGrid columns="2">
-                                    <h:outputLabel value="ProjectTitle:" for="projectTitle" />
-                                    <h:inputText id="projectTitle" value="#{webUserController.currentProject.projectTitle}" title="ProjectTitle" />
-
-
-                                    <h:outputLabel value="Sector:" for="sector" />
-                                    <h:selectOneMenu id="sector" value="#{webUserController.currentProject.sector}" >
-                                        <f:selectItem itemLabel="Select Sector" ></f:selectItem>
-                                        <f:selectItems value="#{itemController.sectors}" var="i" itemLabel="#{i.name}" itemValue="#{i}"/>
-                                    </h:selectOneMenu>
-
-                                    <h:outputLabel value="AllIsland:" for="allIsland" />
-                                    <h:selectBooleanCheckbox id="allIsland" value="#{webUserController.currentProject.allIsland}" title="AllIsland" />
-
-                                    <h:outputLabel value="Provinces" ></h:outputLabel>
-                                    <h:selectOneMenu value="#{webUserController.currentProject.province}" >
-                                        <f:selectItem itemLabel="Select Province" ></f:selectItem>
-                                        <f:selectItems value="#{areaController.provinces}" var="p" itemLabel="#{p.name}" itemValue="#{p}" ></f:selectItems>
-                                    </h:selectOneMenu>
-
-                                    <h:outputLabel value="Districts" ></h:outputLabel>
-                                    <h:selectOneMenu value="#{webUserController.currentProject.district}" >
-                                        <f:selectItem itemLabel="Select district" ></f:selectItem>
-                                        <f:selectItems value="#{areaController.rdhsAreas}" var="d" itemLabel="#{d.name}" itemValue="#{d}" ></f:selectItems>
-                                    </h:selectOneMenu>
-
-                                    <h:outputLabel value="File Number" for="fileNo" />
-                                    <h:inputText id="fileNo" value="#{webUserController.currentProject.fileNumber}" title="CurrentStageType" />
-
-                                    <h:outputLabel value="Project Description" for="pd" />
-                                    <h:inputTextarea rows="4" cols="30" id="pd" value="#{webUserController.currentProject.projectDescription}" title="Comments" />
-
-                                    <h:outputLabel value="Project Cost" for="cost" />
-                                    <h:inputText id="cost" value="#{webUserController.currentProject.projectCost}" title="Project Cost" />
-
-                                    <h:outputLabel value="Source of Funds" for="sof" />
-                                    <h:selectOneMenu id="sof" value="#{webUserController.currentProject.sourceOfFunds}"
-                                                     title="Source of Funds" >
-                                        <f:selectItem itemLabel="Select" ></f:selectItem>
-                                        <f:selectItems value="#{itemController.sourcesOfFunds}" 
-                                                       var="f" itemLabel="#{f.name}" 
-                                                       itemValue="#{f}" ></f:selectItems>
-                                    </h:selectOneMenu>
-
-                                    <h:outputLabel value="Proposal Date"  />
-                                    <p:calendar value="#{webUserController.currentProject.proposalDate}" pattern="dd MMMM yyyy" >
-                                    </p:calendar>
+                        <div class="w3-container w3-twothird w3-card" >
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-25">
+                                        <h:outputLabel value="Year" for="projectYear" />
+                                    </div>
+                                    <div class="col-75">
+                                        <h:inputText id="projectYear" value="#{webUserController.currentProject.projectYear}" title="Project Year" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-25">
+                                        <h:outputLabel value="Title" for="projectTitle" />
+                                    </div>
+                                    <div class="col-75">
+                                        <h:inputText id="projectTitle" value="#{webUserController.currentProject.projectTitle}" title="ProjectTitle" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-25">
+                                        <h:outputLabel value="File Number" for="fileNo" />
+                                    </div>
+                                    <div class="col-75">
+                                        <h:inputText id="fileNo" value="#{webUserController.currentProject.fileNumber}" title="CurrentStageType" />
+                                    </div>
+                                </div>
 
 
-                                </h:panelGrid>
+                                <div class="row">
+                                    <div class="col-25">
+                                        <h:outputLabel value="Provinces" ></h:outputLabel>
+                                    </div>
+                                    <div class="col-75">
+                                        <h:panelGroup >
+                                            <h:selectOneMenu 
+                                                value="#{webUserController.currentProject.province}" >
+                                                <f:selectItem itemLabel="Select Province" ></f:selectItem>
+                                                <f:selectItems value="#{areaController.provinces}" var="p" itemLabel="#{p.name}" itemValue="#{p}" ></f:selectItems>
+                                            </h:selectOneMenu>
+                                            <h:selectBooleanCheckbox id="allIsland" value="#{webUserController.currentProject.allIsland}" title="AllIsland" >All Island&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h:selectBooleanCheckbox>
+                                        </h:panelGroup>
+                                    </div>
+                                </div>
 
-                            </f:view>
+                                <div class="row">
+                                    <div class="col-25">
+                                        <h:outputLabel value="Districts" ></h:outputLabel>
+                                    </div>
+                                    <div class="col-75">
+                                        <h:selectOneMenu value="#{webUserController.currentProject.district}" >
+                                            <f:selectItem itemLabel="Select district" ></f:selectItem>
+                                            <f:selectItems value="#{areaController.rdhsAreas}" var="d" itemLabel="#{d.name}" itemValue="#{d}" ></f:selectItems>
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
 
+
+                                <div class="row">
+                                    <div class="col-25">
+                                        <label for="country">Location</label>
+                                    </div>
+                                    <div class="col-75">
+                                        <p:autoComplete value="#{webUserController.currentProject.projectLocation}"
+                                                        completeMethod="#{institutionController.completeInstitutions}"
+                                                        var="ins" forceSelection="true" 
+                                                        itemLabel="#{ins.name}" inputStyle="width:100%;" style="width: 100%;"
+                                                        itemValue="#{ins}"></p:autoComplete>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-25">
+                                        <h:outputLabel value="Project Description" for="pd"  />
+                                    </div>
+                                    <div class="col-75">
+                                        <h:inputTextarea  id="pd" 
+                                                          value="#{webUserController.currentProject.projectDescription}" 
+                                                          title="Project Description" 
+                                                          />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-25">
+                                        <h:outputLabel value="Project Cost" />
+                                    </div>
+                                    <div class="col-75">
+                                        <h:inputText value="#{webUserController.currentProject.projectCost}" 
+                                                     title="Project Description" style="width: 60%;"
+                                                     />
+                                        <p:spacer height="1" width="15" ></p:spacer>
+                                        <h:selectOneMenu style="width: 30%;" value="#{webUserController.currentProject.projectCostUnit}" >
+                                            <f:selectItems value="#{itemController.costUnits}" ></f:selectItems>
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-25">
+                                        <h:outputLabel value="Source of Funds" />
+                                    </div>
+                                    <div class="col-75">
+                                        <h:selectOneMenu value="#{webUserController.currentProject.sourceOfFunds}" >
+                                            <f:selectItem itemLabel="Select" ></f:selectItem>
+                                            <f:selectItems value="#{itemController.sourcesOfFunds}" ></f:selectItems>
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-25">
+                                        <h:outputLabel value="Proposal Date"  />
+                                    </div>
+                                    <div class="col-75">
+                                        <p:calendar value="#{webUserController.currentProject.proposalDate}" pattern="dd MMMM yyyy" >
+                                        </p:calendar>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-25">
+
+                                    </div>
+                                    <div class="col-75">
+                                        <div class="w3-col s4 ">
+                                            <h:selectBooleanCheckbox  value="#{webUserController.currentProject.engineersEstimateAvailable}" title="Engineer's Estimate" >Engineer's Estimate&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h:selectBooleanCheckbox>
+                                        </div>
+                                        <div class="w3-col s4 ">
+                                            <h:selectBooleanCheckbox  value="#{webUserController.currentProject.masterPlanAvailable}" title="Mater Plan" >Mater Plan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h:selectBooleanCheckbox>
+                                        </div>
+                                        <div class="w3-col s4 ">
+                                            <h:selectBooleanCheckbox  value="#{webUserController.currentProject.buildingPlanAvailable}" title="Building Plan" >Mater Plan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h:selectBooleanCheckbox>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="w3-twothired" >
-                            <h:panelGrid columns="1" >
+                        <div class="w3-container w3-third w3-card" style="text-align: center;" >
+                            <h:commandLink  action="#{webUserController.updateProject()}" 
+                                            class="w3-btn w3-amber w3-margin btn350"  >
+                                <div>
+                                    <i class='fas fa-save' style='float: left; font-size:24px;color:green;'></i>
+                                    <div style="float: right;">Save</div>
+                                </div>
+                            </h:commandLink> 
+                            <h:commandLink 
+                                class="w3-btn w3-amber w3-margin  btn350" 
+                                action="/upload_files_to_project_proposal" 
+                                >
+                                <div>
+                                    <i class='far fa-file' style='float: left; font-size:24px;color:green;'></i>
+                                    <div style="float: right;">File Uploads</div>
+                                </div>  
+                            </h:commandLink>
 
-                                <h:commandButton value="SAVE" action="#{webUserController.updateProject()}" class="w3-btn w3-yellow btn350" ></h:commandButton> 
+                            <h:commandLink action="#{webUserController.toPcpApproval()}" 
+                                           class="w3-btn w3-amber w3-margin  btn350" >
+                                <div>
+                                    <i class="fas far fa-thumbs-up" style='float: left; font-size:24px;color:yellow;'></i>
+                                    <div style="float: right;">To Approve at PCP</div>
+                                </div>
+                            </h:commandLink> 
+                            <h:commandLink action="#{webUserController.toPcpRejection()}" 
+                                           class="w3-btn w3-amber w3-margin  btn350" >
+                                <div>
+                                    <i class="fas far fa-thumbs-down" style='float: left; font-size:24px;color:yellow;'></i>
+                                    <div style="float: right;">To Reject at PCP</div>
+                                </div>
+                            </h:commandLink> 
 
-
-                                <h:commandButton value="To Approve at PCP" action="#{webUserController.toPcpApproval()}" class="w3-btn w3-yellow btn350" ></h:commandButton> 
-                                <h:commandButton value="To Reject at PCP" action="#{webUserController.toPcpRejection() }" class="w3-btn w3-yellow btn350" ></h:commandButton> 
-
-                                <h:commandButton value="File Uploads" class="w3-btn w3-yellow btn350"
-                                                 action="/upload_files_to_project_proposal" ></h:commandButton>
-
-
-
-
-                            </h:panelGrid>
+                            <h:commandLink action="#{webUserController.toPcpApproval()}" 
+                                           class="w3-btn w3-amber w3-margin  btn350 w3-disabled" >
+                                <div>
+                                    <i class="fas far fa-thumbs-up" style='float: left; font-size:24px;color:blueviolet ;'></i>
+                                    <div style="float: right;">To Approve at PEC</div>
+                                </div>
+                            </h:commandLink> 
+                            <h:commandLink action="#{webUserController.toPcpRejection()}" 
+                                           class="w3-btn w3-amber w3-margin  btn350" >
+                                <div>
+                                    <i class="fas far fa-thumbs-down" style='float: left; font-size:24px;color:blueviolet;'></i>
+                                    <div style="float: right;">To Reject at PEC</div>
+                                </div>
+                            </h:commandLink> 
                         </div>
-
-
-
-
                     </h:form>
-
                 </div>
 
+                <div class="row" style="height: 100px;">
+                </div>
 
 
             </ui:define>

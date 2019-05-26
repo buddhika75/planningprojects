@@ -20,7 +20,7 @@
                             <f:selectItems value="#{commonController.itemTypes}" ></f:selectItems>
                         </h:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{itemController.update}" value="Save" update="display,:ItemListForm:datalist" oncomplete="handleSubmit(args, 'ItemEditDialog');"/>
+                    <p:commandButton ajax="false" actionListener="#{itemController.update}" value="Save" update="display,:ItemListForm:datalist" oncomplete="handleSubmit(args, 'ItemEditDialog');"/>
                     <p:commandButton value="Cancel" onclick="ItemEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

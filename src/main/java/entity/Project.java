@@ -105,6 +105,12 @@ public class Project implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date createdAt;
 
+    
+    //Editor Properties
+    @ManyToOne
+    private WebUser lastEditor;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date lastEditAt;
 
     //Retairing properties
     private boolean retired;
@@ -419,6 +425,22 @@ public class Project implements Serializable {
 
     public void setRetireComments(String retireComments) {
         this.retireComments = retireComments;
+    }
+
+    public WebUser getLastEditor() {
+        return lastEditor;
+    }
+
+    public void setLastEditor(WebUser lastEditor) {
+        this.lastEditor = lastEditor;
+    }
+
+    public Date getLastEditAt() {
+        return lastEditAt;
+    }
+
+    public void setLastEditAt(Date lastEditAt) {
+        this.lastEditAt = lastEditAt;
     }
 
     

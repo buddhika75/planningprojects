@@ -98,10 +98,6 @@
 .material-icons.md-36 { font-size: 36px; }
 .material-icons.md-48 { font-size: 48px; }
 
-input[type=text] {
-  background-color: #3CBC8D;
-  color: white;
-}
 
 .footer {
    position: fixed;
@@ -111,4 +107,8 @@ input[type=text] {
    /*background-color: red;*/
    color: white;
    text-align: center;
+}
+
+.alignTop{
+    vertical-align: top;
 }

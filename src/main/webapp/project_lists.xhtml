@@ -67,7 +67,7 @@
 
                                         </td>
                                     </tr>
-                                    
+
                                     <tr>
                                         <td>
                                             <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsBidSelected()}" 
@@ -75,8 +75,8 @@
 
                                         </td>
                                     </tr>
-                                    
-                                    
+
+
                                     <tr>
                                         <td>
                                             <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsBidSelected()}" 
@@ -84,8 +84,8 @@
 
                                         </td>
                                     </tr>
-                                    
-                                    
+
+
                                     <tr>
                                         <td>
                                             <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsBidSelected()}" 
@@ -93,7 +93,7 @@
 
                                         </td>
                                     </tr>
-                                    
+
                                     <tr>
                                         <td>
                                             <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsBidSelected()}" 
@@ -101,8 +101,8 @@
 
                                         </td>
                                     </tr>
-                                    
-                                    
+
+
                                     <tr>
                                         <td>
                                             <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsBidSelected()}" 
@@ -110,17 +110,17 @@
 
                                         </td>
                                     </tr>
-                                    
-                                    
-                                     <tr>
+
+
+                                    <tr>
                                         <td>
                                             <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsBidSelected()}" 
                                                              value="List Projects awaiting Cabinet Approval" ></h:commandButton>
 
                                         </td>
                                     </tr>
-                                    
-                                    
+
+
                                     <tr>
                                         <td>
                                             <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsBidSelected()}" 
@@ -128,23 +128,34 @@
 
                                         </td>
                                     </tr>
-                                    
+
                                 </table>
 
-                                
+
 
                             </h:form>
                         </td>
                         <td style="vertical-align: top;">
                             <h:form >
-                                <p:dataTable class="w3-table-all w3-striped redTable" value="#{webUserController.listOfProjects}" var="p" rowKey="#{p.id}"
+                                <p:dataTable class="w3-table-all w3-striped redTable" value="#{webUserController.listOfProjects}" var="p" 
+                                             rowKey="#{p.id}"
+                                             rows="10"
+                                             paginator="true"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             rowsPerPageTemplate="10,20,25"
                                              >
-                                    <p:column headerText="Submitted Date" >
-                                        <h:outputLabel value="#{p.proposalDate}" >
+                                    
+                                    <p:column headerText="Year" style="width: 70px;" >
+                                        <h:outputLabel value="#{p.projectYear}" >
+                                        </h:outputLabel>
+                                    </p:column>
+                                    
+                                     <p:column headerText="Title" >
+                                         <h:outputLabel value="#{p.projectTitle}" >
                                             <f:convertDateTime pattern="MMM/dd/yyyy" ></f:convertDateTime>
                                         </h:outputLabel>
                                     </p:column>
-                                    <p:column headerText="FIle No" >
+                                    <p:column headerText="File No" >
                                         <h:outputLabel value="#{p.fileNumber }" >
                                         </h:outputLabel>
                                     </p:column>
@@ -152,11 +163,16 @@
                                         <h:outputLabel value="#{p.projectCost}" >
                                         </h:outputLabel>
                                     </p:column>
-                                    <p:column headerText="Description" >
-                                        <h:outputLabel value="#{p.projectDescription}" >
+                                    <p:column headerText="Province" >
+                                        <h:outputLabel value="#{p.province}" >
                                         </h:outputLabel>
                                     </p:column>
-                                    
+                                    <p:column headerText="Submitted Date" >
+                                        <h:outputLabel value="#{p.proposalDate}" >
+                                            <f:convertDateTime pattern="MMM/dd/yyyy" ></f:convertDateTime>
+                                        </h:outputLabel>
+                                    </p:column>
+
                                     <p:column headerText="Actions" >
                                         <p:commandButton class="w3-btn w3-teal" value="Manage" ajax="false" action="#{webUserController.viewProject()}" >
                                             <f:setPropertyActionListener value="#{p}" target="#{webUserController.currentProject}" ></f:setPropertyActionListener>
@@ -172,7 +188,9 @@
 
 
 
+                <div style="height: 100px;" >
 
+                </div>
 
 
 

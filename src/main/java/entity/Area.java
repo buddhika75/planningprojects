@@ -69,7 +69,7 @@ public class Area implements Serializable {
 
     @Override
     public String toString() {
-        return "Area[ id=" + id + " ]";
+        return name;
     }
 
     public AreaType getType() {

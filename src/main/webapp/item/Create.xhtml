@@ -21,7 +21,7 @@
                             <f:selectItems value="#{commonController.itemTypes}" ></f:selectItems>
                         </h:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{itemController.create}" value="Save" update="display,:ItemListForm:datalist" oncomplete="handleSubmit(args,'ItemCreateDialog');"/>
+                    <p:commandButton ajax="false" actionListener="#{itemController.create}" value="Save" update="display,:ItemListForm:datalist" oncomplete="handleSubmit(args,'ItemCreateDialog');"/>
                     <p:commandButton value="Cancel" onclick="ItemCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

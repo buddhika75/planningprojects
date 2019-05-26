@@ -14,6 +14,9 @@
         <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet"></link>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
               rel="stylesheet"></link>
+        <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' 
+              integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' 
+              crossorigin='anonymous'></link>
         <h:outputStylesheet library="css" name="tem1.css"/>
         <title>Management Development and Planning Unit</title>
         <h:outputStylesheet library="css" name="tem1.css" ></h:outputStylesheet>
@@ -66,7 +69,9 @@
                     </li>
                     <h:panelGroup rendered="#{webUserController.loggedUser.systemAdministrator}" >
                         <li>
-                            <h:commandLink value="VIEW PROJECTS" action="#{webUserController.listAllProjects}"></h:commandLink>
+                            <ui:insert name="viewProjects">
+                                <h:commandLink value="VIEW PROJECTS" action="#{webUserController.listAllProjects}"></h:commandLink>
+                            </ui:insert>
                         </li>
                         <li>
                             <h:commandLink  value="SYSTEM MANAGEMENT" action="/system_management"></h:commandLink>
@@ -79,9 +84,13 @@
                         </li>
                     </h:panelGroup>
                     <h:panelGroup rendered="#{webUserController.loggedUser.user}" >
-                        <li>
-                            <h:commandLink value="ADD PROJECT" action="#{webUserController.addNewProject()}"></h:commandLink>
-                        </li>
+
+                        <ui:insert name="addProject">
+                            <li>
+                                <h:commandLink value="ADD PROJECT" action="#{webUserController.addNewProject()}"></h:commandLink>
+                            </li>
+                        </ui:insert>
+
                         <li>
                             <h:commandLink value="VIEW PROJECTS" action="#{webUserController.listAllProjects}"></h:commandLink>
                         </li>

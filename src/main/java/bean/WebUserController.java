@@ -303,17 +303,16 @@ public class WebUserController implements Serializable {
         return "/project_lists";
     }
 
-    
     public String listPcpApprovedProjects() {
         listOfProjects = listProjects(ProjectStageType.PCP_Approved);
         return "/project_lists";
     }
-    
-     public String listPcpRejectedProjects() {
+
+    public String listPcpRejectedProjects() {
         listOfProjects = listProjects(ProjectStageType.PCP_Rejected);
         return "/project_lists";
     }
-    
+
     public String listProjectsAwaitingBidding() {
         listOfProjects = listProjects(ProjectStageType.Awaiting_ANP_Approval);
         return "/project_lists";
@@ -472,7 +471,6 @@ public class WebUserController implements Serializable {
         currentProject.setProjectYear(c.get(Calendar.YEAR));
         currentProject.setCreater(current);
         currentProject.setCreatedAt(new Date());
-        getProjectFacade().create(currentProject);
         return "/project";
     }
 
@@ -481,24 +479,34 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to update");
             return;
         }
-        currentProject.setCurrentStageType(ProjectStageType.Processing);
-        getProjectFacade().edit(currentProject);
-        JsfUtil.addSuccessMessage("Updated");
+        if (currentProject.getId() == null) {
+            currentProject.setCurrentStageType(ProjectStageType.Processing);
+            getProjectFacade().create(currentProject);
+            JsfUtil.addSuccessMessage("Saved");
+        } else {
+            currentProject.setLastEditAt(new Date());
+            currentProject.setLastEditor(loggedUser);
+            getProjectFacade().edit(currentProject);
+            JsfUtil.addSuccessMessage("Updated");
+        }
+
     }
-    
-    
+
     public String toPcpApproval() {
         if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
         currentProject.setCurrentStageType(ProjectStageType.Processing);
+        if(currentProject.getPcpFirstReceivedDate()==null){
+            currentProject.setPcpFirstReceivedDate(new Date());
+        }else{
+            currentProject.setPcpLastReceivedDate(new Date());
+        }
         getProjectFacade().edit(currentProject);
         return "/pcp_approval";
     }
-    
-    
-    
+
     public String toPcpRejection() {
         if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing to update");
@@ -508,7 +516,7 @@ public class WebUserController implements Serializable {
         getProjectFacade().edit(currentProject);
         return "/pcp_approval_reject";
     }
-    
+
     public String rejectPcpApproval() {
         if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing to update");
@@ -518,7 +526,6 @@ public class WebUserController implements Serializable {
         getProjectFacade().edit(currentProject);
         return listPcpRejectedProjects();
     }
-    
 
     public void finalizeProposal() {
         if (currentProject == null) {
