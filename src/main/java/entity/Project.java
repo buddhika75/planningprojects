@@ -30,9 +30,13 @@ public class Project implements Serializable {
     private Item sector;
     private Boolean allIsland;
     
+    @ManyToOne
     private Area province;
+    @ManyToOne
     private Area district;
+    @ManyToOne
     private Area dsArea;
+    @ManyToOne
     private Area gnArea;
     
     
