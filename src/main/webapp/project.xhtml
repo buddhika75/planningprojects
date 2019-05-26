@@ -63,7 +63,6 @@
 
                     .container {
                         border-radius: 5px;
-                        background-color: #f2f2f2;
                         padding: 20px;
                     }
 
@@ -105,8 +104,18 @@
                     <h:form >
 
 
-                        <div class="w3-container w3-twothird " >
+                        <div class="w3-container w3-twothird" >
                             <div class="container">
+                                
+                                <div class="row">
+                                    <div class="col-25">
+                                        <h:outputLabel value="Stage" for="projectStage" />
+                                    </div>
+                                    <div class="col-75">
+                                        <h:outputLabel id="projectStage" value="#{webUserController.currentProject.currentStageType}"  />
+                                    </div>
+                                </div>
+                                
                                 <div class="row">
                                     <div class="col-25">
                                         <h:outputLabel value="Year" for="projectYear" />
@@ -227,6 +236,26 @@
 
                                 <div class="row">
                                     <div class="col-25">
+                                        <h:outputLabel value="PCP First Received Date"  />
+                                    </div>
+                                    <div class="col-75">
+                                        <p:calendar value="#{webUserController.currentProject.pcpFirstReceivedDate}" pattern="dd MMMM yyyy" >
+                                        </p:calendar>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-25">
+                                        <h:outputLabel value="PCP Last Received Date"  />
+                                    </div>
+                                    <div class="col-75">
+                                        <p:calendar value="#{webUserController.currentProject.pcpLastReceivedDate}" pattern="dd MMMM yyyy" >
+                                        </p:calendar>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-25">
 
                                     </div>
                                     <div class="col-75">
@@ -262,33 +291,54 @@
                                 </div>  
                             </h:commandLink>
 
-                            <h:commandLink action="#{webUserController.toPcpApproval()}" 
+                            <h:commandLink action="#{webUserController.toPecApproval()}" 
                                            class="w3-btn w3-amber w3-margin  btn350" >
                                 <div>
                                     <i class="fas far fa-thumbs-up" style='float: left; font-size:24px;color:yellow;'></i>
-                                    <div style="float: right;">To Approve at PCP</div>
-                                </div>
-                            </h:commandLink> 
-                            <h:commandLink action="#{webUserController.toPcpRejection()}" 
-                                           class="w3-btn w3-amber w3-margin  btn350" >
-                                <div>
-                                    <i class="fas far fa-thumbs-down" style='float: left; font-size:24px;color:yellow;'></i>
-                                    <div style="float: right;">To Reject at PCP</div>
-                                </div>
-                            </h:commandLink> 
-
-                            <h:commandLink action="#{webUserController.toPcpApproval()}" 
-                                           class="w3-btn w3-amber w3-margin  btn350 w3-disabled" >
-                                <div>
-                                    <i class="fas far fa-thumbs-up" style='float: left; font-size:24px;color:blueviolet ;'></i>
                                     <div style="float: right;">To Approve at PEC</div>
                                 </div>
                             </h:commandLink> 
-                            <h:commandLink action="#{webUserController.toPcpRejection()}" 
+                            <h:commandLink action="#{webUserController.toPecRejection()}" 
+                                           class="w3-btn w3-amber w3-margin  btn350" >
+                                <div>
+                                    <i class="fas far fa-thumbs-down" style='float: left; font-size:24px;color:yellow;'></i>
+                                    <div style="float: right;">To Reject at PEC</div>
+                                </div>
+                            </h:commandLink> 
+
+                            <h:commandLink action="#{webUserController.toDnpSubmission()}" 
+                                           class="w3-btn w3-amber w3-margin  btn350 " >
+                                <div>
+                                    <i class="fa fa-arrow-right" style='float: left; font-size:24px;color:blueviolet ;'></i>
+                                    <div style="float: right;">To DNP Submission</div>
+                                </div>
+                            </h:commandLink> 
+                            <h:commandLink action="#{webUserController.toDnpApproval()}" 
                                            class="w3-btn w3-amber w3-margin  btn350" >
                                 <div>
                                     <i class="fas far fa-thumbs-down" style='float: left; font-size:24px;color:blueviolet;'></i>
-                                    <div style="float: right;">To Reject at PEC</div>
+                                    <div style="float: right;">To Approve at DNP</div>
+                                </div>
+                            </h:commandLink> 
+                            <h:commandLink action="#{webUserController.toDnpRejection()}" 
+                                           class="w3-btn w3-amber w3-margin  btn350" >
+                                <div>
+                                    <i class="fas far fa-thumbs-down" style='float: left; font-size:24px;color:blueviolet;'></i>
+                                    <div style="float: right;">To Reject at DNP</div>
+                                </div>
+                            </h:commandLink> 
+                             <h:commandLink action="#{webUserController.toCabinetSubmission()}" 
+                                           class="w3-btn w3-amber w3-margin  btn350" >
+                                <div>
+                                    <i class="fa fa-arrow-right" style='float: left; font-size:24px;color:blueviolet ;'></i>
+                                    <div style="float: right;">To Cabinet Submission</div>
+                                </div>
+                            </h:commandLink> 
+                            <h:commandLink action="#{webUserController.toCabinetApproval()}" 
+                                           class="w3-btn w3-amber w3-margin  btn350" >
+                                <div>
+                                    <i class="fas far fa-thumbs-down" style='float: left; font-size:24px;color:blueviolet;'></i>
+                                    <div style="float: right;">To Approve at Cabinet</div>
                                 </div>
                             </h:commandLink> 
                         </div>

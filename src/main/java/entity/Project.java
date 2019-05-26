@@ -70,13 +70,29 @@ public class Project implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date pcpLastSendToNdpDate;
 
-    private Boolean ndbApproved;
-
+    private Boolean pecApproved;
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date ndpApprovedDate;
+    private Date pecApprovedDate;
 
-    @Lob
-    private String ndbRemarks;
+    private Boolean pecRejected;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date pecRejectedDate;
+
+    private Boolean dnpSubmitted;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dnpSubmittedDate;
+
+    private Boolean dnpApproved;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dnpApprovedDate;
+
+    private Boolean dnpRejected;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dnpRejectedDate;
+
+    private Boolean cabinetSubmitted;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date cabinetSubmittedDate;
 
     private Boolean cabinetApproved;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -114,33 +130,6 @@ public class Project implements Serializable {
     @Lob
     private String retireComments;
 
-    
-    //PCP Approval
-    @ManyToOne
-    private WebUser pcpApprovedUser;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date pcpApprovedAt;
-    @Lob
-    private String pcpApprovalRecommendation;
-
-    //PCP Rejection
-    @ManyToOne
-    private WebUser pcpRejectedUser;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date pcpRejectedAt;
-    @Lob
-    private String pcpRejectRecommendation;
-    
-    
-    
-    //Sento to PEC
-    @ManyToOne
-    private WebUser sentToPec;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date sentToPecAt;
-    @Lob
-    private String sentToPecRecommendation;
-    
     //PCE Approval
     @ManyToOne
     private WebUser pecApprovedUser;
@@ -156,38 +145,38 @@ public class Project implements Serializable {
     private Date pecRejectedAt;
     @Lob
     private String pecRejectRecommendation;
-    
-    //Sento to NDP
-    @ManyToOne
-    private WebUser sentToNdp;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date sentToNdpAt;
-    @Lob
-    private String sentToNdpRecommendation;
 
-    //NDP Approval
+    //Sento to DNP
     @ManyToOne
-    private WebUser ndpApprovedUser;
+    private WebUser dnpSubmissionUser;
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date ndpApprovedAt;
+    private Date dnpSubmissionAt;
     @Lob
-    private String ndpApprovalRecommendation;
+    private String dnpSubmissionRecommendation;
 
-    //NDP Rejection
+    //DNP Approval
     @ManyToOne
-    private WebUser ndpRejectedUser;
+    private WebUser dnpApprovedUser;
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date ndpRejectedAt;
+    private Date dnpApprovedAt;
     @Lob
-    private String ndpRejectRecommendation;
-    
+    private String dnpApprovalRecommendation;
+
+    //DNP Rejection
+    @ManyToOne
+    private WebUser dnpRejectedUser;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dnpRejectedAt;
+    @Lob
+    private String dnpRejectRecommendation;
+
     //Sento to Cabinet
     @ManyToOne
-    private WebUser sentToCabinet;
+    private WebUser cabinetSubmissionUser;
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date sentToCabinetAt;
+    private Date cabinetSubmissionAt;
     @Lob
-    private String sentToCabinetRecommendation;
+    private String cabinetSubmissionRecommendation;
 
     //Cabinet Approval
     @ManyToOne
@@ -196,7 +185,6 @@ public class Project implements Serializable {
     private Date cabinetApprovedAt;
     @Lob
     private String cabinetApprovalRecommendation;
-
 
     @Override
     public int hashCode() {
@@ -303,28 +291,20 @@ public class Project implements Serializable {
         this.pcpLastSendToNdpDate = pcpLastSendToNdpDate;
     }
 
-    public Boolean getNdbApproved() {
-        return ndbApproved;
+    public Boolean getDnpApproved() {
+        return dnpApproved;
     }
 
-    public void setNdbApproved(Boolean ndbApproved) {
-        this.ndbApproved = ndbApproved;
+    public void setDnpApproved(Boolean dnpApproved) {
+        this.dnpApproved = dnpApproved;
     }
 
-    public Date getNdpApprovedDate() {
-        return ndpApprovedDate;
+    public Date getDnpApprovedDate() {
+        return dnpApprovedDate;
     }
 
-    public void setNdpApprovedDate(Date ndpApprovedDate) {
-        this.ndpApprovedDate = ndpApprovedDate;
-    }
-
-    public String getNdbRemarks() {
-        return ndbRemarks;
-    }
-
-    public void setNdbRemarks(String ndbRemarks) {
-        this.ndbRemarks = ndbRemarks;
+    public void setDnpApprovedDate(Date dnpApprovedDate) {
+        this.dnpApprovedDate = dnpApprovedDate;
     }
 
     public Boolean getCabinetApproved() {
@@ -519,85 +499,11 @@ public class Project implements Serializable {
         this.lastEditAt = lastEditAt;
     }
 
-    public WebUser getPcpApprovedUser() {
-        return pcpApprovedUser;
-    }
-
-    public void setPcpApprovedUser(WebUser pcpApprovedUser) {
-        this.pcpApprovedUser = pcpApprovedUser;
-    }
-
-    public Date getPcpApprovedAt() {
-        return pcpApprovedAt;
-    }
-
-    public void setPcpApprovedAt(Date pcpApprovedAt) {
-        this.pcpApprovedAt = pcpApprovedAt;
-    }
-
-    public String getPcpApprovalRecommendation() {
-        return pcpApprovalRecommendation;
-    }
-
-    public void setPcpApprovalRecommendation(String pcpApprovalRecommendation) {
-        this.pcpApprovalRecommendation = pcpApprovalRecommendation;
-    }
-
-    public WebUser getPcpRejectedUser() {
-        return pcpRejectedUser;
-    }
-
-    public void setPcpRejectedUser(WebUser pcpRejectedUser) {
-        this.pcpRejectedUser = pcpRejectedUser;
-    }
-
-    public Date getPcpRejectedAt() {
-        return pcpRejectedAt;
-    }
-
-    public void setPcpRejectedAt(Date pcpRejectedAt) {
-        this.pcpRejectedAt = pcpRejectedAt;
-    }
-
-    public String getPcpRejectRecommendation() {
-        return pcpRejectRecommendation;
-    }
-
-    public void setPcpRejectRecommendation(String pcpRejectRecommendation) {
-        this.pcpRejectRecommendation = pcpRejectRecommendation;
-    }
-
-    public WebUser getSentToPec() {
-        return sentToPec;
-    }
-
-    public void setSentToPec(WebUser sentToPec) {
-        this.sentToPec = sentToPec;
-    }
-
-    public Date getSentToPecAt() {
-        return sentToPecAt;
-    }
-
-    public void setSentToPecAt(Date sentToPecAt) {
-        this.sentToPecAt = sentToPecAt;
-    }
-
-    public String getSentToPecRecommendation() {
-        return sentToPecRecommendation;
-    }
-
-    public void setSentToPecRecommendation(String sentToPecRecommendation) {
-        this.sentToPecRecommendation = sentToPecRecommendation;
-    }
-
-    public WebUser getPecApprovedUser() {
-        return pecApprovedUser;
-    }
-
     public void setPecApprovedUser(WebUser pecApprovedUser) {
         this.pecApprovedUser = pecApprovedUser;
     }
+    
+    
 
     public Date getPecApprovedAt() {
         return pecApprovedAt;
@@ -639,100 +545,100 @@ public class Project implements Serializable {
         this.pecRejectRecommendation = pecRejectRecommendation;
     }
 
-    public WebUser getSentToNdp() {
-        return sentToNdp;
+    public WebUser getDnpSubmissionUser() {
+        return dnpSubmissionUser;
     }
 
-    public void setSentToNdp(WebUser sentToNdp) {
-        this.sentToNdp = sentToNdp;
+    public void setDnpSubmissionUser(WebUser dnpSubmissionUser) {
+        this.dnpSubmissionUser = dnpSubmissionUser;
     }
 
-    public Date getSentToNdpAt() {
-        return sentToNdpAt;
+    public Date getDnpSubmissionAt() {
+        return dnpSubmissionAt;
     }
 
-    public void setSentToNdpAt(Date sentToNdpAt) {
-        this.sentToNdpAt = sentToNdpAt;
+    public void setDnpSubmissionAt(Date dnpSubmissionAt) {
+        this.dnpSubmissionAt = dnpSubmissionAt;
     }
 
-    public String getSentToNdpRecommendation() {
-        return sentToNdpRecommendation;
+    public String getDnpSubmissionRecommendation() {
+        return dnpSubmissionRecommendation;
     }
 
-    public void setSentToNdpRecommendation(String sentToNdpRecommendation) {
-        this.sentToNdpRecommendation = sentToNdpRecommendation;
+    public void setDnpSubmissionRecommendation(String dnpSubmissionRecommendation) {
+        this.dnpSubmissionRecommendation = dnpSubmissionRecommendation;
     }
 
-    public WebUser getNdpApprovedUser() {
-        return ndpApprovedUser;
+    public WebUser getDnpApprovedUser() {
+        return dnpApprovedUser;
     }
 
-    public void setNdpApprovedUser(WebUser ndpApprovedUser) {
-        this.ndpApprovedUser = ndpApprovedUser;
+    public void setDnpApprovedUser(WebUser dnpApprovedUser) {
+        this.dnpApprovedUser = dnpApprovedUser;
     }
 
-    public Date getNdpApprovedAt() {
-        return ndpApprovedAt;
+    public Date getDnpApprovedAt() {
+        return dnpApprovedAt;
     }
 
-    public void setNdpApprovedAt(Date ndpApprovedAt) {
-        this.ndpApprovedAt = ndpApprovedAt;
+    public void setDnpApprovedAt(Date dnpApprovedAt) {
+        this.dnpApprovedAt = dnpApprovedAt;
     }
 
-    public String getNdpApprovalRecommendation() {
-        return ndpApprovalRecommendation;
+    public String getDnpApprovalRecommendation() {
+        return dnpApprovalRecommendation;
     }
 
-    public void setNdpApprovalRecommendation(String ndpApprovalRecommendation) {
-        this.ndpApprovalRecommendation = ndpApprovalRecommendation;
+    public void setDnpApprovalRecommendation(String dnpApprovalRecommendation) {
+        this.dnpApprovalRecommendation = dnpApprovalRecommendation;
     }
 
-    public WebUser getNdpRejectedUser() {
-        return ndpRejectedUser;
+    public WebUser getDnpRejectedUser() {
+        return dnpRejectedUser;
     }
 
-    public void setNdpRejectedUser(WebUser ndpRejectedUser) {
-        this.ndpRejectedUser = ndpRejectedUser;
+    public void setDnpRejectedUser(WebUser dnpRejectedUser) {
+        this.dnpRejectedUser = dnpRejectedUser;
     }
 
-    public Date getNdpRejectedAt() {
-        return ndpRejectedAt;
+    public Date getDnpRejectedAt() {
+        return dnpRejectedAt;
     }
 
-    public void setNdpRejectedAt(Date ndpRejectedAt) {
-        this.ndpRejectedAt = ndpRejectedAt;
+    public void setDnpRejectedAt(Date dnpRejectedAt) {
+        this.dnpRejectedAt = dnpRejectedAt;
     }
 
-    public String getNdpRejectRecommendation() {
-        return ndpRejectRecommendation;
+    public String getDnpRejectRecommendation() {
+        return dnpRejectRecommendation;
     }
 
-    public void setNdpRejectRecommendation(String ndpRejectRecommendation) {
-        this.ndpRejectRecommendation = ndpRejectRecommendation;
+    public void setDnpRejectRecommendation(String dnpRejectRecommendation) {
+        this.dnpRejectRecommendation = dnpRejectRecommendation;
     }
 
-    public WebUser getSentToCabinet() {
-        return sentToCabinet;
+    public WebUser getCabinetSubmissionUser() {
+        return cabinetSubmissionUser;
     }
 
-    public void setSentToCabinet(WebUser sentToCabinet) {
-        this.sentToCabinet = sentToCabinet;
+    public void setCabinetSubmissionUser(WebUser cabinetSubmissionUser) {
+        this.cabinetSubmissionUser = cabinetSubmissionUser;
     }
 
-    public Date getSentToCabinetAt() {
-        return sentToCabinetAt;
+    public Date getCabinetSubmissionAt() {
+        return cabinetSubmissionAt;
     }
 
-    public void setSentToCabinetAt(Date sentToCabinetAt) {
-        this.sentToCabinetAt = sentToCabinetAt;
+    public void setCabinetSubmissionAt(Date cabinetSubmissionAt) {
+        this.cabinetSubmissionAt = cabinetSubmissionAt;
     }
 
-    public String getSentToCabinetRecommendation() {
-        return sentToCabinetRecommendation;
+    public String getCabinetSubmissionRecommendation() {
+        return cabinetSubmissionRecommendation;
     }
 
-    public void setSentToCabinetRecommendation(String sentToCabinetRecommendation) {
-        this.sentToCabinetRecommendation = sentToCabinetRecommendation;
+    public void setCabinetSubmissionRecommendation(String cabinetSubmissionRecommendation) {
+        this.cabinetSubmissionRecommendation = cabinetSubmissionRecommendation;
     }
 
     public WebUser getCabinetApprovedUser() {
@@ -758,7 +664,91 @@ public class Project implements Serializable {
     public void setCabinetApprovalRecommendation(String cabinetApprovalRecommendation) {
         this.cabinetApprovalRecommendation = cabinetApprovalRecommendation;
     }
-    
-    
 
+    public Boolean getPecApproved() {
+        return pecApproved;
+    }
+
+    public void setPecApproved(Boolean pecApproved) {
+        this.pecApproved = pecApproved;
+    }
+
+    public Date getPecApprovedDate() {
+        return pecApprovedDate;
+    }
+
+    public void setPecApprovedDate(Date pecApprovedDate) {
+        this.pecApprovedDate = pecApprovedDate;
+    }
+
+    public Boolean getPecRejected() {
+        return pecRejected;
+    }
+
+    public void setPecRejected(Boolean pecRejected) {
+        this.pecRejected = pecRejected;
+    }
+
+    public Date getPecRejectedDate() {
+        return pecRejectedDate;
+    }
+
+    public void setPecRejectedDate(Date pecRejectedDate) {
+        this.pecRejectedDate = pecRejectedDate;
+    }
+
+    public Boolean getDnpRejected() {
+        return dnpRejected;
+    }
+
+    public void setDnpRejected(Boolean dnpRejected) {
+        this.dnpRejected = dnpRejected;
+    }
+
+    public Date getDnpRejectedDate() {
+        return dnpRejectedDate;
+    }
+
+    public void setDnpRejectedDate(Date dnpRejectedDate) {
+        this.dnpRejectedDate = dnpRejectedDate;
+    }
+
+    public Boolean getDnpSubmitted() {
+        return dnpSubmitted;
+    }
+
+    public void setDnpSubmitted(Boolean dnpSubmitted) {
+        this.dnpSubmitted = dnpSubmitted;
+    }
+
+    public Date getDnpSubmittedDate() {
+        return dnpSubmittedDate;
+    }
+
+    public void setDnpSubmittedDate(Date dnpSubmittedDate) {
+        this.dnpSubmittedDate = dnpSubmittedDate;
+    }
+
+    public WebUser getPecApprovedUser() {
+        return pecApprovedUser;
+    }
+
+    public Boolean getCabinetSubmitted() {
+        return cabinetSubmitted;
+    }
+
+    public void setCabinetSubmitted(Boolean cabinetSubmitted) {
+        this.cabinetSubmitted = cabinetSubmitted;
+    }
+
+    public Date getCabinetSubmittedDate() {
+        return cabinetSubmittedDate;
+    }
+
+    public void setCabinetSubmittedDate(Date cabinetSubmittedDate) {
+        this.cabinetSubmittedDate = cabinetSubmittedDate;
+    }
+
+    
+    
 }

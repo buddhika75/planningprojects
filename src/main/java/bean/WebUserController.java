@@ -289,7 +289,7 @@ public class WebUserController implements Serializable {
     }
 
     public void listProjectsToSubmitBids(Institution provider) {
-        List<Project> ps = listProjects(ProjectStageType.Awaiting_NDP_Approval);
+        List<Project> ps = listProjects(ProjectStageType.Awaiting_DNP_Approval);
         listOfProjects = new ArrayList<>();
     }
 
@@ -303,23 +303,13 @@ public class WebUserController implements Serializable {
         return "/project_lists";
     }
 
-    public String listPcpApprovedProjects() {
-        listOfProjects = listProjects(ProjectStageType.PCP_Approved);
-        return "/project_lists";
-    }
-
-    public String listPcpRejectedProjects() {
-        listOfProjects = listProjects(ProjectStageType.PCP_Rejected);
-        return "/project_lists";
-    }
-
     public String listProjectsAwaitingBidding() {
-        listOfProjects = listProjects(ProjectStageType.Awaiting_NDP_Approval);
+        listOfProjects = listProjects(ProjectStageType.Awaiting_DNP_Approval);
         return "/project_lists";
     }
 
     public String listProjectsAwaitingBidSelection() {
-        listOfProjects = listProjects(ProjectStageType.NDP_Approved);
+        listOfProjects = listProjects(ProjectStageType.DNP_Approved);
         return "/project_lists";
     }
 
@@ -469,8 +459,9 @@ public class WebUserController implements Serializable {
         currentProject.setProjectTitle("");
         Calendar c = Calendar.getInstance();
         currentProject.setProjectYear(c.get(Calendar.YEAR));
-        currentProject.setCreater(current);
+        currentProject.setCreater(loggedUser);
         currentProject.setCreatedAt(new Date());
+        currentProject.setCurrentStageType(ProjectStageType.Awaiting_PEC_Approval);
         return "/project";
     }
 
@@ -480,7 +471,9 @@ public class WebUserController implements Serializable {
             return;
         }
         if (currentProject.getId() == null) {
-            currentProject.setCurrentStageType(ProjectStageType.Awaiting_PCP_Approval);
+            currentProject.setCurrentStageType(ProjectStageType.Awaiting_PEC_Approval);
+            currentProject.setCreatedAt(new Date());
+            currentProject.setCreater(loggedUser);
             getProjectFacade().create(currentProject);
             JsfUtil.addSuccessMessage("Saved");
         } else {
@@ -491,63 +484,29 @@ public class WebUserController implements Serializable {
         }
 
     }
-    
-    
+
     /**
-     * 
-     * 
-     * 
-     * 
-     * 
-     *  Navigating to Mark
-     * 
-     * 
-     * 
-     * 
-     * 
-     * 
+     *
+     *
+     *
+     *
+     *
+     * Navigating to Mark
+     *
+     *
+     *
+     *
+     *
+     *
      */
-
-    public String toPcpApproval() {
-        if (currentProject == null) {
-            JsfUtil.addErrorMessage("Nothing to update");
-            return "";
-        }
-        currentProject.setCurrentStageType(ProjectStageType.Awaiting_PCP_Approval);
-        currentProject.setPcpApprovedAt(new Date());
-        if (currentProject.getPcpFirstReceivedDate() == null) {
-            currentProject.setPcpFirstReceivedDate(new Date());
-        } else {
-            currentProject.setPcpLastReceivedDate(new Date());
-        }
-        getProjectFacade().edit(currentProject);
-        return "/pcp_approval";
-    }
-
-    public String toPcpRejection() {
-        if (currentProject == null) {
-            JsfUtil.addErrorMessage("Nothing to update");
-            return "";
-        }
-        currentProject.setCurrentStageType(ProjectStageType.PCP_Rejected);
-        getProjectFacade().edit(currentProject);
-        return "/pcp_approval_reject";
-    }
-    
     public String toPecApproval() {
         if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
-        currentProject.setCurrentStageType(ProjectStageType.Awaiting_PCP_Approval);
-        currentProject.setPcpApprovedAt(new Date());
-        if (currentProject.getPcpFirstReceivedDate() == null) {
-            currentProject.setPcpFirstReceivedDate(new Date());
-        } else {
-            currentProject.setPcpLastReceivedDate(new Date());
-        }
+        currentProject.setPecApprovedDate(new Date());
         getProjectFacade().edit(currentProject);
-        return "/pcp_approval";
+        return "/pec_approval";
     }
 
     public String toPecRejection() {
@@ -555,25 +514,29 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
-        currentProject.setCurrentStageType(ProjectStageType.PCP_Rejected);
+        currentProject.setPecRejectedDate(new Date());
         getProjectFacade().edit(currentProject);
-        return "/pcp_approval_reject";
+        return "/pec_rejection";
     }
-    
+
+    public String toDnpSubmission() {
+        if (currentProject == null) {
+            JsfUtil.addErrorMessage("Nothing to update");
+            return "";
+        }
+        currentProject.setDnpSubmittedDate(new Date());
+        getProjectFacade().edit(currentProject);
+        return "/dnp_submission";
+    }
+
     public String toDnpApproval() {
         if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
-        currentProject.setCurrentStageType(ProjectStageType.Awaiting_PCP_Approval);
-        currentProject.setPcpApprovedAt(new Date());
-        if (currentProject.getPcpFirstReceivedDate() == null) {
-            currentProject.setPcpFirstReceivedDate(new Date());
-        } else {
-            currentProject.setPcpLastReceivedDate(new Date());
-        }
+        currentProject.setDnpApprovedDate(new Date());
         getProjectFacade().edit(currentProject);
-        return "/pcp_approval";
+        return "/dnp_approval";
     }
 
     public String toDnpRejection() {
@@ -581,127 +544,148 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
-        currentProject.setCurrentStageType(ProjectStageType.PCP_Rejected);
+        currentProject.setDnpRejectedDate(new Date());
         getProjectFacade().edit(currentProject);
-        return "/pcp_approval_reject";
+        return "/dnp_rejection";
+    }
+
+    public String toCabinetSubmission() {
+        if (currentProject == null) {
+            JsfUtil.addErrorMessage("Nothing to update");
+            return "";
+        }
+        currentProject.setCabinetSubmittedDate(new Date());
+        getProjectFacade().edit(currentProject);
+        return "/cabinet_submission";
+    }
+
+    public String toCabinetApproval() {
+        if (currentProject == null) {
+            JsfUtil.addErrorMessage("Nothing to update");
+            return "";
+        }
+        currentProject.setCabinetApprovalDate(new Date());
+        getProjectFacade().edit(currentProject);
+        return "/cabinet_approval";
     }
 
     /**
-     * 
-     * 
-     * 
-     * 
-     * 
-     *  Marking
-     * 
-     * 
-     * 
-     * 
-     * 
-     * 
+     *
+     *
+     *
+     *
+     *
+     * Marking
+     *
+     *
+     *
+     *
+     *
+     *
      */
-    
-    public void markAsPcpApproved() {
-        if (currentProject == null) {
-            JsfUtil.addErrorMessage("Nothing selected");
-            return;
-        }
-        getCurrentProject().setCurrentStageType(ProjectStageType.PCP_Approved);
-        getCurrentProject().setPecApprovedUser(loggedUser);
-        getProjectFacade().edit(currentProject);
-        JsfUtil.addSuccessMessage("Marked as Approved by PCP.");
-    }
-
-    public void markAsPcpRejected() {
-        if (currentProject == null) {
-            JsfUtil.addErrorMessage("Nothing selected");
-            return;
-        }
-        getCurrentProject().setCurrentStageType(ProjectStageType.PCP_Rejected);
-        getCurrentProject().setPecRejectedUser(loggedUser);
-        getProjectFacade().edit(currentProject);
-        JsfUtil.addSuccessMessage("Marked as Rejected by PEC.");
-    }
-
-    public void markAsPecRejected() {
-        if (currentProject == null) {
-            JsfUtil.addErrorMessage("Nothing to finalize");
-            return;
-        }
-        getCurrentProject().setCurrentStageType(ProjectStageType.PEC_Rejected);
-        getCurrentProject().setPecRejectedUser(loggedUser);
-        getProjectFacade().edit(currentProject);
-        JsfUtil.addSuccessMessage("Marked as PEC Approved.");
-    }
-
     public void markAsPecApproved() {
         if (currentProject == null) {
-            JsfUtil.addErrorMessage("Nothing to accept");
+            JsfUtil.addErrorMessage("Nothing selected");
             return;
         }
         getCurrentProject().setCurrentStageType(ProjectStageType.PEC_Approved);
         getCurrentProject().setPecApprovedUser(loggedUser);
+        getCurrentProject().setPecApprovedAt(new Date());
+        getCurrentProject().setPecApproved(true);
         getProjectFacade().edit(currentProject);
-        JsfUtil.addSuccessMessage("Marked as PEC Approved");
+        JsfUtil.addSuccessMessage("Marked as PEC Approved.");
     }
 
-    public void uploadByCompanyAsProposal() {
-        if (getCurrentProject() == null) {
-            facade.util.JsfUtil.addErrorMessage("No Project");
+    public void markAsPecRejected() {
+        if (currentProject == null) {
+            JsfUtil.addErrorMessage("Nothing selected");
             return;
         }
-
-        InputStream in;
-
-        Upload u = new Upload();
-
-        u.setProject(currentProject);
-        u.setComments(comments);
-        u.setCreatedAt(new Date());
-        u.setUploadType(UploadType.Company_Design_Upload);
-        currentProjectUploads = null;
-        companyUploads = null;
-        clientUploads = null;
-
-        getUploadFacade().create(u);
-        comments = "";
-
-        StringWriter writer = new StringWriter();
-        if (file != null) {
-            try {
-                in = getFile().getInputstream();
-                File f = new File("P" + currentProject.getId() + "U" + u.getId());
-                FileOutputStream out = new FileOutputStream(f);
-
-                //            OutputStream out = new FileOutputStream(new File(fileName));
-                int read = 0;
-                byte[] bytes = new byte[1024];
-                while ((read = in.read(bytes)) != -1) {
-                    out.write(bytes, 0, read);
-                }
-                in.close();
-                out.flush();
-                out.close();
-
-                u.setRetireComments(f.getAbsolutePath());
-                u.setFileName(file.getFileName());
-                u.setFileType(file.getContentType());
-                in = file.getInputstream();
-                u.setBaImage(IOUtils.toByteArray(in));
-                getUploadFacade().edit(u);
-                JsfUtil.addSuccessMessage("File Uploaded");
-            } catch (IOException io) {
-                System.out.println("io = " + io);
-                JsfUtil.addErrorMessage("Error in Uploading. " + io.getMessage());
-            } catch (Exception e) {
-                System.out.println("e = " + e);
-                JsfUtil.addErrorMessage("Error in Uploading. " + e.getMessage());
-            }
-
+        getCurrentProject().setCurrentStageType(ProjectStageType.PEC_Rejected);
+        getCurrentProject().setPecRejectedUser(loggedUser);
+        getCurrentProject().setPecRejectedAt(new Date());
+        getCurrentProject().setPecRejected(true);
+        getProjectFacade().edit(currentProject);
+        JsfUtil.addSuccessMessage("Marked as Rejected by PEC.");
+    }
+    
+    public void markAsSubmittedToDnp() {
+        if (currentProject == null) {
+            JsfUtil.addErrorMessage("Nothing selected");
+            return;
         }
+        getCurrentProject().setCurrentStageType(ProjectStageType.Awaiting_DNP_Approval);
+        getCurrentProject().setDnpSubmissionUser(loggedUser);
+        getCurrentProject().setDnpSubmissionAt(new Date());
+        getCurrentProject().setDnpSubmitted(true);
+        getProjectFacade().edit(currentProject);
+        JsfUtil.addSuccessMessage("Marked as Submitted to DNP.");
+    }
+    
+    public void markAsDnpApproved() {
+        if (currentProject == null) {
+            JsfUtil.addErrorMessage("Nothing selected");
+            return;
+        }
+        getCurrentProject().setCurrentStageType(ProjectStageType.DNP_Approved);
+        getCurrentProject().setDnpApprovedUser(loggedUser);
+        getCurrentProject().setDnpApprovedAt(new Date());
+        getCurrentProject().setDnpApproved(true);
+        getProjectFacade().edit(currentProject);
+        JsfUtil.addSuccessMessage("Marked as DNP Approved.");
     }
 
-    public void uploadByCustomerBeforeTechnicalProposal() {
+    public void markAsDnpRejected() {
+        if (currentProject == null) {
+            JsfUtil.addErrorMessage("Nothing selected");
+            return;
+        }
+        getCurrentProject().setCurrentStageType(ProjectStageType.DNP_Rejected);
+        getCurrentProject().setDnpRejectedUser(loggedUser);
+        getCurrentProject().setDnpRejectedAt(new Date());
+        getCurrentProject().setDnpRejected(true);
+        getProjectFacade().edit(currentProject);
+        JsfUtil.addSuccessMessage("Marked as Rejected by DNP.");
+    }
+
+    
+    public void markAsSubmittedToCabinet() {
+        if (currentProject == null) {
+            JsfUtil.addErrorMessage("Nothing selected");
+            return;
+        }
+        getCurrentProject().setCurrentStageType(ProjectStageType.Awaiting_Cabinet_Approval);
+        getCurrentProject().setCabinetSubmissionUser(loggedUser);
+        getCurrentProject().setCabinetSubmissionAt(new Date());
+        getCurrentProject().setCabinetSubmitted(true);
+        getProjectFacade().edit(currentProject);
+        JsfUtil.addSuccessMessage("Marked as Submitted to Cabinet.");
+    }
+    
+    public void markAsCabinetApproved() {
+        if (currentProject == null) {
+            JsfUtil.addErrorMessage("Nothing selected");
+            return;
+        }
+        getCurrentProject().setCurrentStageType(ProjectStageType.Cabinet_Approved);
+        getCurrentProject().setCabinetApprovedUser(loggedUser);
+        getCurrentProject().setCabinetApprovedAt(new Date());
+        getCurrentProject().setCabinetApproved(true);
+        getProjectFacade().edit(currentProject);
+        JsfUtil.addSuccessMessage("Marked as DNP Approved.");
+    }
+    
+    /**
+     * 
+     * 
+     * 
+     * Other Functions
+     * 
+     * 
+     */
+    
+   
+    public void uploadFiles() {
         if (getCurrentProject() == null) {
             facade.util.JsfUtil.addErrorMessage("No Project");
             return;
