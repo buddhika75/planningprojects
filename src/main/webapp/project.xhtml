@@ -77,29 +77,14 @@
                                         <f:selectItems value="#{areaController.rdhsAreas}" var="d" itemLabel="#{d.name}" itemValue="#{d}" ></f:selectItems>
                                     </h:selectOneMenu>
 
-
-
-
-
-
-
-
-
                                     <h:outputLabel value="File Number" for="fileNo" />
                                     <h:inputText id="fileNo" value="#{webUserController.currentProject.fileNumber}" title="CurrentStageType" />
-
-
-
 
                                     <h:outputLabel value="Project Description" for="pd" />
                                     <h:inputTextarea rows="4" cols="30" id="pd" value="#{webUserController.currentProject.projectDescription}" title="Comments" />
 
-
-
-
                                     <h:outputLabel value="Project Cost" for="cost" />
                                     <h:inputText id="cost" value="#{webUserController.currentProject.projectCost}" title="Project Cost" />
-
 
                                     <h:outputLabel value="Source of Funds" for="sof" />
                                     <h:selectOneMenu id="sof" value="#{webUserController.currentProject.sourceOfFunds}"
@@ -109,7 +94,6 @@
                                                        var="f" itemLabel="#{f.name}" 
                                                        itemValue="#{f}" ></f:selectItems>
                                     </h:selectOneMenu>
-
 
                                     <h:outputLabel value="Proposal Date"  />
                                     <p:calendar value="#{webUserController.currentProject.proposalDate}" pattern="dd MMMM yyyy" >

@@ -1,10 +1,7 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -13,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 @Entity
@@ -25,21 +21,31 @@ public class Project implements Serializable {
     private Long id;
 
     private Integer projectYear;
+    
     @ManyToOne
     private Area province;
+    
     private String fileNumber;
+    
     @ManyToOne
     private Area district;
+    
     @ManyToOne
     private Institution projectLocation;
+    
     private String projectTitle;
+    
     @Lob
     private String projectDescription;
+    
     private Double projectCost;
+    
     @ManyToOne
     private Item projectCostUnit;
+    
     @ManyToOne
     private Item sourceOfFunds;
+    
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date proposalDate;
 

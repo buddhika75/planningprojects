@@ -361,7 +361,7 @@ public class WebUserController implements Serializable {
         clientUploads = null;
         currentUpload = null;
         markLocationOnMap();
-        return "/add_project";
+        return "/project";
     }
 
     public String viewMyProject() {
@@ -467,10 +467,13 @@ public class WebUserController implements Serializable {
 
     public String addNewProject() {
         currentProject = new Project();
+        currentProject.setProjectTitle("");
+        Calendar c = Calendar.getInstance();
+        currentProject.setProjectYear(c.get(Calendar.YEAR));
         currentProject.setCreater(current);
         currentProject.setCreatedAt(new Date());
         getProjectFacade().create(currentProject);
-        return "/add_project";
+        return "/project";
     }
 
     public void updateProject() {
