@@ -309,6 +309,11 @@ public class WebUserController implements Serializable {
         return "/project_lists";
     }
     
+     public String listPcpRejectedProjects() {
+        listOfProjects = listProjects(ProjectStageType.PCP_Rejected);
+        return "/project_lists";
+    }
+    
     public String listProjectsAwaitingBidding() {
         listOfProjects = listProjects(ProjectStageType.Awaiting_ANP_Approval);
         return "/project_lists";
@@ -479,7 +484,7 @@ public class WebUserController implements Serializable {
     }
     
     
-    public String tpPcpApproval() {
+    public String toPcpApproval() {
         if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
@@ -490,14 +495,25 @@ public class WebUserController implements Serializable {
     }
     
     
-    public String givePcpApproval() {
+    
+    public String toPcpRejection() {
         if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
-        currentProject.setCurrentStageType(ProjectStageType.PCP_Approved);
+        currentProject.setCurrentStageType(ProjectStageType.PCP_Rejected);
         getProjectFacade().edit(currentProject);
-        return listPcpApprovedProjects();
+        return "/pcp_approval_reject";
+    }
+    
+    public String rejectPcpApproval() {
+        if (currentProject == null) {
+            JsfUtil.addErrorMessage("Nothing to update");
+            return "/pcp_approval_reject";
+        }
+        currentProject.setCurrentStageType(ProjectStageType.PCP_Rejected);
+        getProjectFacade().edit(currentProject);
+        return listPcpRejectedProjects();
     }
     
 

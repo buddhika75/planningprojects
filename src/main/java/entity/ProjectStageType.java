@@ -7,6 +7,7 @@ package entity;
 public enum ProjectStageType {
     Processing,
     PCP_Approved,
+    PCP_Rejected,
     Awaiting_PEC_Approval,
     PEC_Approved,
     Awaiting_ANP_Approval,

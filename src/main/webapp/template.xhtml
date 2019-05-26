@@ -15,6 +15,7 @@
               rel="stylesheet"></link>
         <h:outputStylesheet library="css" name="tem1.css"/>
         <title>Management Development and Planning Unit</title>
+        <h:outputStylesheet library="css" name="tem1.css" ></h:outputStylesheet>
         <style>
             ul {
                 list-style-type: none;
@@ -49,19 +50,18 @@
     </h:head>
 
     <h:body>
+        <div class="w3-row w3-center w3-amber">
+            <h3 class="w3-opacity">
+                Project Management System
+            </h3>
+        </div>
 
-        <div class="w3-row w3-center">
-            <h:outputLabel  styleClass="logoFont1" value="Management Development and Planning Unit" ></h:outputLabel>
-        </div>
-        <div class="w3-row w3-center">
-            <h:outputLabel  styleClass="logoFont2" value="Project Management System" ></h:outputLabel>
-        </div>
 
         <div class="w3-row" >
             <h:form>
                 <ul>
                     <li>
-                        <h:commandLink class="nonUnderline"  value="Home" action="#{webUserController.logOut()}"></h:commandLink>
+                        <h:commandLink class="nonUnderline"  value="HOME" action="#{webUserController.logOut()}"></h:commandLink>
                     </li>
                     <h:panelGroup rendered="#{webUserController.loggedUser.systemAdministrator}" >
                         <li>
@@ -93,11 +93,11 @@
                         <li>
                             <h:commandLink  class="spacer1x boldedText" value="VIEW MY PROJECTS" action="#{webUserController.viewMyProject()}"></h:commandLink>
                         </li>
-                        
+
                     </h:panelGroup>
 
                     <h:panelGroup rendered="#{webUserController.loggedUser.institutionAdministrator}" >
-                       <li>
+                        <li>
                             <h:commandLink value="SUBMIT PROJECT" action="#{webUserController.listAllProjects}"></h:commandLink>
                         </li>
                         <li>
@@ -117,19 +117,19 @@
                             <h:commandLink  class="spacer1x boldedText" value="CHANGE MY DETAILS" action="/system_management"></h:commandLink>
                         </li>
                         <li>
-                            <h:commandLink  value="Sing out" action="#{webUserController.logOut()}"></h:commandLink>
+                            <h:commandLink  value="SIGN OUT" action="#{webUserController.logOut()}"></h:commandLink>
                         </li>
                     </h:panelGroup>
 
                     <h:panelGroup rendered="#{webUserController.loggedUser eq null}" >
                         <li>
-                            <h:commandLink class="nonUnderline"  value="How it works" action="#{webUserController.logOut()}"></h:commandLink>
+                            <h:commandLink class="nonUnderline"  value="HELP" action="#{webUserController.logOut()}"></h:commandLink>
                         </li>
                         <li>
-                            <h:commandLink class="nonUnderline"  value="Sign up" action="#{webUserController.prepareRegisterAsClient()}"></h:commandLink>
+                            <h:commandLink class="nonUnderline"  value="SIGN IN" action="#{webUserController.prepareRegisterAsClient()}"></h:commandLink>
                         </li>
                         <li>
-                            <h:commandLink class="nonUnderline" value="Sign in" action="#{webUserController.toLogin()}"></h:commandLink>
+                            <h:commandLink class="nonUnderline" value="SIGN OUT" action="#{webUserController.toLogin()}"></h:commandLink>
                         </li>
                     </h:panelGroup>
                 </ul>
@@ -150,12 +150,15 @@
 
         </ui:insert>
 
-        <div class="w3-container" >
-            <div class="w3-row" style="top: 80vh;" >
-                <ui:insert name="bottom">
-                    &copy; Health Information Unit, 2019
-                </ui:insert>
-            </div>
+
+
+        <div class="footer">
+            <p>
+            
+             <ui:insert name="bottom">
+                &copy; Health Information Unit, 2019
+            </ui:insert>
+            </p>
         </div>
 
     </h:body>
