@@ -5,11 +5,12 @@ package entity;
  * @author Dr M H B Ariyaratne
  */
 public enum ProjectStageType {
-    Adding_Details_To_Project,
-    Awaiting_Authority_Approval,
-    Awaiting_Resubmission,
-    Approved_Subjected_To_Changes,
-    Approved,
-    Rejected,
-    Project_Finalized,
+    Processing,
+    PCP_Approved,
+    Awaiting_PEC_Approval,
+    PEC_Approved,
+    Awaiting_ANP_Approval,
+    NDP_Approved,
+    Awaiting_Cabinet_Approval,
+    Cabinet_Approved,
 }

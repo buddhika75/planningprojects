@@ -311,8 +311,6 @@ public class AreaController implements Serializable {
                     moh.setCentreLongitude(Double.parseDouble(centreLon));
                     moh.setZoomLavel(12);
                     moh.setName(mohAreaName);
-                    moh.setPdhsArea(province);
-                    moh.setRdhsArea(district);
                     moh.setParentArea(district);
                     getFacade().create(moh);
                     System.out.println("moh = " + moh);
@@ -506,10 +504,7 @@ public class AreaController implements Serializable {
                     gn.setZoomLavel(16);
                     gn.setName(gnAreaName);
                     gn.setCode(gnAreaCode);
-                    gn.setPdhsArea(province);
-                    gn.setRdhsArea(district);
                     gn.setParentArea(moh);
-                    gn.setMohArea(moh);
                     getFacade().create(gn);
                     System.out.println("gn = " + gn);
                     System.out.println("to add coords");

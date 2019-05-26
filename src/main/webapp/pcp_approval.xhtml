@@ -27,14 +27,14 @@
                         <table style="width: 99%; top: 0px; margin: auto; margin-top: 0px; vertical-align: top; " >
                             <tr >
                                 <td colspan="3" >
-                                    <h3>Add Project</h3>
+                                    <h3>PCP Approval</h3>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2" valign="top" style="width: 220px;">
                                     <f:view>
 
-                                        <p:panelGrid columns="2">
+                                        <p:panelGrid columns="2" >
                                             <p:outputLabel value="ProjectTitle:" for="projectTitle" />
                                             <p:inputText id="projectTitle" value="#{webUserController.currentProject.projectTitle}" title="ProjectTitle" />
 
@@ -111,18 +111,7 @@
                                 <td style="vertical-align: top;">
 
                                     <h:panelGrid columns="1" >
-
-                                        <h:commandButton value="SAVE" action="#{webUserController.updateProject()}" class="w3-btn w3-yellow btn350" ></h:commandButton> 
-                                        
-                                        
-                                        <h:commandButton value="To Approve at PCP" action="#{webUserController.tpPcpApproval()}" class="w3-btn w3-yellow btn350" ></h:commandButton> 
-
-                                        <h:commandButton value="File Uploads" class="w3-btn w3-yellow btn350"
-                                                         action="/upload_files_to_project_proposal" ></h:commandButton>
-
-
-
-
+                                        <h:commandButton value="Give PCP Approval" action="#{webUserController.givePcpApproval()}" class="w3-btn w3-yellow btn350" ></h:commandButton> 
                                     </h:panelGrid>
 
                                 </td>

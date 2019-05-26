@@ -28,141 +28,48 @@ public class Area implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Enumerated(EnumType.STRING)
-    AreaType type;
-    String name;
-    String code;
+    private AreaType type;
+    private String name;
+    private String code;
     @ManyToOne
-    Area parentArea;
+    private Area parentArea;
 
     @ManyToOne
-    WebUser creater;
+    private WebUser creater;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    Date createAt;
-    double centreLongitude;
-    double centreLatitude;
-    double zoomLavel;
-    String officialPhone;
-    String officeFax;
-    String mobilePhone;
-    String personalAddress;
-    String officialAddress;
-    String officialEmail;
-    String personalEmail;
-
-    @ManyToOne
-    Area pdhsArea;
-    @ManyToOne
-    Area rdhsArea;
-    @ManyToOne
-    Area mohArea;
-    @ManyToOne
-    Area phiArea;
+    private Date createAt;
+    private double centreLongitude;
+    private double centreLatitude;
+    private double zoomLavel;
     
-    Long population;
-    Double areaSqKm;
 
-    public Long getPopulation() {
-        return population;
-    }
-
-    public void setPopulation(Long population) {
-        this.population = population;
-    }
-
-    public Double getAreaSqKm() {
-        return areaSqKm;
-    }
-
-    public void setAreaSqKm(Double areaSqKm) {
-        this.areaSqKm = areaSqKm;
-    }
     
-    public String getOfficialPhone() {
-        return officialPhone;
+   
+    
+    
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
 
-    public void setOfficialPhone(String officialPhone) {
-        this.officialPhone = officialPhone;
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Area)) {
+            return false;
+        }
+        Area other = (Area) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
 
-    public String getOfficeFax() {
-        return officeFax;
-    }
-
-    public void setOfficeFax(String officeFax) {
-        this.officeFax = officeFax;
-    }
-
-    public String getMobilePhone() {
-        return mobilePhone;
-    }
-
-    public void setMobilePhone(String mobilePhone) {
-        this.mobilePhone = mobilePhone;
-    }
-
-    public String getPersonalAddress() {
-        return personalAddress;
-    }
-
-    public void setPersonalAddress(String personalAddress) {
-        this.personalAddress = personalAddress;
-    }
-
-    public String getOfficialAddress() {
-        return officialAddress;
-    }
-
-    public void setOfficialAddress(String officialAddress) {
-        this.officialAddress = officialAddress;
-    }
-
-    public String getOfficialEmail() {
-        return officialEmail;
-    }
-
-    public void setOfficialEmail(String officialEmail) {
-        this.officialEmail = officialEmail;
-    }
-
-    public String getPersonalEmail() {
-        return personalEmail;
-    }
-
-    public void setPersonalEmail(String personalEmail) {
-        this.personalEmail = personalEmail;
-    }
-
-    public double getCentreLongitude() {
-        return centreLongitude;
-    }
-
-    public void setCentreLongitude(double centreLongitude) {
-        this.centreLongitude = centreLongitude;
-    }
-
-    public double getCentreLatitude() {
-        return centreLatitude;
-    }
-
-    public void setCentreLatitude(double centreLatitude) {
-        this.centreLatitude = centreLatitude;
-    }
-
-    public double getZoomLavel() {
-        return zoomLavel;
-    }
-
-    public void setZoomLavel(double zoomLavel) {
-        this.zoomLavel = zoomLavel;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    @Override
+    public String toString() {
+        return "Area[ id=" + id + " ]";
     }
 
     public AreaType getType() {
@@ -213,63 +120,36 @@ public class Area implements Serializable {
         this.createAt = createAt;
     }
 
-    public Area getPdhsArea() {
-        return pdhsArea;
+    public double getCentreLongitude() {
+        return centreLongitude;
     }
 
-    public void setPdhsArea(Area pdhsArea) {
-        this.pdhsArea = pdhsArea;
+    public void setCentreLongitude(double centreLongitude) {
+        this.centreLongitude = centreLongitude;
     }
 
-    public Area getRdhsArea() {
-        return rdhsArea;
+    public double getCentreLatitude() {
+        return centreLatitude;
     }
 
-    public void setRdhsArea(Area rdhsArea) {
-        this.rdhsArea = rdhsArea;
+    public void setCentreLatitude(double centreLatitude) {
+        this.centreLatitude = centreLatitude;
     }
 
-    public Area getMohArea() {
-        return mohArea;
+    public double getZoomLavel() {
+        return zoomLavel;
     }
 
-    public void setMohArea(Area mohArea) {
-        this.mohArea = mohArea;
+    public void setZoomLavel(double zoomLavel) {
+        this.zoomLavel = zoomLavel;
     }
 
-    public Area getPhiArea() {
-        return phiArea;
+    public Long getId() {
+        return id;
     }
 
-    public void setPhiArea(Area phiArea) {
-        this.phiArea = phiArea;
-    }
-
-    
-    
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Area)) {
-            return false;
-        }
-        Area other = (Area) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Area[ id=" + id + " ]";
+    public void setId(Long id) {
+        this.id = id;
     }
 
 }

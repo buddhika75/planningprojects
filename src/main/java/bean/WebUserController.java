@@ -3,7 +3,6 @@ package bean;
 import entity.Area;
 import entity.WebUser;
 
-
 import entity.Institution;
 import entity.InstitutionType;
 import entity.Project;
@@ -70,7 +69,7 @@ public class WebUserController implements Serializable {
     private UploadFacade uploadFacade;
     @EJB
     private ProjectAreaFacade projectAreaFacade;
-    
+
     /*
     Controllers
      */
@@ -85,12 +84,12 @@ public class WebUserController implements Serializable {
     private List<Upload> clientUploads;
     private List<Upload> companyUploads;
     private List<Project> listOfProjects;
-    
+
     private Area[] selectedProvinces;
     private List<Area> selectedDistricts;
     private List<Area> selectedDsAreas;
     private List<Area> selectedGnAreas;
-    
+
     private ProjectArea selectedProjectArea;
 
     private WebUser current;
@@ -116,217 +115,212 @@ public class WebUserController implements Serializable {
         emptyModel = new DefaultMapModel();
     }
 
-    public void removeSelectedProvince(){
-        if(currentProject==null){
+    public void removeSelectedProvince() {
+        if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing to add");
             return;
         }
-        if(selectedProjectArea==null){
+        if (selectedProjectArea == null) {
             JsfUtil.addErrorMessage("Nothing to add");
             return;
         }
-        try{
-            currentProject.getProvinces().remove(selectedProjectArea);
-        } catch(Exception e){
+        try {
+//            currentProject.getProvinces().remove(selectedProjectArea);
+        } catch (Exception e) {
             JsfUtil.addErrorMessage("Error. " + e.getMessage());
         }
     }
-    
-    public void addSelectedProvincesToProject(){
+
+    public void addSelectedProvincesToProject() {
         System.out.println("addSelectedProvincesToProject");
-        if(currentProject==null){
+        if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing to add");
             return;
         }
-        for(Area a:selectedProvinces){
-            boolean alreadyAdded=false;
-            for(ProjectArea pa: currentProject.getProvinces()){
-                if(pa.getArea().equals(a)){
-                    alreadyAdded= true;
-                }
-            }
-            System.out.println("alreadyAdded = " + alreadyAdded);
-            if(!alreadyAdded){
-                ProjectArea pa = new ProjectArea();
-                pa.setProject(currentProject);
-                pa.setArea(a);
-                projectAreaFacade.create(pa); 
-                getCurrentProject().getProvinces().add(pa);
-                System.out.println("added");
-            }
+        for (Area a : selectedProvinces) {
+//            boolean alreadyAdded=false;
+//            for(ProjectArea pa: currentProject.getProvinces()){
+//                if(pa.getArea().equals(a)){
+//                    alreadyAdded= true;
+//                }
+//            }
+//            System.out.println("alreadyAdded = " + alreadyAdded);
+//            if(!alreadyAdded){
+//                ProjectArea pa = new ProjectArea();
+//                pa.setProject(currentProject);
+//                pa.setArea(a);
+//                projectAreaFacade.create(pa); 
+//                getCurrentProject().getProvinces().add(pa);
+//                System.out.println("added");
+//            }
         }
         selectedProvinces = null;
     }
-    
-    
-    
-    
-    
-    
-    public void removeSelectedDistrict(){
-        if(currentProject==null){
+
+    public void removeSelectedDistrict() {
+        if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing to add");
             return;
         }
-        if(selectedProjectArea==null){
+        if (selectedProjectArea == null) {
             JsfUtil.addErrorMessage("Nothing to add");
             return;
         }
-        try{
-            currentProject.getDistricts().remove(selectedProjectArea);
-        } catch(Exception e){
+        try {
+//            currentProject.getDistricts().remove(selectedProjectArea);
+        } catch (Exception e) {
             JsfUtil.addErrorMessage("Error. " + e.getMessage());
         }
     }
-    
-    public void addSelectedDistrictToProject(){
+
+    public void addSelectedDistrictToProject() {
         System.out.println("addSelectedProvincesToProject");
-        if(currentProject==null){
+        if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing to add");
             return;
         }
-        for(Area a:selectedDistricts){
-            boolean alreadyAdded=false;
-            for(ProjectArea pa: currentProject.getDistricts()){
-                if(pa.getArea().equals(a)){
-                    alreadyAdded= true;
-                }
-            }
+        for (Area a : selectedDistricts) {
+            boolean alreadyAdded = false;
+//            for(ProjectArea pa: currentProject.getDistricts()){
+//                if(pa.getArea().equals(a)){
+//                    alreadyAdded= true;
+//                }
+//            }
             System.out.println("alreadyAdded = " + alreadyAdded);
-            if(!alreadyAdded){
+            if (!alreadyAdded) {
                 ProjectArea pa = new ProjectArea();
                 pa.setProject(currentProject);
                 pa.setArea(a);
-                projectAreaFacade.create(pa); 
-                getCurrentProject().getDistricts().add(pa);
+                projectAreaFacade.create(pa);
+//                getCurrentProject().getDistricts().add(pa);
                 System.out.println("added");
             }
         }
         selectedDistricts = null;
     }
-    
-    public void removeSelectedDsArea(){
-        if(currentProject==null){
+
+    public void removeSelectedDsArea() {
+        if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing to add");
             return;
         }
-        if(selectedProjectArea==null){
+        if (selectedProjectArea == null) {
             JsfUtil.addErrorMessage("Nothing to add");
             return;
         }
-        try{
-            currentProject.getDsDivisions().remove(selectedProjectArea);
-        } catch(Exception e){
+        try {
+//            currentProject.getDsDivisions().remove(selectedProjectArea);
+        } catch (Exception e) {
             JsfUtil.addErrorMessage("Error. " + e.getMessage());
         }
     }
-    
-    public void addSelectedDsDivisionToProject(){
+
+    public void addSelectedDsDivisionToProject() {
         System.out.println("addSelectedProvincesToProject");
-        if(currentProject==null){
+        if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing to add");
             return;
         }
-        for(Area a:selectedDsAreas){
-            boolean alreadyAdded=false;
-            for(ProjectArea pa: currentProject.getDsDivisions()){
-                if(pa.getArea().equals(a)){
-                    alreadyAdded= true;
-                }
-            }
+        for (Area a : selectedDsAreas) {
+            boolean alreadyAdded = false;
+//            for(ProjectArea pa: currentProject.getDsDivisions()){
+//                if(pa.getArea().equals(a)){
+//                    alreadyAdded= true;
+//                }
+//            }
             System.out.println("alreadyAdded = " + alreadyAdded);
-            if(!alreadyAdded){
+            if (!alreadyAdded) {
                 ProjectArea pa = new ProjectArea();
                 pa.setProject(currentProject);
                 pa.setArea(a);
-                projectAreaFacade.create(pa); 
-                getCurrentProject().getDsDivisions().add(pa);
+                projectAreaFacade.create(pa);
+//                getCurrentProject().getDsDivisions().add(pa);
                 System.out.println("added");
             }
         }
         selectedDsAreas = null;
     }
-    
-    public void removeSelectedGn(){
-        if(currentProject==null){
+
+    public void removeSelectedGn() {
+        if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing to add");
             return;
         }
-        if(selectedProjectArea==null){
+        if (selectedProjectArea == null) {
             JsfUtil.addErrorMessage("Nothing to add");
             return;
         }
-        try{
-            currentProject.getGnDivisions().remove(selectedProjectArea);
-        } catch(Exception e){
+        try {
+//            currentProject.getGnDivisions().remove(selectedProjectArea);
+        } catch (Exception e) {
             JsfUtil.addErrorMessage("Error. " + e.getMessage());
         }
     }
-    
-    public void addSelectedGnAreasToProject(){
+
+    public void addSelectedGnAreasToProject() {
         System.out.println("addSelectedProvincesToProject");
-        if(currentProject==null){
+        if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing to add");
             return;
         }
-        for(Area a:selectedGnAreas){
-            boolean alreadyAdded=false;
-            for(ProjectArea pa: currentProject.getGnDivisions()){
-                if(pa.getArea().equals(a)){
-                    alreadyAdded= true;
-                }
-            }
+        for (Area a : selectedGnAreas) {
+            boolean alreadyAdded = false;
+//            for(ProjectArea pa: currentProject.getGnDivisions()){
+//                if(pa.getArea().equals(a)){
+//                    alreadyAdded= true;
+//                }
+//            }
             System.out.println("alreadyAdded = " + alreadyAdded);
-            if(!alreadyAdded){
+            if (!alreadyAdded) {
                 ProjectArea pa = new ProjectArea();
                 pa.setProject(currentProject);
                 pa.setArea(a);
 //                projectAreaFacade.create(pa); 
-                getCurrentProject().getGnDivisions().add(pa);
+//                getCurrentProject().getGnDivisions().add(pa);
                 System.out.println("added");
             }
         }
         selectedGnAreas = null;
     }
-    
-    
-    
-    
-    
+
     public String listProjectsToSubmitBids() {
         listProjectsToSubmitBids(getLoggedUser().getInstitution());
         return "/list_for_providers";
     }
 
     public void listProjectsToSubmitBids(Institution provider) {
-        List<Project> ps = listProjects(ProjectStageType.Approved_Subjected_To_Changes);
+        List<Project> ps = listProjects(ProjectStageType.Awaiting_ANP_Approval);
         listOfProjects = new ArrayList<>();
     }
 
+    public String listAllProjects() {
+        listOfProjects = listProjects();
+        return "/project_lists";
+    }
+
+    public String listProjectsAwaitingPcpApproval() {
+        listOfProjects = listProjects(ProjectStageType.Awaiting_PEC_Approval);
+        return "/project_lists";
+    }
+
     
-
-    public String listProjectsToSubmitProposals() {
-        listOfProjects = listProjects(ProjectStageType.Adding_Details_To_Project);
+    public String listPcpApprovedProjects() {
+        listOfProjects = listProjects(ProjectStageType.PCP_Approved);
         return "/project_lists";
     }
-
-    public String listProjectsAwaitingCustomerApproval() {
-        listOfProjects = listProjects(ProjectStageType.Awaiting_Resubmission);
-        return "/project_lists";
-    }
-
+    
     public String listProjectsAwaitingBidding() {
-        listOfProjects = listProjects(ProjectStageType.Approved_Subjected_To_Changes);
+        listOfProjects = listProjects(ProjectStageType.Awaiting_ANP_Approval);
         return "/project_lists";
     }
 
     public String listProjectsAwaitingBidSelection() {
-        listOfProjects = listProjects(ProjectStageType.Approved);
+        listOfProjects = listProjects(ProjectStageType.NDP_Approved);
         return "/project_lists";
     }
 
     public String listProjectsBidSelected() {
-        listOfProjects = listProjects(ProjectStageType.Rejected);
+        listOfProjects = listProjects(ProjectStageType.Awaiting_Cabinet_Approval);
         return "/project_lists";
     }
 
@@ -340,7 +334,15 @@ public class WebUserController implements Serializable {
         Map m = new HashMap();
         m.put("t", type);
         return getProjectFacade().findBySQL(j, m, TemporalType.DATE);
+    }
 
+    public List<Project> listProjects() {
+        Calendar c = Calendar.getInstance();
+        c.setTime(getToDate());
+        c.add(Calendar.DATE, 2);
+        String j = "select p from Project p "
+                + " order by p.id";
+        return getProjectFacade().findBySQL(j);
     }
 
     public String viewProject() {
@@ -424,8 +426,8 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Please refresh and login to system to submit.");
             return "";
         }
-        currentProject.setRequestSubmittedAt(new Date());
-        currentProject.setCurrentStageType(ProjectStageType.Awaiting_Authority_Approval);
+//        currentProject.setRequestSubmittedAt(new Date());
+        currentProject.setCurrentStageType(ProjectStageType.Awaiting_PEC_Approval);
         getProjectFacade().edit(currentProject);
         sendSubmitClientRequestConfirmationEmail();
         JsfUtil.addSuccessMessage("Project Successfully Submitted");
@@ -463,7 +465,7 @@ public class WebUserController implements Serializable {
         currentProject.setCreater(current);
         currentProject.setCreatedAt(new Date());
         getProjectFacade().create(currentProject);
-        return "add_project";
+        return "/add_project";
     }
 
     public void updateProject() {
@@ -471,19 +473,42 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to update");
             return;
         }
-        currentProject.setCurrentStageType(ProjectStageType.Adding_Details_To_Project);
+        currentProject.setCurrentStageType(ProjectStageType.Processing);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Updated");
     }
+    
+    
+    public String tpPcpApproval() {
+        if (currentProject == null) {
+            JsfUtil.addErrorMessage("Nothing to update");
+            return "";
+        }
+        currentProject.setCurrentStageType(ProjectStageType.Processing);
+        getProjectFacade().edit(currentProject);
+        return "/pcp_approval";
+    }
+    
+    
+    public String givePcpApproval() {
+        if (currentProject == null) {
+            JsfUtil.addErrorMessage("Nothing to update");
+            return "";
+        }
+        currentProject.setCurrentStageType(ProjectStageType.PCP_Approved);
+        getProjectFacade().edit(currentProject);
+        return listPcpApprovedProjects();
+    }
+    
 
     public void finalizeProposal() {
         if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing to finalize");
             return;
         }
-        getCurrentProject().setCurrentStageType(ProjectStageType.Awaiting_Resubmission);
-        getCurrentProject().setProposalSubmittedAt(new Date());
-        getCurrentProject().setProposalSubmittedBy(loggedUser);
+        getCurrentProject().setCurrentStageType(ProjectStageType.PEC_Approved);
+//        getCurrentProject().setProposalSubmittedAt(new Date());
+//        getCurrentProject().setProposalSubmittedBy(loggedUser);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Updated");
     }
@@ -493,8 +518,8 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to accept");
             return;
         }
-        getCurrentProject().setCurrentStageType(ProjectStageType.Approved_Subjected_To_Changes);
-        getCurrentProject().setProposalAcceptedAt(new Date());
+        getCurrentProject().setCurrentStageType(ProjectStageType.Awaiting_ANP_Approval);
+//        getCurrentProject().setProposalAcceptedAt(new Date());
 
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Updated");
@@ -773,8 +798,6 @@ public class WebUserController implements Serializable {
 
     }
 
-   
-
     public UploadedFile getFile() {
         return file;
     }
@@ -998,8 +1021,6 @@ public class WebUserController implements Serializable {
         this.currentProjectUploads = currentProjectUploads;
     }
 
-  
-
     public List<Project> getListOfProjects() {
         return listOfProjects;
     }
@@ -1055,7 +1076,6 @@ public class WebUserController implements Serializable {
         this.companyUploads = companyUploads;
     }
 
-
     public Institution getInstitution() {
         return institution;
     }
@@ -1072,7 +1092,6 @@ public class WebUserController implements Serializable {
         this.selectedProvinces = selectedProvinces;
     }
 
-   
     public ProjectArea getSelectedProjectArea() {
         return selectedProjectArea;
     }
@@ -1086,7 +1105,7 @@ public class WebUserController implements Serializable {
     }
 
     public List<Area> getSelectedDistricts() {
-        if(selectedDistricts==null){
+        if (selectedDistricts == null) {
             selectedDistricts = new ArrayList<>();
         }
         return selectedDistricts;
@@ -1097,7 +1116,7 @@ public class WebUserController implements Serializable {
     }
 
     public List<Area> getSelectedDsAreas() {
-        if(selectedDsAreas==null){
+        if (selectedDsAreas == null) {
             selectedDsAreas = new ArrayList<>();
         }
         return selectedDsAreas;
@@ -1112,18 +1131,11 @@ public class WebUserController implements Serializable {
     }
 
     public void setSelectedGnAreas(List<Area> selectedGnAreas) {
-        if(selectedGnAreas==null){
+        if (selectedGnAreas == null) {
             selectedGnAreas = new ArrayList<>();
         }
         this.selectedGnAreas = selectedGnAreas;
     }
-
-   
-    
-    
-    
-    
-    
 
     @FacesConverter(forClass = WebUser.class)
     public static class WebUserControllerConverter implements Converter {

@@ -34,39 +34,101 @@
                                 <table class="w3-table" >
                                     <tr>
                                         <td>
-                                            <h:commandButton class="w3-btn w3-yellow btn350"  action="#{webUserController.listProjectsToSubmitProposals()}" 
-                                                             value="List Projects to Complete Data Entry" ></h:commandButton>
+                                            <h:commandButton class="w3-btn w3-yellow btn350"  action="#{webUserController.listAllProjects()}" 
+                                                             value="List All Projects" ></h:commandButton>
 
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <h:commandButton class="w3-btn w3-yellow btn350"  action="#{webUserController.listProjectsAwaitingCustomerApproval() }" 
-                                                             value="List Proposals awaiting approval" ></h:commandButton>
+                                            <h:commandButton class="w3-btn w3-yellow btn350"  action="#{webUserController.listProjectsAwaitingPcpApproval() }" 
+                                                             value="List Projects waiting PCP Approval" ></h:commandButton>
 
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsAwaitingBidding()}" 
-                                                             value="List Proposals approved" ></h:commandButton>
+                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listPcpApprovedProjects()}" 
+                                                             value="List PCP Approved Projects" ></h:commandButton>
 
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsAwaitingBidSelection() }" 
-                                                             value="List Proposals approved with changes" ></h:commandButton>
+                                                             value="List PCP Rejected Projects" ></h:commandButton>
 
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsBidSelected()}" 
-                                                             value="List Proposals Rejected" ></h:commandButton>
+                                                             value="List Projects awaiting PCE Approval" ></h:commandButton>
 
                                         </td>
                                     </tr>
+                                    
+                                    <tr>
+                                        <td>
+                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsBidSelected()}" 
+                                                             value="List PCE rejected projects" ></h:commandButton>
+
+                                        </td>
+                                    </tr>
+                                    
+                                    
+                                    <tr>
+                                        <td>
+                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsBidSelected()}" 
+                                                             value="List PCE approved projects" ></h:commandButton>
+
+                                        </td>
+                                    </tr>
+                                    
+                                    
+                                    <tr>
+                                        <td>
+                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsBidSelected()}" 
+                                                             value="List Projects awaiting NDP Approval" ></h:commandButton>
+
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td>
+                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsBidSelected()}" 
+                                                             value="List NDP rejected projects" ></h:commandButton>
+
+                                        </td>
+                                    </tr>
+                                    
+                                    
+                                    <tr>
+                                        <td>
+                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsBidSelected()}" 
+                                                             value="List NDP approved projects" ></h:commandButton>
+
+                                        </td>
+                                    </tr>
+                                    
+                                    
+                                     <tr>
+                                        <td>
+                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsBidSelected()}" 
+                                                             value="List Projects awaiting Cabinet Approval" ></h:commandButton>
+
+                                        </td>
+                                    </tr>
+                                    
+                                    
+                                    <tr>
+                                        <td>
+                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsBidSelected()}" 
+                                                             value="List Cabinet approved projects" ></h:commandButton>
+
+                                        </td>
+                                    </tr>
+                                    
                                 </table>
 
                                 
@@ -83,7 +145,7 @@
                                         </h:outputLabel>
                                     </p:column>
                                     <p:column headerText="FIle No" >
-                                        <h:outputLabel value="#{p.referenceNo }" >
+                                        <h:outputLabel value="#{p.fileNumber }" >
                                         </h:outputLabel>
                                     </p:column>
                                     <p:column headerText="Cost" >
@@ -91,7 +153,7 @@
                                         </h:outputLabel>
                                     </p:column>
                                     <p:column headerText="Description" >
-                                        <h:outputLabel value="#{p.comments}" >
+                                        <h:outputLabel value="#{p.projectDescription}" >
                                         </h:outputLabel>
                                     </p:column>
                                     

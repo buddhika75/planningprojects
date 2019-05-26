@@ -24,84 +24,82 @@ public class Project implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String projectTitle;
-
-    @ManyToOne
-    private Item sector;
-    private Boolean allIsland;
-    
+    private Integer projectYear;
     @ManyToOne
     private Area province;
+    private String fileNumber;
     @ManyToOne
     private Area district;
     @ManyToOne
-    private Area dsArea;
-    @ManyToOne
-    private Area gnArea;
-    
-    
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<ProjectArea> provinces;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<ProjectArea> districts;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<ProjectArea> dsDivisions;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<ProjectArea> gnDivisions;
-
+    private Institution projectLocation;
+    private String projectTitle;
     @Lob
     private String projectDescription;
+    private Double projectCost;
+    @ManyToOne
+    private Item projectCostUnit;
+    @ManyToOne
+    private Item sourceOfFunds;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date proposalDate;
+
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date pcpFirstReceivedDate;
+
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date pcpLastReceivedDate;
+
+    private Boolean engineersEstimateAvailable;
+
+    private Boolean masterPlanAvailable;
+
+    private Boolean buildingPlanAvailable;
+
+    @Lob
+    private String pecRecommendation;
+
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date pcpFirstSendToNdpDate;
+
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date pcpLastSendToNdpDate;
+    
+    
+    private Boolean ndbApproved;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date ndpApprovedDate;
+    
+    
+    @Lob
+    private String ndbRemarks;
+    
+    
+    private Boolean cabinetApproved;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date cabinetApprovalDate;
+    
+    @Lob
+    private String remarks;
+
+    @ManyToOne
+    private Item sector;
+    
+    private Boolean allIsland;
+
+    
+
 
     @Enumerated(EnumType.STRING)
     private ProjectStageType currentStageType;
 
-    @ManyToOne
-    private Institution originatingInstitution;
-
-    private String fileNumber;
-
-    private Double projectCost;
-    @ManyToOne
-    private Item projectCostUnit;
-
-    @ManyToOne
-    private Item sourceOfFunds;
-
-    
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date requestSubmittedAt;
-
-    
-    //Booleans
-    private boolean cancelled;
-    private boolean rejected;
-    private boolean reactivated;
     //Created Properties
     @ManyToOne
     private WebUser creater;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date proposalSubmittedAt;
-    @ManyToOne
-    private WebUser proposalSubmittedBy;
 
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date proposalAcceptedAt;
-
-    @ManyToOne
-    private WebUser editor;
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date editedAt;
-    //Checking Property
-    @ManyToOne
-    private WebUser checkedBy;
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date checkeAt;
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date proposalDate;
     //Retairing properties
     private boolean retired;
     @ManyToOne
@@ -109,81 +107,8 @@ public class Project implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date retiredAt;
     private String retireComments;
-    ////////////////
-    @Lob
-    private String notes;
-    @Lob
-    private String specialNotes;
-    @Lob
-    private String proposal;
 
-    public String getProjectTitle() {
-        return projectTitle;
-    }
 
-    public void setProjectTitle(String projectTitle) {
-        this.projectTitle = projectTitle;
-    }
-
-    public Item getSector() {
-        return sector;
-    }
-
-    public void setSector(Item sector) {
-        this.sector = sector;
-    }
-
-    public Boolean getAllIsland() {
-        return allIsland;
-    }
-
-    public void setAllIsland(Boolean allIsland) {
-        this.allIsland = allIsland;
-    }
-
-    public List<ProjectArea> getProvinces() {
-        if (provinces == null) {
-            provinces = new ArrayList<>();
-        }
-        return provinces;
-    }
-
-    public void setProvinces(List<ProjectArea> provinces) {
-        this.provinces = provinces;
-    }
-
-    public List<ProjectArea> getDistricts() {
-        if (districts == null) {
-            districts = new ArrayList<>();
-        }
-        return districts;
-    }
-
-    public void setDistricts(List<ProjectArea> districts) {
-        this.districts = districts;
-    }
-
-    public List<ProjectArea> getDsDivisions() {
-        if (dsDivisions == null) {
-            dsDivisions = new ArrayList<>();
-        }
-        return dsDivisions;
-    }
-
-    public void setDsDivisions(List<ProjectArea> dsDivisions) {
-        this.dsDivisions = dsDivisions;
-    }
-
-    public List<ProjectArea> getGnDivisions() {
-        if (gnDivisions == null) {
-            gnDivisions = new ArrayList<>();
-        }
-        return gnDivisions;
-    }
-
-    public void setGnDivisions(List<ProjectArea> gnDivisions) {
-        this.gnDivisions = gnDivisions;
-    }
 
     @Override
     public int hashCode() {
@@ -210,6 +135,134 @@ public class Project implements Serializable {
         return "Ref No " + fileNumber + " ";
     }
 
+    public Integer getProjectYear() {
+        return projectYear;
+    }
+
+    public void setProjectYear(Integer projectYear) {
+        this.projectYear = projectYear;
+    }
+
+    public Institution getProjectLocation() {
+        return projectLocation;
+    }
+
+    public void setProjectLocation(Institution projectLocation) {
+        this.projectLocation = projectLocation;
+    }
+
+    public Date getPcpFirstReceivedDate() {
+        return pcpFirstReceivedDate;
+    }
+
+    public void setPcpFirstReceivedDate(Date pcpFirstReceivedDate) {
+        this.pcpFirstReceivedDate = pcpFirstReceivedDate;
+    }
+
+    public Date getPcpLastReceivedDate() {
+        return pcpLastReceivedDate;
+    }
+
+    public void setPcpLastReceivedDate(Date pcpLastReceivedDate) {
+        this.pcpLastReceivedDate = pcpLastReceivedDate;
+    }
+
+    public Boolean getEngineersEstimateAvailable() {
+        return engineersEstimateAvailable;
+    }
+
+    public void setEngineersEstimateAvailable(Boolean engineersEstimateAvailable) {
+        this.engineersEstimateAvailable = engineersEstimateAvailable;
+    }
+
+    public Boolean getMasterPlanAvailable() {
+        return masterPlanAvailable;
+    }
+
+    public void setMasterPlanAvailable(Boolean masterPlanAvailable) {
+        this.masterPlanAvailable = masterPlanAvailable;
+    }
+
+    public Boolean getBuildingPlanAvailable() {
+        return buildingPlanAvailable;
+    }
+
+    public void setBuildingPlanAvailable(Boolean buildingPlanAvailable) {
+        this.buildingPlanAvailable = buildingPlanAvailable;
+    }
+
+    public String getPecRecommendation() {
+        return pecRecommendation;
+    }
+
+    public void setPecRecommendation(String pecRecommendation) {
+        this.pecRecommendation = pecRecommendation;
+    }
+
+    public Date getPcpFirstSendToNdpDate() {
+        return pcpFirstSendToNdpDate;
+    }
+
+    public void setPcpFirstSendToNdpDate(Date pcpFirstSendToNdpDate) {
+        this.pcpFirstSendToNdpDate = pcpFirstSendToNdpDate;
+    }
+
+    public Date getPcpLastSendToNdpDate() {
+        return pcpLastSendToNdpDate;
+    }
+
+    public void setPcpLastSendToNdpDate(Date pcpLastSendToNdpDate) {
+        this.pcpLastSendToNdpDate = pcpLastSendToNdpDate;
+    }
+
+    public Boolean getNdbApproved() {
+        return ndbApproved;
+    }
+
+    public void setNdbApproved(Boolean ndbApproved) {
+        this.ndbApproved = ndbApproved;
+    }
+
+    public Date getNdpApprovedDate() {
+        return ndpApprovedDate;
+    }
+
+    public void setNdpApprovedDate(Date ndpApprovedDate) {
+        this.ndpApprovedDate = ndpApprovedDate;
+    }
+
+    public String getNdbRemarks() {
+        return ndbRemarks;
+    }
+
+    public void setNdbRemarks(String ndbRemarks) {
+        this.ndbRemarks = ndbRemarks;
+    }
+
+    public Boolean getCabinetApproved() {
+        return cabinetApproved;
+    }
+
+    public void setCabinetApproved(Boolean cabinetApproved) {
+        this.cabinetApproved = cabinetApproved;
+    }
+
+    public Date getCabinetApprovalDate() {
+        return cabinetApprovalDate;
+    }
+
+    public void setCabinetApprovalDate(Date cabinetApprovalDate) {
+        this.cabinetApprovalDate = cabinetApprovalDate;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
     public Long getId() {
         return id;
     }
@@ -218,28 +271,12 @@ public class Project implements Serializable {
         this.id = id;
     }
 
-    public String getProjectDescription() {
-        return projectDescription;
+    public Area getProvince() {
+        return province;
     }
 
-    public void setProjectDescription(String projectDescription) {
-        this.projectDescription = projectDescription;
-    }
-
-    public ProjectStageType getCurrentStageType() {
-        return currentStageType;
-    }
-
-    public void setCurrentStageType(ProjectStageType currentStageType) {
-        this.currentStageType = currentStageType;
-    }
-
-    public Institution getOriginatingInstitution() {
-        return originatingInstitution;
-    }
-
-    public void setOriginatingInstitution(Institution originatingInstitution) {
-        this.originatingInstitution = originatingInstitution;
+    public void setProvince(Area province) {
+        this.province = province;
     }
 
     public String getFileNumber() {
@@ -250,28 +287,84 @@ public class Project implements Serializable {
         this.fileNumber = fileNumber;
     }
 
-    public boolean isCancelled() {
-        return cancelled;
+    public Area getDistrict() {
+        return district;
     }
 
-    public void setCancelled(boolean cancelled) {
-        this.cancelled = cancelled;
+    public void setDistrict(Area district) {
+        this.district = district;
     }
 
-    public boolean isRejected() {
-        return rejected;
+    public String getProjectTitle() {
+        return projectTitle;
     }
 
-    public void setRejected(boolean rejected) {
-        this.rejected = rejected;
+    public void setProjectTitle(String projectTitle) {
+        this.projectTitle = projectTitle;
     }
 
-    public boolean isReactivated() {
-        return reactivated;
+    public String getProjectDescription() {
+        return projectDescription;
     }
 
-    public void setReactivated(boolean reactivated) {
-        this.reactivated = reactivated;
+    public void setProjectDescription(String projectDescription) {
+        this.projectDescription = projectDescription;
+    }
+
+    public Double getProjectCost() {
+        return projectCost;
+    }
+
+    public void setProjectCost(Double projectCost) {
+        this.projectCost = projectCost;
+    }
+
+    public Item getProjectCostUnit() {
+        return projectCostUnit;
+    }
+
+    public void setProjectCostUnit(Item projectCostUnit) {
+        this.projectCostUnit = projectCostUnit;
+    }
+
+    public Item getSourceOfFunds() {
+        return sourceOfFunds;
+    }
+
+    public void setSourceOfFunds(Item sourceOfFunds) {
+        this.sourceOfFunds = sourceOfFunds;
+    }
+
+    public Date getProposalDate() {
+        return proposalDate;
+    }
+
+    public void setProposalDate(Date proposalDate) {
+        this.proposalDate = proposalDate;
+    }
+
+    public Item getSector() {
+        return sector;
+    }
+
+    public void setSector(Item sector) {
+        this.sector = sector;
+    }
+
+    public Boolean getAllIsland() {
+        return allIsland;
+    }
+
+    public void setAllIsland(Boolean allIsland) {
+        this.allIsland = allIsland;
+    }
+
+    public ProjectStageType getCurrentStageType() {
+        return currentStageType;
+    }
+
+    public void setCurrentStageType(ProjectStageType currentStageType) {
+        this.currentStageType = currentStageType;
     }
 
     public WebUser getCreater() {
@@ -322,161 +415,8 @@ public class Project implements Serializable {
         this.retireComments = retireComments;
     }
 
-    public WebUser getEditor() {
-        return editor;
-    }
-
-    public void setEditor(WebUser editor) {
-        this.editor = editor;
-    }
-
-    public Date getEditedAt() {
-        return editedAt;
-    }
-
-    public void setEditedAt(Date editedAt) {
-        this.editedAt = editedAt;
-    }
-
-    public WebUser getCheckedBy() {
-        return checkedBy;
-    }
-
-    public void setCheckedBy(WebUser checkedBy) {
-        this.checkedBy = checkedBy;
-    }
-
-    public Date getCheckeAt() {
-        return checkeAt;
-    }
-
-    public void setCheckeAt(Date checkeAt) {
-        this.checkeAt = checkeAt;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public String getSpecialNotes() {
-        return specialNotes;
-    }
-
-    public void setSpecialNotes(String specialNotes) {
-        this.specialNotes = specialNotes;
-    }
-
-    public Date getRequestSubmittedAt() {
-        return requestSubmittedAt;
-    }
-
-    public void setRequestSubmittedAt(Date requestSubmittedAt) {
-        this.requestSubmittedAt = requestSubmittedAt;
-    }
-
-    public String getProposal() {
-        if (proposal == null) {
-            proposal = "";
-        }
-        return proposal;
-    }
-
-    public void setProposal(String proposal) {
-        this.proposal = proposal;
-    }
-
-    public Date getProposalSubmittedAt() {
-        return proposalSubmittedAt;
-    }
-
-    public void setProposalSubmittedAt(Date proposalSubmittedAt) {
-        this.proposalSubmittedAt = proposalSubmittedAt;
-    }
-
-    public WebUser getProposalSubmittedBy() {
-        return proposalSubmittedBy;
-    }
-
-    public void setProposalSubmittedBy(WebUser proposalSubmittedBy) {
-        this.proposalSubmittedBy = proposalSubmittedBy;
-    }
-
-    public Date getProposalAcceptedAt() {
-        return proposalAcceptedAt;
-    }
-
-    public void setProposalAcceptedAt(Date proposalAcceptedAt) {
-        this.proposalAcceptedAt = proposalAcceptedAt;
-    }
-
-    public Double getProjectCost() {
-        return projectCost;
-    }
-
-    public void setProjectCost(Double projectCost) {
-        this.projectCost = projectCost;
-    }
-
-    public Item getProjectCostUnit() {
-        return projectCostUnit;
-    }
-
-    public void setProjectCostUnit(Item projectCostUnit) {
-        this.projectCostUnit = projectCostUnit;
-    }
-
-    public Item getSourceOfFunds() {
-        return sourceOfFunds;
-    }
-
-    public void setSourceOfFunds(Item sourceOfFunds) {
-        this.sourceOfFunds = sourceOfFunds;
-    }
-
-    public Date getProposalDate() {
-        return proposalDate;
-    }
-
-    public void setProposalDate(Date proposalDate) {
-        this.proposalDate = proposalDate;
-    }
-
-    public Area getProvince() {
-        return province;
-    }
-
-    public void setProvince(Area province) {
-        this.province = province;
-    }
-
-    public Area getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(Area district) {
-        this.district = district;
-    }
-
-    public Area getDsArea() {
-        return dsArea;
-    }
-
-    public void setDsArea(Area dsArea) {
-        this.dsArea = dsArea;
-    }
-
-    public Area getGnArea() {
-        return gnArea;
-    }
-
-    public void setGnArea(Area gnArea) {
-        this.gnArea = gnArea;
-    }
-
     
     
+    
+
 }

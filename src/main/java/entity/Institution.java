@@ -41,9 +41,6 @@ public class Institution implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private Coordinate coordinate;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    private WebUser webUser;
-    //Created Properties
     @ManyToOne
     private WebUser creater;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
@@ -60,18 +57,6 @@ public class Institution implements Serializable {
     private Date retiredAt;
     private String retireComments;
 
-    @Transient
-    private String lastPartOfAddress;
-
-    @Transient
-    private String lastPartOfName;
-
-    public String getLastPartOfAddress() {
-        if (address == null) {
-            return "";
-        }
-        return address.substring(address.lastIndexOf(" ") + 1);
-    }
 
     public Long getId() {
         return id;
