@@ -148,7 +148,11 @@ public class Person implements Serializable {
         } else {
             temT = "";
         }
-        nameWithTitle = temT + " " + getName();
+        if (temT.trim().equals("")) {
+            nameWithTitle = getName();
+        } else {
+            nameWithTitle = temT + " " + getName();
+        }
         return nameWithTitle;
     }
 
