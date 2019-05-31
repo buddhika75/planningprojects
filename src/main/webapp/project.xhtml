@@ -253,23 +253,36 @@
                                         </p:calendar>
                                     </div>
                                 </div>
-
+                                
                                 <div class="row">
                                     <div class="col-25">
-
+                                        <h:outputLabel value="Engineer's Estimate"  />
                                     </div>
                                     <div class="col-75">
-                                        <div class="w3-col s4 ">
-                                            <h:selectBooleanCheckbox  value="#{webUserController.currentProject.engineersEstimateAvailable}" title="Engineer's Estimate" >Engineer's Estimate&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h:selectBooleanCheckbox>
-                                        </div>
-                                        <div class="w3-col s4 ">
-                                            <h:selectBooleanCheckbox  value="#{webUserController.currentProject.masterPlanAvailable}" title="Mater Plan" >Mater Plan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h:selectBooleanCheckbox>
-                                        </div>
-                                        <div class="w3-col s4 ">
-                                            <h:selectBooleanCheckbox  value="#{webUserController.currentProject.buildingPlanAvailable}" title="Building Plan" >Mater Plan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h:selectBooleanCheckbox>
-                                        </div>
+                                        <p:selectBooleanButton value="#{webUserController.currentProject.engineersEstimateAvailable}" offLabel="NOT Available" onLabel="Available" ></p:selectBooleanButton>
                                     </div>
                                 </div>
+                                
+                                <div class="row">
+                                    <div class="col-25">
+                                        <h:outputLabel value="Mater Plan"  />
+                                    </div>
+                                    <div class="col-75">
+                                        <p:selectBooleanButton value="#{webUserController.currentProject.masterPlanAvailable}" offLabel="NOT Available" onLabel="Available" ></p:selectBooleanButton>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-25">
+                                        <h:outputLabel value="Building Plan"  />
+                                    </div>
+                                    <div class="col-75">
+                                        <p:selectBooleanButton value="#{webUserController.currentProject.buildingPlanAvailable}" offLabel="NOT Available" onLabel="Available" 
+                                                               ></p:selectBooleanButton>
+                                    </div>
+                                </div>
+
+                               
                             </div>
                         </div>
 
@@ -292,6 +305,7 @@
                             </h:commandLink>
 
                             <h:commandLink action="#{webUserController.toPecApproval()}" 
+                                           rendered="#{webUserController.currentProject.canApproveAtPec}"
                                            class="w3-btn w3-amber w3-margin  btn350" >
                                 <div>
                                     <i class="fas far fa-thumbs-up" style='float: left; font-size:24px;color:yellow;'></i>
@@ -299,6 +313,7 @@
                                 </div>
                             </h:commandLink> 
                             <h:commandLink action="#{webUserController.toPecRejection()}" 
+                                           rendered="#{webUserController.currentProject.canRejectAtPec}"
                                            class="w3-btn w3-amber w3-margin  btn350" >
                                 <div>
                                     <i class="fas far fa-thumbs-down" style='float: left; font-size:24px;color:yellow;'></i>
@@ -307,13 +322,15 @@
                             </h:commandLink> 
 
                             <h:commandLink action="#{webUserController.toDnpSubmission()}" 
+                                           rendered="#{webUserController.currentProject.canSubmitToDnp}"
                                            class="w3-btn w3-amber w3-margin  btn350 " >
                                 <div>
                                     <i class="fa fa-arrow-right" style='float: left; font-size:24px;color:blueviolet ;'></i>
                                     <div style="float: right;">To DNP Submission</div>
                                 </div>
                             </h:commandLink> 
-                            <h:commandLink action="#{webUserController.toDnpApproval()}" 
+                            <h:commandLink action="#{webUserController.toDnpApproval()}"
+                                           rendered="#{webUserController.currentProject.canApproveAtDnp}"
                                            class="w3-btn w3-amber w3-margin  btn350" >
                                 <div>
                                     <i class="fas far fa-thumbs-down" style='float: left; font-size:24px;color:blueviolet;'></i>
@@ -321,6 +338,7 @@
                                 </div>
                             </h:commandLink> 
                             <h:commandLink action="#{webUserController.toDnpRejection()}" 
+                                           rendered="#{webUserController.currentProject.canRejectAtDnp}"
                                            class="w3-btn w3-amber w3-margin  btn350" >
                                 <div>
                                     <i class="fas far fa-thumbs-down" style='float: left; font-size:24px;color:blueviolet;'></i>
@@ -328,6 +346,7 @@
                                 </div>
                             </h:commandLink> 
                              <h:commandLink action="#{webUserController.toCabinetSubmission()}" 
+                                            rendered="#{webUserController.currentProject.canSubmitToCabinet}"
                                            class="w3-btn w3-amber w3-margin  btn350" >
                                 <div>
                                     <i class="fa fa-arrow-right" style='float: left; font-size:24px;color:blueviolet ;'></i>
@@ -335,17 +354,19 @@
                                 </div>
                             </h:commandLink> 
                             <h:commandLink action="#{webUserController.toCabinetApproval()}" 
+                                           rendered="#{webUserController.currentProject.canApproveAtCabinet}"
                                            class="w3-btn w3-amber w3-margin  btn350" >
                                 <div>
                                     <i class="fas far fa-thumbs-down" style='float: left; font-size:24px;color:blueviolet;'></i>
                                     <div style="float: right;">To Approve at Cabinet</div>
                                 </div>
                             </h:commandLink> 
-                            <h:commandLink action="#{webUserController.toCabinetApproval()}" 
+                            <h:commandLink action="#{webUserController.toCabinetRejection()}" 
+                                           rendered="#{webUserController.currentProject.canRejectAtCabinet}"
                                            class="w3-btn w3-amber w3-margin  btn350" >
                                 <div>
                                     <i class="fas far fa-thumbs-down" style='float: left; font-size:24px;color:blueviolet;'></i>
-                                    <div style="float: right;">To Approve at Cabinet</div>
+                                    <div style="float: right;">To Reject at Cabinet</div>
                                 </div>
                             </h:commandLink> 
                         </div>

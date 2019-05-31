@@ -807,7 +807,7 @@ public class Project implements Serializable {
     }
 
     public boolean isCanApproveAtPec() {
-        if (currentStageType == ProjectStageType.Awaiting_PEC_Approval) {
+        if (currentStageType == ProjectStageType.Awaiting_PEC_Approval || currentStageType==ProjectStageType.PEC_Rejected) {
             canApproveAtPec = true;
         } else {
             canApproveAtPec = false;
@@ -825,7 +825,7 @@ public class Project implements Serializable {
     }
 
     public boolean isCanSubmitToDnp() {
-        if (currentStageType == ProjectStageType.Awaiting_DNP_Submission) {
+        if (currentStageType == ProjectStageType.Awaiting_DNP_Submission || currentStageType == ProjectStageType.DNP_Rejected) {
             canSubmitToDnp = true;
         } else {
             canSubmitToDnp = false;
@@ -852,7 +852,7 @@ public class Project implements Serializable {
     }
 
     public boolean isCanSubmitToCabinet() {
-        if (currentStageType == ProjectStageType.Awaiting_Cabinet_Submission) {
+        if (currentStageType == ProjectStageType.Awaiting_Cabinet_Submission || currentStageType == ProjectStageType.Cabinet_Rejected) {
             canSubmitToCabinet = true;
         } else {
             canSubmitToCabinet = false;

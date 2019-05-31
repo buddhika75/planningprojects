@@ -15,4 +15,5 @@ public enum ProjectStageType {
     Awaiting_Cabinet_Submission,
     Awaiting_Cabinet_Approval,
     Cabinet_Approved,
+    Cabinet_Rejected,
 }
