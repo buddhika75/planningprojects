@@ -664,6 +664,16 @@ public class WebUserController implements Serializable {
         getProjectFacade().edit(currentProject);
         return "/cabinet_approval";
     }
+    
+    public String toCabinetRejection() {
+        if (currentProject == null) {
+            JsfUtil.addErrorMessage("Nothing to update");
+            return "";
+        }
+        currentProject.setCabinetRejectedDate(new Date());
+        getProjectFacade().edit(currentProject);
+        return "/cabinet_rejection";
+    }
 
     /**
      *

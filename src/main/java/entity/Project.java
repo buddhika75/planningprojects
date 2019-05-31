@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 @Entity
 public class Project implements Serializable {
@@ -97,6 +98,10 @@ public class Project implements Serializable {
     private Boolean cabinetApproved;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date cabinetApprovalDate;
+
+    private Boolean cabinetRejected;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date cabinetRejectedDate;
 
     @Lob
     private String remarks;
@@ -185,6 +190,33 @@ public class Project implements Serializable {
     private Date cabinetApprovedAt;
     @Lob
     private String cabinetApprovalRecommendation;
+
+    //Cabinet Rejection
+    @ManyToOne
+    private WebUser cabinetRejectedUser;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date cabinetRejectedAt;
+    @Lob
+    private String cabinetRejectRecommendation;
+
+    @Transient
+    private boolean canApproveAtPec = false;
+    @Transient
+    private boolean canRejectAtPec = false;
+
+    @Transient
+    private boolean canSubmitToDnp;
+    @Transient
+    private boolean canApproveAtDnp = false;
+    @Transient
+    private boolean canRejectAtDnp = false;
+
+    @Transient
+    private boolean canSubmitToCabinet;
+    @Transient
+    private boolean canApproveAtCabinet = false;
+    @Transient
+    private boolean canRejectAtCabinet = false;
 
     @Override
     public int hashCode() {
@@ -502,8 +534,6 @@ public class Project implements Serializable {
     public void setPecApprovedUser(WebUser pecApprovedUser) {
         this.pecApprovedUser = pecApprovedUser;
     }
-    
-    
 
     public Date getPecApprovedAt() {
         return pecApprovedAt;
@@ -749,6 +779,119 @@ public class Project implements Serializable {
         this.cabinetSubmittedDate = cabinetSubmittedDate;
     }
 
+    public WebUser getCabinetRejectedUser() {
+        return cabinetRejectedUser;
+    }
+
+    public void setCabinetRejectedUser(WebUser cabinetRejectedUser) {
+        this.cabinetRejectedUser = cabinetRejectedUser;
+    }
+
+    public Date getCabinetRejectedAt() {
+        return cabinetRejectedAt;
+    }
+
+    public void setCabinetRejectedAt(Date cabinetRejectedAt) {
+        this.cabinetRejectedAt = cabinetRejectedAt;
+    }
+
     
     
+    
+    public String getCabinetRejectRecommendation() {
+        return cabinetRejectRecommendation;
+    }
+
+    public void setCabinetRejectRecommendation(String cabinetRejectRecommendation) {
+        this.cabinetRejectRecommendation = cabinetRejectRecommendation;
+    }
+
+    public boolean isCanApproveAtPec() {
+        if (currentStageType == ProjectStageType.Awaiting_PEC_Approval) {
+            canApproveAtPec = true;
+        } else {
+            canApproveAtPec = false;
+        }
+        return canApproveAtPec;
+    }
+
+    public boolean isCanRejectAtPec() {
+        if (currentStageType == ProjectStageType.Awaiting_PEC_Approval) {
+            canRejectAtPec = true;
+        } else {
+            canRejectAtPec = false;
+        }
+        return canRejectAtPec;
+    }
+
+    public boolean isCanSubmitToDnp() {
+        if (currentStageType == ProjectStageType.Awaiting_DNP_Submission) {
+            canSubmitToDnp = true;
+        } else {
+            canSubmitToDnp = false;
+        }
+        return canSubmitToDnp;
+    }
+
+    public boolean isCanApproveAtDnp() {
+        if (currentStageType == ProjectStageType.Awaiting_DNP_Approval) {
+            canApproveAtDnp = true;
+        } else {
+            canApproveAtDnp = false;
+        }
+        return canApproveAtDnp;
+    }
+
+    public boolean isCanRejectAtDnp() {
+        if (currentStageType == ProjectStageType.Awaiting_DNP_Approval) {
+            canRejectAtDnp = true;
+        } else {
+            canRejectAtDnp = false;
+        }
+        return canRejectAtDnp;
+    }
+
+    public boolean isCanSubmitToCabinet() {
+        if (currentStageType == ProjectStageType.Awaiting_Cabinet_Submission) {
+            canSubmitToCabinet = true;
+        } else {
+            canSubmitToCabinet = false;
+        }
+        return canSubmitToCabinet;
+    }
+
+    public boolean isCanApproveAtCabinet() {
+        if (currentStageType == ProjectStageType.Awaiting_Cabinet_Approval) {
+            canApproveAtCabinet = true;
+        } else {
+            canApproveAtCabinet = false;
+        }
+        return canApproveAtCabinet;
+    }
+
+    public boolean isCanRejectAtCabinet() {
+        if (currentStageType == ProjectStageType.Awaiting_Cabinet_Approval) {
+            canRejectAtCabinet = true;
+        } else {
+            canRejectAtCabinet = false;
+        }
+        return canRejectAtCabinet;
+    }
+
+    public Boolean getCabinetRejected() {
+        return cabinetRejected;
+    }
+
+    public void setCabinetRejected(Boolean cabinetRejected) {
+        this.cabinetRejected = cabinetRejected;
+    }
+
+    public Date getCabinetRejectedDate() {
+        return cabinetRejectedDate;
+    }
+
+    public void setCabinetRejectedDate(Date cabinetRejectedDate) {
+        this.cabinetRejectedDate = cabinetRejectedDate;
+    }
+
 }
