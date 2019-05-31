@@ -111,6 +111,10 @@ public class WebUserController implements Serializable {
     private Date toDate;
     
     private Integer year;
+    private Area province;
+    private Area district;
+    private Institution location;
+    private Boolean allIslandProjects;
     
     
 
@@ -304,8 +308,15 @@ public class WebUserController implements Serializable {
     
     
     public String searchAllIslandProjects() {
+        allIslandProjects=true;
         listOfProjects = listProjects(null, year, true, null, null);
         return "/projects_search_all_island";
+    }
+    
+    public String searchProjectsByProvince() {
+        allIslandProjects=false;
+        listOfProjects = listProjects(null, year, false, province, null);
+        return "/projects_search_by_province";
     }
     
     public String searchProjects() {
@@ -1304,7 +1315,41 @@ public class WebUserController implements Serializable {
     public void setYear(Integer year) {
         this.year = year;
     }
+
+    public Area getProvince() {
+        return province;
+    }
+
+    public void setProvince(Area province) {
+        this.province = province;
+    }
+
+    public Area getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(Area district) {
+        this.district = district;
+    }
+
+    public Institution getLocation() {
+        return location;
+    }
+
+    public void setLocation(Institution location) {
+        this.location = location;
+    }
+
+    public Boolean getAllIslandProjects() {
+        return allIslandProjects;
+    }
+
+    public void setAllIslandProjects(Boolean allIslandProjects) {
+        this.allIslandProjects = allIslandProjects;
+    }
+
     
+
     
     
 

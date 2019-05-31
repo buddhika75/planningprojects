@@ -16,11 +16,14 @@
 
         <h:form >
             <h:panelGrid columns="1" >
-                <h:panelGrid columns="2" >
-                    <h:commandLink 
-                        class="w3-btn w3-amber w3-margin  btn150" 
-                        action="/upload_files_to_project_proposal" 
-                        >
+                <h:panelGrid columns="3" >
+
+                    
+
+
+                    <h:commandLink class="w3-btn w3-amber w3-margin  btn150" 
+                                   action="/upload_files_to_project_proposal" 
+                                   >
                         <div>
                             <i class='fa fa-file-excel-o' style='float: left; font-size:24px;color:green;'></i>
                             <div style="float: right;">Download</div>
@@ -71,13 +74,13 @@
                     </h:outputLabel>
                     <h:outputLabel value=" #{p.projectCostUnit.name}" ></h:outputLabel>
                 </p:column>
-                <p:column headerText="Province" >
+                <p:column headerText="Province" rendered="#{webUserController.allIslandProjects ne true}" >
                     <h:outputLabel value="#{p.province}" >
                     </h:outputLabel>
                     <h:outputLabel value="#{p.allIsland?'All Island':''}" >
                     </h:outputLabel>
                 </p:column>
-                <p:column headerText="District" >
+                <p:column headerText="District"  rendered="#{webUserController.allIslandProjects ne true}" >
                     <h:outputLabel value="#{p.district.name}" >
                     </h:outputLabel>
                 </p:column>

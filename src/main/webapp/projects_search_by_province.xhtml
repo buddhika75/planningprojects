@@ -22,7 +22,7 @@
                 <div class="w3-row w3-container w3-padding-16" >
                     <h:panelGroup >
 
-                        <p:panel header="All Island Projects" >
+                        <p:panel header="Search Projects By Province" >
                             <h:form >
                                 <table >
                                     <tr>
@@ -48,8 +48,26 @@
 
                                         </td>
                                         <td>
+                                            <p:spacer height="1" width="20" ></p:spacer>
+                                        </td>
+                                        <td>
+
+                                            <p:outputLabel value="Province" ></p:outputLabel>
+                                        </td>
+                                        <td>
+                                            <h:selectOneMenu 
+                                                value="#{webUserController.province}" >
+                                                <f:selectItem itemLabel="Select Province" ></f:selectItem>
+                                                <f:selectItems value="#{areaController.provinces}" var="p" itemLabel="#{p.name}" itemValue="#{p}" ></f:selectItems>
+                                                <f:ajax event="blur" execute="@this" ></f:ajax>
+                                            </h:selectOneMenu>
+                                        </td>
+                                        <td>
+                                            <p:spacer height="1" width="20" ></p:spacer>
+                                        </td>
+                                        <td>
                                             <h:commandLink class="w3-btn w3-amber w3-margin  btn150" 
-                                                           action="#{webUserController.searchAllIslandProjects()}" 
+                                                           action="#{webUserController.searchProjectsByProvince()}" 
                                                            >
                                                 <div>
                                                     <i class='fa fa-refresh' style='float: left; font-size:24px;color:green;'></i>
