@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+          xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <h:head>
+        <h:outputStylesheet library="css" name="main.css" ></h:outputStylesheet>
+    </h:head>
+
+    <h:body>
+
+        <ui:composition template="./template.xhtml">
+
+            <ui:define name="content">
+
+
+                <table style="width: 99%; top: 0px; margin: auto; margin-top: 0px; vertical-align: top; " class="w3-table" >
+                    <tr style="height: 50px;">
+                        <td colspan="2" >
+                            <h3>Project Search</h3>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" style="width: 220px;">
+                            <table   >
+
+                                <tr>
+                                    <td style="text-align: left; width: 210px!important; min-width: 210px!important; max-width: 210px!important;">
+                                        <table >
+                                            <tr>
+                                                <td>
+                                                    Year
+                                                </td>
+                                                <td>
+                                                    <h:form >
+                                                        <h:selectOneMenu id="y" value="#{webUserController.year}" >
+                                                        <f:selectItem itemLabel="Any" ></f:selectItem>
+                                                        <f:selectItem itemValue="2010" itemLabel="2010"></f:selectItem>
+                                                        <f:selectItem itemValue="2011" itemLabel="2011"></f:selectItem>
+                                                        <f:selectItem itemValue="2012" itemLabel="2012"></f:selectItem>
+                                                        <f:selectItem itemValue="2013" itemLabel="2013"></f:selectItem>
+                                                        <f:selectItem itemValue="2014" itemLabel="2014"></f:selectItem>
+                                                        <f:selectItem itemValue="2015" itemLabel="2015"></f:selectItem>
+                                                        <f:selectItem itemValue="2016" itemLabel="2016"></f:selectItem>
+                                                        <f:selectItem itemValue="2017" itemLabel="2017"></f:selectItem>
+                                                        <f:selectItem itemValue="2018" itemLabel="2018"></f:selectItem>
+                                                        <f:selectItem itemValue="2019" itemLabel="2019"></f:selectItem>
+                                                        <f:ajax event="blur" execute="@this" ></f:ajax>
+                                                    </h:selectOneMenu>
+                                                    </h:form>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                
+                                 <tr>
+                                    <td style="text-align: left; width: 210px!important; min-width: 210px!important; max-width: 210px!important;">
+                                        <h:form>
+                                            <h:commandButton  class="w3-btn w3-yellow btn350" 
+                                                              value="All Island Projects" 
+                                                              action="#{webUserController.searchAllIslandProjects()}"></h:commandButton>
+                                        </h:form>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td style="text-align: left; width: 210px!important; min-width: 210px!important; max-width: 210px!important;">
+                                        <h:form>
+                                            <h:commandButton  class="w3-btn w3-yellow btn350" 
+                                                              value="By Province" 
+                                                              action="#{webUserController.prepareCreate()}"></h:commandButton>
+                                        </h:form>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <h:form>
+                                            <h:commandButton  class="w3-btn w3-yellow btn350" 
+                                                              value="By District" 
+                                                              action="/webUser/manage_users"></h:commandButton>
+                                        </h:form>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <h:form>
+                                            <h:commandButton  class="w3-btn w3-yellow btn350" 
+                                                              value="By Title" 
+                                                              action="#{institutionController.prepareListOfProviders()}"></h:commandButton>
+                                        </h:form>
+                                    </td>
+                                </tr>
+                                
+                            </table>
+                        </td>
+                        <td>
+
+                            <ui:insert name="right">
+
+                            </ui:insert>
+
+                        </td>
+                    </tr>
+                </table>
+
+
+
+
+            </ui:define>
+
+        </ui:composition>
+
+
+    </h:body>
+
+
+
+
+
+
+</html>

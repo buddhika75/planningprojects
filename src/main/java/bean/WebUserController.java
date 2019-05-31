@@ -109,6 +109,10 @@ public class WebUserController implements Serializable {
 
     private Date fromDate;
     private Date toDate;
+    
+    private Integer year;
+    
+    
 
     @PostConstruct
     public void init() {
@@ -297,6 +301,17 @@ public class WebUserController implements Serializable {
         listOfProjects = listProjects();
         return "/project_lists";
     }
+    
+    
+    public String searchAllIslandProjects() {
+        listOfProjects = listProjects(null, year, true, null, null);
+        return "/projects_search_all_island";
+    }
+    
+    public String searchProjects() {
+        listOfProjects = null;
+        return "/project_search";
+    }
 
     public String listProjectsAwaitingPcpApproval() {
         listOfProjects = listProjects(ProjectStageType.Awaiting_PEC_Approval);
@@ -330,6 +345,47 @@ public class WebUserController implements Serializable {
         return getProjectFacade().findBySQL(j, m, TemporalType.DATE);
     }
 
+    
+    public List<Project> listProjects(ProjectStageType type, Integer y, Boolean allIsland, Area province, Area district) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(getToDate());
+        c.add(Calendar.DATE, 2);
+        String j = "select p from Project p "
+                + " where p.retired=:f ";
+                
+        Map m = new HashMap();
+        m.put("f", false);
+        
+        if(type!=null){
+            j += " and p.currentStageType=:t ";
+            m.put("t", type);
+        }
+        
+        
+        if(y!=null){
+            j += " and p.projectYear=:y ";
+            m.put("y", y);
+        }
+        
+        if(allIsland!=null){
+            j += " and p.allIsland=:a ";
+            m.put("a", allIsland);
+        }
+        
+        if(province!=null){
+             j += " and p.province=:p ";
+            m.put("p", province);
+        }
+        
+         if(district!=null){
+             j += " and p.district=:d ";
+            m.put("d", district);
+        }
+        
+        j+= " order by p.id";
+        return getProjectFacade().findBySQL(j, m, TemporalType.DATE);
+    }
+    
     public List<Project> listProjects() {
         Calendar c = Calendar.getInstance();
         c.setTime(getToDate());
@@ -1240,6 +1296,17 @@ public class WebUserController implements Serializable {
         }
         this.selectedGnAreas = selectedGnAreas;
     }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+    
+    
+    
 
     @FacesConverter(forClass = WebUser.class)
     public static class WebUserControllerConverter implements Converter {

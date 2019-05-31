@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp">
 
 
     <h:head>
@@ -136,50 +137,9 @@
                             </h:form>
                         </td>
                         <td style="vertical-align: top;">
-                            <h:form >
-                                <p:dataTable class="w3-table-all w3-striped redTable" value="#{webUserController.listOfProjects}" var="p" 
-                                             rowKey="#{p.id}"
-                                             rows="10"
-                                             paginator="true"
-                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                             rowsPerPageTemplate="10,20,25"
-                                             >
-                                    
-                                    <p:column headerText="Year" style="width: 70px;" >
-                                        <h:outputLabel value="#{p.projectYear}" >
-                                        </h:outputLabel>
-                                    </p:column>
-                                    
-                                     <p:column headerText="Title" >
-                                         <h:outputLabel value="#{p.projectTitle}" >
-                                            <f:convertDateTime pattern="MMM/dd/yyyy" ></f:convertDateTime>
-                                        </h:outputLabel>
-                                    </p:column>
-                                    <p:column headerText="File No" >
-                                        <h:outputLabel value="#{p.fileNumber }" >
-                                        </h:outputLabel>
-                                    </p:column>
-                                    <p:column headerText="Cost" >
-                                        <h:outputLabel value="#{p.projectCost}" >
-                                        </h:outputLabel>
-                                    </p:column>
-                                    <p:column headerText="Province" >
-                                        <h:outputLabel value="#{p.province}" >
-                                        </h:outputLabel>
-                                    </p:column>
-                                    <p:column headerText="Submitted Date" >
-                                        <h:outputLabel value="#{p.proposalDate}" >
-                                            <f:convertDateTime pattern="MMM/dd/yyyy" ></f:convertDateTime>
-                                        </h:outputLabel>
-                                    </p:column>
-
-                                    <p:column headerText="Actions" >
-                                        <p:commandButton class="w3-btn w3-teal" value="Manage" ajax="false" action="#{webUserController.viewProject()}" >
-                                            <f:setPropertyActionListener value="#{p}" target="#{webUserController.currentProject}" ></f:setPropertyActionListener>
-                                        </p:commandButton>
-                                    </p:column>
-                                </p:dataTable>
-                            </h:form>
+                            
+                            <ez:projectList/>
+                            
                         </td>
                     </tr>
                 </table>

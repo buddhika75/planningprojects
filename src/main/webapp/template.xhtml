@@ -17,6 +17,7 @@
         <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' 
               integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' 
               crossorigin='anonymous'></link>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
         <h:outputStylesheet library="css" name="tem1.css"/>
         <title>Management Development and Planning Unit</title>
         <h:outputStylesheet library="css" name="tem1.css" ></h:outputStylesheet>
@@ -70,7 +71,7 @@
                     <h:panelGroup rendered="#{webUserController.loggedUser.systemAdministrator}" >
                         <li>
                             <ui:insert name="viewProjects">
-                                <h:commandLink value="VIEW PROJECTS" action="#{webUserController.listAllProjects}"></h:commandLink>
+                                <h:commandLink value="LIST PROJECTS" action="#{webUserController.listAllProjects}"></h:commandLink>
                             </ui:insert>
                         </li>
                         <li>
@@ -80,7 +81,10 @@
 
                     <h:panelGroup rendered="#{webUserController.loggedUser.superUser}" >
                         <li>
-                            <h:commandLink value="VIEW PROJECTS" action="#{webUserController.listAllProjects}"></h:commandLink>
+                            <h:commandLink value="LIST PROJECTS" action="#{webUserController.listAllProjects}"></h:commandLink>
+                        </li>
+                        <li>
+                            <h:commandLink value="SEARCH PROJECTS" action="#{webUserController.searchProjects()}"></h:commandLink>
                         </li>
                     </h:panelGroup>
                     <h:panelGroup rendered="#{webUserController.loggedUser.user}" >
@@ -92,7 +96,11 @@
                         </ui:insert>
 
                         <li>
-                            <h:commandLink value="VIEW PROJECTS" action="#{webUserController.listAllProjects}"></h:commandLink>
+                            <h:commandLink value="LIST PROJECTS" action="#{webUserController.listAllProjects}"></h:commandLink>
+                        </li>
+                        
+                        <li>
+                            <h:commandLink value="SEARCH PROJECTS" action="#{webUserController.searchProjects()}"></h:commandLink>
                         </li>
                     </h:panelGroup>
 
