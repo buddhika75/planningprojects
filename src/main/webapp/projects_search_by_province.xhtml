@@ -54,7 +54,7 @@
                                         <td>
                                            <h:selectOneMenu class="w3-amber"
                                                              value="#{webUserController.province}" >
-                                                <f:selectItem itemLabel="Any Province" ></f:selectItem>
+                                                <f:selectItem itemLabel="Select Province" ></f:selectItem>
                                                 <f:selectItems value="#{areaController.provinces}" var="p" itemLabel="#{p.name}" itemValue="#{p}" ></f:selectItems>
                                                 <f:ajax event="blur" execute="@this" render="@this"></f:ajax>
                                             </h:selectOneMenu>
