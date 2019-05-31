@@ -52,7 +52,7 @@
                                         <h:form>
                                             <h:commandButton  class="w3-btn w3-yellow btn350" 
                                                               value="Search By Province" 
-                                                              action="#{webUserController.searchAllIslandProjects()}"></h:commandButton>
+                                                              action="#{webUserController.searchProjectsByProvince()}"></h:commandButton>
                                         </h:form>
                                     </td>
                                 </tr>
@@ -60,8 +60,9 @@
                                     <td style="text-align: left;">
                                         <h:form>
                                             <h:commandButton  class="w3-btn w3-yellow btn350" 
-                                                              value="By District" 
-                                                              action="/webUser/manage_users"></h:commandButton>
+                                                              value="Search By District" 
+                                                              action="#{webUserController.searchProjectsByDistrict()}">
+                                            </h:commandButton>
                                         </h:form>
                                     </td>
                                 </tr>

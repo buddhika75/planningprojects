@@ -116,3 +116,7 @@
 .alignTop{
     vertical-align: top;
 }
+
+.noClass select{
+    float: none;
+}

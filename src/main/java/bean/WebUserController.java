@@ -319,6 +319,12 @@ public class WebUserController implements Serializable {
         return "/projects_search_by_province";
     }
     
+    public String searchProjectsByDistrict() {
+        allIslandProjects=false;
+        listOfProjects = listProjects(null, year, false, null, district);
+        return "/projects_search_by_district";
+    }
+    
     public String searchProjects() {
         listOfProjects = null;
         return "/project_search";

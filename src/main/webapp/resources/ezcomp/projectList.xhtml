@@ -75,7 +75,7 @@
                     <h:outputLabel value=" #{p.projectCostUnit.name}" ></h:outputLabel>
                 </p:column>
                 <p:column headerText="Province" rendered="#{webUserController.allIslandProjects ne true}" >
-                    <h:outputLabel value="#{p.province}" >
+                    <h:outputLabel value="#{p.province.name}" >
                     </h:outputLabel>
                     <h:outputLabel value="#{p.allIsland?'All Island':''}" >
                     </h:outputLabel>
