@@ -109,14 +109,13 @@ public class WebUserController implements Serializable {
 
     private Date fromDate;
     private Date toDate;
-    
+
     private Integer year;
     private Area province;
     private Area district;
     private Institution location;
     private Boolean allIslandProjects;
-    
-    
+    private String titleSearchKeyword;
 
     @PostConstruct
     public void init() {
@@ -305,26 +304,43 @@ public class WebUserController implements Serializable {
         listOfProjects = listProjects();
         return "/project_lists";
     }
-    
-    
+
     public String searchAllIslandProjects() {
-        allIslandProjects=true;
+        allIslandProjects = true;
         listOfProjects = listProjects(null, year, true, null, null);
         return "/projects_search_all_island";
     }
-    
+
     public String searchProjectsByProvince() {
-        allIslandProjects=false;
-        listOfProjects = listProjects(null, year, false, province, null);
+        allIslandProjects = false;
+        if (province != null) {
+            listOfProjects = listProjects(null, year, false, province, null);
+        } else {
+            listOfProjects = null;
+        }
         return "/projects_search_by_province";
     }
-    
+
     public String searchProjectsByDistrict() {
-        allIslandProjects=false;
-        listOfProjects = listProjects(null, year, false, null, district);
+        allIslandProjects = false;
+        if (district != null) {
+            listOfProjects = listProjects(null, year, false, null, district);
+        } else {
+            listOfProjects = null;
+        }
         return "/projects_search_by_district";
     }
-    
+
+    public String searchProjectsByTitle() {
+        allIslandProjects = false;
+        if (titleSearchKeyword != null && !titleSearchKeyword.trim().equals("")) {
+            listOfProjects = listProjects(null, year, null, null, null, titleSearchKeyword);
+        } else {
+            listOfProjects = null;
+        }
+        return "/projects_search_by_title";
+    }
+
     public String searchProjects() {
         listOfProjects = null;
         return "/project_search";
@@ -362,47 +378,54 @@ public class WebUserController implements Serializable {
         return getProjectFacade().findBySQL(j, m, TemporalType.DATE);
     }
 
-    
-    public List<Project> listProjects(ProjectStageType type, Integer y, Boolean allIsland, Area province, Area district) {
+    public List<Project> listProjects(ProjectStageType type, Integer y, Boolean allIsland, Area province, Area district, String titleSearchQry) {
         Calendar c = Calendar.getInstance();
         c.setTime(getToDate());
         c.add(Calendar.DATE, 2);
         String j = "select p from Project p "
                 + " where p.retired=:f ";
-                
+
         Map m = new HashMap();
         m.put("f", false);
-        
-        if(type!=null){
+
+        if (type != null) {
             j += " and p.currentStageType=:t ";
             m.put("t", type);
         }
-        
-        
-        if(y!=null){
+
+        if (y != null) {
             j += " and p.projectYear=:y ";
             m.put("y", y);
         }
-        
-        if(allIsland!=null){
+
+        if (allIsland != null) {
             j += " and p.allIsland=:a ";
             m.put("a", allIsland);
         }
-        
-        if(province!=null){
-             j += " and p.province=:p ";
+
+        if (province != null) {
+            j += " and p.province=:p ";
             m.put("p", province);
         }
-        
-         if(district!=null){
-             j += " and p.district=:d ";
+
+        if (district != null) {
+            j += " and p.district=:d ";
             m.put("d", district);
         }
-        
-        j+= " order by p.id";
+
+        if (titleSearchQry != null && !titleSearchQry.trim().equals("")) {
+            j += " and lower(p.projectTitle) like :tq ";
+            m.put("tq", "%" + titleSearchQry.trim().toLowerCase() + "%");
+        }
+
+        j += " order by p.id";
         return getProjectFacade().findBySQL(j, m, TemporalType.DATE);
     }
-    
+
+    public List<Project> listProjects(ProjectStageType type, Integer y, Boolean allIsland, Area province, Area district) {
+        return listProjects(type, y, allIsland, province, district, null);
+    }
+
     public List<Project> listProjects() {
         Calendar c = Calendar.getInstance();
         c.setTime(getToDate());
@@ -681,7 +704,7 @@ public class WebUserController implements Serializable {
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as Rejected by PEC.");
     }
-    
+
     public void markAsSubmittedToDnp() {
         if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing selected");
@@ -694,7 +717,7 @@ public class WebUserController implements Serializable {
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as Submitted to DNP.");
     }
-    
+
     public void markAsDnpApproved() {
         if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing selected");
@@ -721,7 +744,6 @@ public class WebUserController implements Serializable {
         JsfUtil.addSuccessMessage("Marked as Rejected by DNP.");
     }
 
-    
     public void markAsSubmittedToCabinet() {
         if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing selected");
@@ -734,7 +756,7 @@ public class WebUserController implements Serializable {
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as Submitted to Cabinet.");
     }
-    
+
     public void markAsCabinetApproved() {
         if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing selected");
@@ -747,17 +769,15 @@ public class WebUserController implements Serializable {
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as DNP Approved.");
     }
-    
+
     /**
-     * 
-     * 
-     * 
+     *
+     *
+     *
      * Other Functions
-     * 
-     * 
+     *
+     *
      */
-    
-   
     public void uploadFiles() {
         if (getCurrentProject() == null) {
             facade.util.JsfUtil.addErrorMessage("No Project");
@@ -1354,10 +1374,13 @@ public class WebUserController implements Serializable {
         this.allIslandProjects = allIslandProjects;
     }
 
-    
+    public String getTitleSearchKeyword() {
+        return titleSearchKeyword;
+    }
 
-    
-    
+    public void setTitleSearchKeyword(String titleSearchKeyword) {
+        this.titleSearchKeyword = titleSearchKeyword;
+    }
 
     @FacesConverter(forClass = WebUser.class)
     public static class WebUserControllerConverter implements Converter {
