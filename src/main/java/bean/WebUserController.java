@@ -118,6 +118,8 @@ public class WebUserController implements Serializable {
     private String titleSearchKeyword;
     
     private String loginRequestResponse;
+    
+    private String locale;
 
     @PostConstruct
     public void init() {
@@ -1070,7 +1072,7 @@ public class WebUserController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("WebUserUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("updated"));
             return "manage_users";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, e.getMessage());
@@ -1405,6 +1407,20 @@ public class WebUserController implements Serializable {
     public void setLoginRequestResponse(String loginRequestResponse) {
         this.loginRequestResponse = loginRequestResponse;
     }
+
+    public String getLocale() {
+        if(loggedUser!=null){
+            locale = loggedUser.getDefLocale();
+        }else{
+            locale = "en";
+        }
+        return locale;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
+    }
+
 
     
     

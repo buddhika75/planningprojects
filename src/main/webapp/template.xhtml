@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp">
+      xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head id="headt">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -55,12 +56,22 @@
     </h:head>
 
     <h:body class="w3-theme-l5">
+        
+        <f:view locale="#{webUserController.locale}" >
+        
+        
+        
+        
+        
+        
         <div class="w3-row w3-center w3-amber">
             <h3 class="w3-opacity">
-                Project Management System
+                #{bundle.title}
             </h3>
         </div>
 
+       
+        
 
         <div class="w3-row" >
             <h:form>
@@ -156,7 +167,7 @@
 
 
 
-        <p:growl autoUpdate="true" ></p:growl>
+        <p:growl autoUpdate="true"  ></p:growl>
 
 
         <ui:insert name="content">
@@ -179,6 +190,8 @@
             </p>
         </div>
 
+        </f:view>
+        
     </h:body>
 
 </html>
