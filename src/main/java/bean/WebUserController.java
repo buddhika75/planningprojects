@@ -116,6 +116,8 @@ public class WebUserController implements Serializable {
     private Institution location;
     private Boolean allIslandProjects;
     private String titleSearchKeyword;
+    
+    private String loginRequestResponse;
 
     @PostConstruct
     public void init() {
@@ -346,25 +348,8 @@ public class WebUserController implements Serializable {
         return "/project_search";
     }
 
-    public String listProjectsAwaitingPcpApproval() {
-        listOfProjects = listProjects(ProjectStageType.Awaiting_PEC_Approval);
-        return "/project_lists";
-    }
-
-    public String listProjectsAwaitingBidding() {
-        listOfProjects = listProjects(ProjectStageType.Awaiting_DNP_Approval);
-        return "/project_lists";
-    }
-
-    public String listProjectsAwaitingBidSelection() {
-        listOfProjects = listProjects(ProjectStageType.DNP_Approved);
-        return "/project_lists";
-    }
-
-    public String listProjectsBidSelected() {
-        listOfProjects = listProjects(ProjectStageType.Awaiting_Cabinet_Approval);
-        return "/project_lists";
-    }
+   
+    
 
     public List<Project> listProjects(ProjectStageType type) {
         Calendar c = Calendar.getInstance();
@@ -694,7 +679,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing selected");
             return;
         }
-        getCurrentProject().setCurrentStageType(ProjectStageType.PEC_Approved);
+        getCurrentProject().setCurrentStageType(ProjectStageType.Awaiting_DNP_Submission);
         getCurrentProject().setPecApprovedUser(loggedUser);
         getCurrentProject().setPecApprovedAt(new Date());
         getCurrentProject().setPecApproved(true);
@@ -733,7 +718,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing selected");
             return;
         }
-        getCurrentProject().setCurrentStageType(ProjectStageType.DNP_Approved);
+        getCurrentProject().setCurrentStageType(ProjectStageType.Awaiting_Cabinet_Submission);
         getCurrentProject().setDnpApprovedUser(loggedUser);
         getCurrentProject().setDnpApprovedAt(new Date());
         getCurrentProject().setDnpApproved(true);
@@ -924,6 +909,27 @@ public class WebUserController implements Serializable {
     }
 
     public String login() {
+        if (userName == null || userName.trim().equals("")) {
+            JsfUtil.addErrorMessage("Please enter a Username");
+            return "";
+        }
+        if (password == null || password.trim().equals("")) {
+            JsfUtil.addErrorMessage("Please enter the Password");
+            return "";
+        }
+        if (!isFirstVisit()) {
+            if (!checkLogin()) {
+                JsfUtil.addErrorMessage("Username/Password Error. Please retry.");
+                return "";
+            }
+        }
+        JsfUtil.addSuccessMessage("Successfully Logged");
+        return "index";
+    }
+    
+    
+    public String loginForMobile() {
+        loginRequestResponse = "";
         if (userName == null || userName.trim().equals("")) {
             JsfUtil.addErrorMessage("Please enter a Username");
             return "";
@@ -1392,6 +1398,17 @@ public class WebUserController implements Serializable {
         this.titleSearchKeyword = titleSearchKeyword;
     }
 
+    public String getLoginRequestResponse() {
+        return loginRequestResponse;
+    }
+
+    public void setLoginRequestResponse(String loginRequestResponse) {
+        this.loginRequestResponse = loginRequestResponse;
+    }
+
+    
+    
+    
     @FacesConverter(forClass = WebUser.class)
     public static class WebUserControllerConverter implements Converter {
 

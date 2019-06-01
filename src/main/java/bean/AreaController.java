@@ -59,7 +59,7 @@ public class AreaController implements Serializable {
     List<Area> phiAreas = null;
     List<Area> rdhsAreas = null;
     List<Area> pdhsAreas = null;
-    private List<Area> dsAreas= null;
+    private List<Area> dsAreas = null;
     private List<Area> provinces = null;
     private Area selected;
 
@@ -97,6 +97,10 @@ public class AreaController implements Serializable {
         return rdhsAreas;
     }
 
+    public List<Area> rdhsAreas(Area province) {
+        return getAreas(AreaType.District, province);
+    }
+
     public void setRdhsAreas(List<Area> rdhsAreas) {
         this.rdhsAreas = rdhsAreas;
     }
@@ -111,8 +115,6 @@ public class AreaController implements Serializable {
     public void setPdhsAreas(List<Area> pdhsAreas) {
         this.pdhsAreas = pdhsAreas;
     }
-    
-    
 
     public Area getAreaById(Long id) {
         return getFacade().find(id);
@@ -946,7 +948,7 @@ public class AreaController implements Serializable {
     }
 
     public List<Area> getProvinces() {
-        if(provinces==null){
+        if (provinces == null) {
             provinces = getAreas(AreaType.Province, null);
         }
         return provinces;
@@ -957,8 +959,8 @@ public class AreaController implements Serializable {
     }
 
     public List<Area> getDsAreas() {
-        if(dsAreas==null){
-            dsAreas= getAreas(AreaType.DsArea, null);
+        if (dsAreas == null) {
+            dsAreas = getAreas(AreaType.DsArea, null);
         }
         return dsAreas;
     }
@@ -967,9 +969,6 @@ public class AreaController implements Serializable {
         this.dsAreas = dsAreas;
     }
 
-    
-    
-    
     @FacesConverter(forClass = Area.class)
     public static class AreaControllerConverter implements Converter {
 

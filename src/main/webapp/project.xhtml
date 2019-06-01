@@ -106,16 +106,21 @@
 
                         <div class="w3-container w3-twothird" >
                             <div class="container">
-                                
+
                                 <div class="row">
                                     <div class="col-25">
-                                        <h:outputLabel value="Stage" for="projectStage" />
+                                        <h2>
+                                            <h:outputLabel value="Stage" for="projectStage" />
+                                        </h2>   
                                     </div>
                                     <div class="col-75">
-                                        <h:outputLabel id="projectStage" value="#{webUserController.currentProject.currentStageType}"  />
+                                        <h2>
+                                            <h:outputLabel id="projectStage" value="#{webUserController.currentProject.currentStageType.label}"  />
+                                        </h2>
+
                                     </div>
                                 </div>
-                                
+
                                 <div class="row">
                                     <div class="col-25">
                                         <h:outputLabel value="Year" for="projectYear" />
@@ -141,34 +146,50 @@
                                     </div>
                                 </div>
 
-
                                 <div class="row">
                                     <div class="col-25">
-                                        <h:outputLabel value="Provinces" ></h:outputLabel>
+                                        <h:outputLabel value="All Island" for="allIsland" />
                                     </div>
                                     <div class="col-75">
-                                        <h:panelGroup >
-                                            <h:selectOneMenu 
-                                                value="#{webUserController.currentProject.province}" >
-                                                <f:selectItem itemLabel="Select Province" ></f:selectItem>
-                                                <f:selectItems value="#{areaController.provinces}" var="p" itemLabel="#{p.name}" itemValue="#{p}" ></f:selectItems>
-                                            </h:selectOneMenu>
-                                            <h:selectBooleanCheckbox id="allIsland" value="#{webUserController.currentProject.allIsland}" title="AllIsland" >All Island&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h:selectBooleanCheckbox>
-                                        </h:panelGroup>
+                                        <p:selectBooleanButton id="allIsland"  value="#{webUserController.currentProject.allIsland}" 
+                                                               offLabel="No" onLabel="Yes" >
+                                            <p:ajax process="@this" update="gpNotAllIsland" ></p:ajax>
+                                        </p:selectBooleanButton>
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-25">
-                                        <h:outputLabel value="Districts" ></h:outputLabel>
-                                    </div>
-                                    <div class="col-75">
-                                        <h:selectOneMenu value="#{webUserController.currentProject.district}" >
-                                            <f:selectItem itemLabel="Select district" ></f:selectItem>
-                                            <f:selectItems value="#{areaController.rdhsAreas}" var="d" itemLabel="#{d.name}" itemValue="#{d}" ></f:selectItems>
-                                        </h:selectOneMenu>
-                                    </div>
-                                </div>
+                                <h:panelGroup id="gpNotAllIsland"  >
+                                    <h:panelGroup  rendered="#{!webUserController.currentProject.allIsland}" >
+
+                                        <div class="row">
+                                            <div class="col-25">
+                                                <h:outputLabel value="Provinces" ></h:outputLabel>
+                                            </div>
+                                            <div class="col-75">
+                                                <h:panelGroup >
+                                                    <h:selectOneMenu id="cmdProvice"
+                                                                     value="#{webUserController.currentProject.province}" >
+                                                        <f:selectItem itemLabel="Select Province" ></f:selectItem>
+                                                        <f:selectItems value="#{areaController.provinces}" var="p" itemLabel="#{p.name}" itemValue="#{p}" ></f:selectItems>
+                                                        <f:ajax execute="@this" render="cmbDistrict" ></f:ajax>
+                                                    </h:selectOneMenu>
+                                                </h:panelGroup>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-25">
+                                                <h:outputLabel value="Districts" ></h:outputLabel>
+                                            </div>
+                                            <div class="col-75">
+                                                <h:selectOneMenu id="cmbDistrict" value="#{webUserController.currentProject.district}" >
+                                                    <f:selectItem itemLabel="Select district" ></f:selectItem>
+                                                    <f:selectItems value="#{areaController.rdhsAreas(webUserController.currentProject.province)}" var="d" itemLabel="#{d.name}" itemValue="#{d}" ></f:selectItems>
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                    </h:panelGroup>
+                                </h:panelGroup>
 
 
                                 <div class="row">
@@ -179,6 +200,7 @@
                                         <p:autoComplete value="#{webUserController.currentProject.projectLocation}"
                                                         completeMethod="#{institutionController.completeInstitutions}"
                                                         var="ins" forceSelection="true" 
+                                                        placeholder="Search Location by typing few letters ..."
                                                         itemLabel="#{ins.name}" inputStyle="width:100%;" style="width: 100%;"
                                                         itemValue="#{ins}"></p:autoComplete>
                                     </div>
@@ -253,7 +275,7 @@
                                         </p:calendar>
                                     </div>
                                 </div>
-                                
+
                                 <div class="row">
                                     <div class="col-25">
                                         <h:outputLabel value="Engineer's Estimate"  />
@@ -262,7 +284,7 @@
                                         <p:selectBooleanButton value="#{webUserController.currentProject.engineersEstimateAvailable}" offLabel="NOT Available" onLabel="Available" ></p:selectBooleanButton>
                                     </div>
                                 </div>
-                                
+
                                 <div class="row">
                                     <div class="col-25">
                                         <h:outputLabel value="Mater Plan"  />
@@ -271,7 +293,7 @@
                                         <p:selectBooleanButton value="#{webUserController.currentProject.masterPlanAvailable}" offLabel="NOT Available" onLabel="Available" ></p:selectBooleanButton>
                                     </div>
                                 </div>
-                                
+
                                 <div class="row">
                                     <div class="col-25">
                                         <h:outputLabel value="Building Plan"  />
@@ -282,7 +304,7 @@
                                     </div>
                                 </div>
 
-                               
+
                             </div>
                         </div>
 
@@ -345,8 +367,8 @@
                                     <div style="float: right;">To Reject at DNP</div>
                                 </div>
                             </h:commandLink> 
-                             <h:commandLink action="#{webUserController.toCabinetSubmission()}" 
-                                            rendered="#{webUserController.currentProject.canSubmitToCabinet}"
+                            <h:commandLink action="#{webUserController.toCabinetSubmission()}" 
+                                           rendered="#{webUserController.currentProject.canSubmitToCabinet}"
                                            class="w3-btn w3-amber w3-margin  btn350" >
                                 <div>
                                     <i class="fa fa-arrow-right" style='float: left; font-size:24px;color:blueviolet ;'></i>

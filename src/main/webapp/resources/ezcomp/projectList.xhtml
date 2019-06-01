@@ -17,13 +17,7 @@
         <h:form >
             <h:panelGrid columns="1" >
                 <h:panelGrid columns="3" >
-
-                    
-
-
-                    <h:commandLink class="w3-btn w3-amber w3-margin  btn150" 
-                                   action="/upload_files_to_project_proposal" 
-                                   >
+                    <h:commandLink class="w3-btn w3-amber w3-margin  btn150" >
                         <div>
                             <i class='fa fa-file-excel-o' style='float: left; font-size:24px;color:green;'></i>
                             <div style="float: right;">Download</div>
@@ -32,8 +26,7 @@
                     </h:commandLink>
                     <h:commandLink 
                         class="w3-btn w3-amber w3-margin  btn150" 
-                        action="/upload_files_to_project_proposal" 
-                        >
+                        action="/upload_files_to_project_proposal" >
                         <div>
                             <i class='fa fa-print' style='float: left; font-size:24px;color:green;'></i>
                             <div style="float: right;">Print</div>
@@ -41,9 +34,6 @@
                         <p:printer target="tblSummery" ></p:printer>
                     </h:commandLink>
                 </h:panelGrid>
-
-
-
             </h:panelGrid>
 
             <p:dataTable id="tblSummery" class="w3-table-all w3-striped redTable" value="#{webUserController.listOfProjects}" var="p" 
@@ -65,7 +55,11 @@
                     </h:outputLabel>
                 </p:column>
                 <p:column headerText="File No" >
-                    <h:outputLabel value="#{p.fileNumber }" >
+                    <h:outputLabel value="#{p.fileNumber}" >
+                    </h:outputLabel>
+                </p:column>
+                 <p:column headerText="Stage" >
+                     <h:outputLabel value="#{p.currentStageType.label}" >
                     </h:outputLabel>
                 </p:column>
                 <p:column headerText="Cost" >
