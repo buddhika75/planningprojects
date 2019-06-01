@@ -3,31 +3,24 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp">
 
+    <body>
 
-    <h:head>
+        <ui:composition template="./index.xhtml">
 
-    </h:head>
-
-    <h:body>
-
-        <ui:composition template="./template.xhtml">
-
-            <ui:define name="content">
-
+            <ui:define name="mcontent">
                 <style>
-                                    input[type=text], select, textarea, checkbox, text {
-                                        padding: 12px;
-                                        border: 1px solid #ccc;
-                                        border-radius: 4px;
-                                        resize: vertical;
-                                    }
+                    input[type=text], select, textarea, checkbox, text {
+                        padding: 12px;
+                        border: 1px solid #ccc;
+                        border-radius: 4px;
+                        resize: vertical;
+                    }
 
                 </style>
-
+                
                 <div class="w3-row w3-container w3-padding-16" >
                     <h:panelGroup >
 
@@ -80,5 +73,5 @@
 
         </ui:composition>
 
-    </h:body>
+    </body>
 </html>

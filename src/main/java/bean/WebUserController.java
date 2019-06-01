@@ -116,9 +116,9 @@ public class WebUserController implements Serializable {
     private Institution location;
     private Boolean allIslandProjects;
     private String titleSearchKeyword;
-    
+
     private String loginRequestResponse;
-    
+
     private String locale;
 
     @PostConstruct
@@ -314,6 +314,12 @@ public class WebUserController implements Serializable {
         listOfProjects = listProjects(null, year, true, null, null);
         return "/projects_search_all_island";
     }
+    
+    public String searchAllIslandProjectsMobile() {
+        allIslandProjects = true;
+        listOfProjects = listProjects(null, year, true, null, null);
+        return "/mobile/projects_search_all_island";
+    }
 
     public String searchProjectsByProvince() {
         allIslandProjects = false;
@@ -349,9 +355,6 @@ public class WebUserController implements Serializable {
         listOfProjects = null;
         return "/project_search";
     }
-
-   
-    
 
     public List<Project> listProjects(ProjectStageType type) {
         Calendar c = Calendar.getInstance();
@@ -651,7 +654,7 @@ public class WebUserController implements Serializable {
         getProjectFacade().edit(currentProject);
         return "/cabinet_approval";
     }
-    
+
     public String toCabinetRejection() {
         if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing to update");
@@ -928,26 +931,22 @@ public class WebUserController implements Serializable {
         JsfUtil.addSuccessMessage("Successfully Logged");
         return "index";
     }
-    
-    
+
     public String loginForMobile() {
         loginRequestResponse = "";
         if (userName == null || userName.trim().equals("")) {
-            JsfUtil.addErrorMessage("Please enter a Username");
-            return "";
+            loginRequestResponse += "Wrong Isername. Please go back to settings and update.";
+            return "/mobile/login_failure";
         }
         if (password == null || password.trim().equals("")) {
-            JsfUtil.addErrorMessage("Please enter the Password");
-            return "";
+            loginRequestResponse += "Wrong Isername. Please go back to settings and update.";
+            return "/mobile/login_failure";
         }
-        if (!isFirstVisit()) {
-            if (!checkLogin()) {
-                JsfUtil.addErrorMessage("Username/Password Error. Please retry.");
-                return "";
-            }
+        if (!checkLogin()) {
+            loginRequestResponse += "Wrong Isername. Please go back to settings and update.";
+            return "/mobile/login_failure";
         }
-        JsfUtil.addSuccessMessage("Successfully Logged");
-        return "index";
+        return "/mobile/index";
     }
 
     private boolean checkLogin() {
@@ -1409,9 +1408,9 @@ public class WebUserController implements Serializable {
     }
 
     public String getLocale() {
-        if(loggedUser!=null){
+        if (loggedUser != null) {
             locale = loggedUser.getDefLocale();
-        }else{
+        } else {
             locale = "en";
         }
         return locale;
@@ -1421,10 +1420,6 @@ public class WebUserController implements Serializable {
         this.locale = locale;
     }
 
-
-    
-    
-    
     @FacesConverter(forClass = WebUser.class)
     public static class WebUserControllerConverter implements Converter {
 
