@@ -77,16 +77,16 @@
             <h:form>
                 <ul>
                     <li>
-                        <h:commandLink class="nonUnderline"  value="HOME" action="#{webUserController.logOut()}"></h:commandLink>
+                        <h:commandLink class="nonUnderline"  value="#{bundle.Home}" action="/index" ></h:commandLink>
                     </li>
                     <h:panelGroup rendered="#{webUserController.loggedUser.systemAdministrator}" >
                         <li>
                             <ui:insert name="viewProjects">
-                                <h:commandLink value="LIST PROJECTS" action="#{webUserController.listAllProjects}"></h:commandLink>
+                                <h:commandLink value="#{bundle.list_project}" action="/listAllProjects"></h:commandLink>
                             </ui:insert>
                         </li>
                         <li>
-                            <h:commandLink  value="SYSTEM MANAGEMENT" action="/system_management"></h:commandLink>
+                            <h:commandLink  value="#{bundle.system_management}" action="/system_management"></h:commandLink>
                         </li>
                     </h:panelGroup>
 
@@ -140,13 +140,13 @@
 
                     <h:panelGroup rendered="#{webUserController.loggedUser ne null}" >
                         <li>
-                            <h:commandLink  class="spacer1x boldedText" value="CHANGE PASSWORD" action="/advertisement_management"></h:commandLink>
+                            <h:commandLink  class="spacer1x boldedText" value="#{bundle.change_password}" action="/advertisement_management"></h:commandLink>
                         </li>
                         <li>
-                            <h:commandLink  class="spacer1x boldedText" value="CHANGE MY DETAILS" action="/system_management"></h:commandLink>
+                            <h:commandLink  class="spacer1x boldedText" value="#{bundle.change_my_details}" action="/system_management"></h:commandLink>
                         </li>
                         <li>
-                            <h:commandLink  value="SIGN OUT" action="#{webUserController.logOut()}"></h:commandLink>
+                            <h:commandLink  value="#{bundle.sign_out}" action="#{webUserController.logOut()}"></h:commandLink>
                         </li>
                     </h:panelGroup>
 
