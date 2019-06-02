@@ -1334,6 +1334,20 @@ public class WebUserController implements Serializable {
         }
     }
 
+    
+    public void updateLoggedUser() {
+        if(loggedUser==null){
+            return ;
+        }
+        try {
+            getFacade().edit(loggedUser);
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("updated"));
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, e.getMessage());
+        }
+    }
+
+    
     public String updatePassword() {
         if (!password.equals(current.getWebUserPassword())) {
             JsfUtil.addErrorMessage("Passwords do NOT match");

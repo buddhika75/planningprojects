@@ -19,10 +19,10 @@
 
             <ui:define name="addProject" >
                 <li>
-                    <h:commandLink value="ADD PROJECT" action="#{webUserController.addNewProject()}"></h:commandLink>
+                    <h:commandLink value="#{bundle.add_project}" action="#{webUserController.addNewProject()}"></h:commandLink>
                 </li>
                 <li>
-                    <h:commandLink class="w3-theme-d2" value="PROJECT DETAILS" action="#{webUserController.addNewProject()}"></h:commandLink>
+                    <h:commandLink class="w3-theme-d2" value="#{bundle.project_details}" action="#{webUserController.addNewProject()}"></h:commandLink>
                 </li>
             </ui:define>
 

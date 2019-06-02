@@ -82,7 +82,7 @@
                         <h:panelGroup rendered="#{webUserController.loggedUser.systemAdministrator or webUserController.loggedUser.superUser or webUserController.loggedUser.user}" >
                             <ui:insert name="addProject">
                                 <li>
-                                    <h:commandLink value="ADD PROJECT" action="#{webUserController.addNewProject()}"></h:commandLink>
+                                    <h:commandLink value="#{bundle.add_project}" action="#{webUserController.addNewProject()}"></h:commandLink>
                                 </li>
                             </ui:insert>
 
@@ -91,7 +91,7 @@
                             </li>
 
                             <li>
-                                <h:commandLink value="SEARCH PROJECTS" action="#{webUserController.searchProjects()}"></h:commandLink>
+                                <h:commandLink value="#{bundle.search_projects}" action="#{webUserController.searchProjects()}"></h:commandLink>
                             </li>
                         </h:panelGroup>
 
@@ -116,13 +116,13 @@
 
                         <h:panelGroup rendered="#{webUserController.loggedUser eq null}" >
                             <li>
-                                <h:commandLink class="nonUnderline"  value="HELP" action="#{webUserController.logOut()}"></h:commandLink>
+                                <h:commandLink class="nonUnderline"  value="#{bundle.help}" action="#{webUserController.logOut()}"></h:commandLink>
                             </li>
                             <li>
-                                <h:commandLink class="nonUnderline" value="SIGN IN" action="#{webUserController.toLogin()}"></h:commandLink>
+                                <h:commandLink class="nonUnderline" value="#{bundle.sign_in}" action="#{webUserController.toLogin()}"></h:commandLink>
                             </li>
                             <li>
-                                <h:commandLink class="nonUnderline"  value="SIGN UP" action="#{webUserController.prepareRegisterAsClient()}"></h:commandLink>
+                                <h:commandLink class="nonUnderline"  value="#{bundle.sign_up}" action="#{webUserController.prepareRegisterAsClient()}"></h:commandLink>
                             </li>
                         </h:panelGroup>
                     </ul>
@@ -149,7 +149,32 @@
             <div class="footer w3-amber">
                 <p>
                     <ui:insert name="bottom">
-                        &copy; Health Information Unit, 2019
+                        <table style="width: 98%; margin: auto;">
+                            <tr>
+                                <td>
+                                    &copy; #{bundle.hiu}, 2019
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    <h:panelGroup rendered="#{webUserController.loggedUser ne null}" >
+                                        <h:outputLabel value="Language"  />
+                                        <h:selectOneMenu value="#{webUserController.loggedUser.defLocale}" >
+                                            <f:selectItem itemLabel="Sinhala" itemValue="si" ></f:selectItem>
+                                            <f:selectItem itemLabel="Tamil" itemValue="ta" ></f:selectItem>
+                                            <f:selectItem itemLabel="English" itemValue="en" ></f:selectItem>
+                                            <f:ajax execute="@this" render="@all" listener="#{webUserController.update()}" ></f:ajax>
+                                        </h:selectOneMenu>
+                                    </h:panelGroup>
+                                </td>
+                            </tr>
+                        </table>
+
+
                     </ui:insert>
                 </p>
             </div>
