@@ -42,46 +42,37 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <h:commandButton class="w3-btn w3-yellow btn350"  action="#{webUserController.listAllProjects()}" 
-                                                             value="List Projects waiting PCP Approval" ></h:commandButton>
+                                            <h:commandButton class="w3-btn w3-yellow btn350"  action="#{webUserController.listProjectsAwaitingPecApproval()}" 
+                                                             value="List Projects waiting PEC Approval" ></h:commandButton>
 
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listPcpApprovedProjects()}" 
-                                                             value="List PCP Approved Projects" ></h:commandButton>
+                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsPecRejected()}" 
+                                                             value="List PEC Rejected Projects" ></h:commandButton>
 
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listPcpRejectedProjects() }" 
-                                                             value="List PCP Rejected Projects" ></h:commandButton>
+                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsAwaitingDnpSubmission()}" 
+                                                             value="List Projects Awaiting DNP Submission" ></h:commandButton>
 
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsBidSelected()}" 
-                                                             value="List Projects awaiting PCE Approval" ></h:commandButton>
+                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsAwaitingDnpApproval()}" 
+                                                             value="List Projects awaiting DNP Approval" ></h:commandButton>
 
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <td>
-                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsBidSelected()}" 
-                                                             value="List PCE rejected projects" ></h:commandButton>
-
-                                        </td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <td>
-                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsBidSelected()}" 
-                                                             value="List PCE approved projects" ></h:commandButton>
+                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsDnpRejected()}" 
+                                                             value="List DNP rejected projects" ></h:commandButton>
 
                                         </td>
                                     </tr>
@@ -89,16 +80,8 @@
 
                                     <tr>
                                         <td>
-                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsBidSelected()}" 
-                                                             value="List Projects awaiting NDP Approval" ></h:commandButton>
-
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsBidSelected()}" 
-                                                             value="List NDP rejected projects" ></h:commandButton>
+                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsAwaitingCabinetSubmission()}" 
+                                                             value="List Projects awaiting Cabinet Submission" ></h:commandButton>
 
                                         </td>
                                     </tr>
@@ -106,34 +89,38 @@
 
                                     <tr>
                                         <td>
-                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsBidSelected()}" 
-                                                             value="List NDP approved projects" ></h:commandButton>
-
-                                        </td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <td>
-                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsBidSelected()}" 
+                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsAwaitingCabinetApproval()}" 
                                                              value="List Projects awaiting Cabinet Approval" ></h:commandButton>
 
                                         </td>
                                     </tr>
 
-
                                     <tr>
                                         <td>
-                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsBidSelected()}" 
-                                                             value="List Cabinet approved projects" ></h:commandButton>
+                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsCabinetApproved()}" 
+                                                             value="List Cabinet approved projects to start" ></h:commandButton>
 
                                         </td>
                                     </tr>
 
+
+                                    <tr>
+                                        <td>
+                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsOngoing()}" 
+                                                             value="List ongoing projects" ></h:commandButton>
+
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td>
+                                            <h:commandButton class="w3-btn w3-yellow btn350" action="#{webUserController.listProjectsCompleted()}" 
+                                                             value="List completed" ></h:commandButton>
+
+                                        </td>
+                                    </tr>
                                 </table>
-
-
-
                             </h:form>
                         </td>
                         <td style="vertical-align: top;">

@@ -361,6 +361,11 @@ public class WebUserController implements Serializable {
         listOfProjects = listProjects(ProjectStageType.Cabinet_Rejected);
         return "/project_lists";
     }
+    
+    public String listProjectsCabinetApproved() {
+        listOfProjects = listProjects(ProjectStageType.Cabinet_Approved);
+        return "/project_lists";
+    }
 
     public String listProjectsOngoing() {
         listOfProjects = listProjects(ProjectStageType.Ongoing);
