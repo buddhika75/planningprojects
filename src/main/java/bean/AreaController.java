@@ -290,21 +290,21 @@ public class AreaController implements Serializable {
 
                 }
 
-                province = getArea(provinceName, AreaType.Province);
+                province = getArea(provinceName, AreaType.Province,false,null);
                 if (province == null) {
                     System.out.println("province = " + province);
                     JsfUtil.addErrorMessage("Add " + provinceName);
                     return "";
                 }
 
-                district = getArea(districtName, AreaType.District);
+                district = getArea(districtName, AreaType.District,false,null);
                 if (district == null) {
                     System.out.println("district = " + district);
                     JsfUtil.addErrorMessage("Add " + districtName);
                     return "";
                 }
 
-                moh = getArea(mohAreaName, AreaType.MOH);
+                moh = getArea(mohAreaName, AreaType.MOH,false,null);
                 if (moh == null) {
                     System.out.println("moh = " + moh);
                     moh = new Area();
@@ -473,28 +473,28 @@ public class AreaController implements Serializable {
 
                 }
 
-                province = getArea(provinceName, AreaType.Province);
+                province = getArea(provinceName, AreaType.Province, false , null);
                 if (province == null) {
                     System.out.println("province = " + province);
                     JsfUtil.addErrorMessage("Add " + provinceName);
                     return "";
                 }
 
-                district = getArea(districtName, AreaType.District);
+                district = getArea(districtName, AreaType.District, false , null);
                 if (district == null) {
                     System.out.println("district = " + district);
                     JsfUtil.addErrorMessage("Add " + districtName);
                     return "";
                 }
 
-                moh = getArea(mohAreaName, AreaType.MOH);
+                moh = getArea(mohAreaName, AreaType.MOH, false , null);
                 if (moh == null) {
                     System.out.println("MOH = " + mohAreaName);
                     JsfUtil.addErrorMessage("Add " + mohAreaName);
                     return "";
                 }
 
-                gn = getArea(gnAreaCode, AreaType.GN);
+                gn = getArea(gnAreaCode, AreaType.GN, false , null);
                 System.out.println("gnAreaCode = " + gnAreaCode);
                 System.out.println("gnAreaName = " + gnAreaName);
                 if (gn == null) {
@@ -831,7 +831,7 @@ public class AreaController implements Serializable {
         return getFacade().findBySQL(j, m);
     }
 
-    public Area getArea(String nameOrCode, AreaType areaType) {
+    public Area getArea(String nameOrCode, AreaType areaType, boolean createNew, Area parentArea) {
         String j;
         Map m = new HashMap();
         j = "select a "
@@ -845,7 +845,16 @@ public class AreaController implements Serializable {
         j += " order by a.code";
         System.out.println("m = " + m);
         System.out.println("j = " + j);
-        return getFacade().findFirstBySQL(j, m);
+        Area ta = getFacade().findFirstBySQL(j, m);
+        if(ta==null && createNew){
+            ta = new Area();
+            ta.setName(nameOrCode);
+            ta.setType(areaType);
+            ta.setCreateAt(new Date());
+            ta.setParentArea(parentArea);
+            getFacade().create(ta);
+        }
+        return ta;
     }
 
     public AreaController() {

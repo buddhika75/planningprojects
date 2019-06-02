@@ -1086,8 +1086,8 @@ public class WebUserController implements Serializable {
                     np.setProvince(null);
                     np.setDistrict(null);
                 }else{
-                    areaProvince = areaController.getArea(strProvince, AreaType.Province);
-                    areaDistrict = areaController.getArea(strDistrict, AreaType.District);
+                    areaProvince = areaController.getArea(strProvince, AreaType.Province, false, null);
+                    areaDistrict = areaController.getArea(strDistrict, AreaType.District, true, areaProvince);
                     np.setProvince(areaProvince);
                     np.setDistrict(areaDistrict);
                 }
