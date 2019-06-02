@@ -452,12 +452,7 @@ public class WebUserController implements Serializable {
         if (searchKeyword != null && !searchKeyword.trim().equals("")) {
             String j = "select p from Project p where lower(p.fileNumber) like :fn ";
             Map m = new HashMap();
-            if (year != null) {
-                j += " and p.projectYear=:y ";
-                m.put("y", year);
-            }
             j += " order by p.id";
-
             m.put("fn", "%" + searchKeyword.trim().toLowerCase() + "%");
             listOfProjects = getProjectFacade().findBySQL(j, m);
         } else {
