@@ -322,6 +322,56 @@ public class WebUserController implements Serializable {
         return "/project_lists";
     }
 
+    public String listProjectsAwaitingPecApproval() {
+        listOfProjects = listProjects(ProjectStageType.Awaiting_PEC_Approval);
+        return "/project_lists";
+    }
+
+    public String listProjectsPecRejected() {
+        listOfProjects = listProjects(ProjectStageType.PEC_Rejected);
+        return "/project_lists";
+    }
+
+    public String listProjectsAwaitingDnpSubmission() {
+        listOfProjects = listProjects(ProjectStageType.Awaiting_DNP_Submission);
+        return "/project_lists";
+    }
+
+    public String listProjectsAwaitingDnpApproval() {
+        listOfProjects = listProjects(ProjectStageType.Awaiting_DNP_Approval);
+        return "/project_lists";
+    }
+
+    public String listProjectsDnpRejected() {
+        listOfProjects = listProjects(ProjectStageType.DNP_Rejected);
+        return "/project_lists";
+    }
+
+    public String listProjectsAwaitingCabinetSubmission() {
+        listOfProjects = listProjects(ProjectStageType.Awaiting_Cabinet_Submission);
+        return "/project_lists";
+    }
+
+    public String listProjectsAwaitingCabinetApproval() {
+        listOfProjects = listProjects(ProjectStageType.Awaiting_Cabinet_Approval);
+        return "/project_lists";
+    }
+
+    public String listProjectsCabinetRejected() {
+        listOfProjects = listProjects(ProjectStageType.Cabinet_Rejected);
+        return "/project_lists";
+    }
+
+    public String listProjectsOngoing() {
+        listOfProjects = listProjects(ProjectStageType.Ongoing);
+        return "/project_lists";
+    }
+
+    public String listProjectsCompleted() {
+        listOfProjects = listProjects(ProjectStageType.Completed);
+        return "/project_lists";
+    }
+
     public String searchAllIslandProjects() {
         allIslandProjects = true;
         listOfProjects = listProjects(null, year, true, null, null);
@@ -1080,23 +1130,21 @@ public class WebUserController implements Serializable {
 
                 cell = sheet.getCell(3, i);
                 strDistrict = cell.getContents();
-                
-                if(strProvince.trim().equalsIgnoreCase("All Island")){
+
+                if (strProvince.trim().equalsIgnoreCase("All Island")) {
                     np.setAllIsland(true);
                     np.setProvince(null);
                     np.setDistrict(null);
-                }else{
+                } else {
                     areaProvince = areaController.getArea(strProvince, AreaType.Province, false, null);
                     areaDistrict = areaController.getArea(strDistrict, AreaType.District, true, areaProvince);
                     np.setProvince(areaProvince);
                     np.setDistrict(areaDistrict);
                 }
-                
-                
+
                 cell = sheet.getCell(2, i);
                 strFileNumber = cell.getContents();
                 np.setFileNumber(strFileNumber);
-                
 
                 cell = sheet.getCell(4, i);
                 strLocation = cell.getContents();
@@ -1113,18 +1161,18 @@ public class WebUserController implements Serializable {
 
                 cell = sheet.getCell(7, i);
                 strCost = cell.getContents();
-                try{
+                try {
                     dblCost = Double.parseDouble(strCost);
                     np.setProjectCost(dblCost);
-                }catch (Exception e){
-                    System.out.println( i + ". e = " + e);
+                } catch (Exception e) {
+                    System.out.println(i + ". e = " + e);
                 }
 
                 cell = sheet.getCell(8, i);
                 strFundSource = cell.getContents();
                 itemFundSource = itemController.getItem(strFundSource, ItemType.Source_of_Funds, true);
                 np.setSourceOfFunds(itemFundSource);
-                
+
                 getProjectFacade().create(np);
                 System.out.println("Added SUccessfully = " + i);
 
@@ -1577,9 +1625,6 @@ public class WebUserController implements Serializable {
     public ItemController getItemController() {
         return itemController;
     }
-    
-    
-    
 
     @FacesConverter(forClass = WebUser.class)
     public static class WebUserControllerConverter implements Converter {
