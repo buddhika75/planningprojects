@@ -148,25 +148,23 @@
 
                         <div class="w3-container w3-third w3-card" style="text-align: center;" >
                             <h:panelGrid columns="1" >
-                                <h:outputLabel value="PCP Rejected Date" ></h:outputLabel>
-                                <p:calendar value="#{webUserController.currentProject.proposalDate}" pattern="dd MMMM yyyy" >
+                                <h:outputLabel value="Date of Rejection by Cabinet" ></h:outputLabel>
+                                <p:calendar value="#{webUserController.currentProject.cabinetRejectedDate}" pattern="dd MMMM yyyy" >
                                 </p:calendar>
 
-                                <h:outputLabel value="PCP Recommendation" ></h:outputLabel>
-                                <h:inputTextarea value="#{webUserController.currentProject.pecRejectRecommendation}" 
+                                <h:outputLabel value="Cabinet Recommendation" ></h:outputLabel>
+                                <h:inputTextarea value="#{webUserController.currentProject.cabinetRejectRecommendation}" 
                                                  title="Project Description" class="btn350" style="height: 150px;"
                                                  />
-                                <h:commandLink  action="#{webUserController.markAsPecRejected()}" 
+                                <h:commandLink  action="#{webUserController.markAsCabinetRejected()}" 
                                                 class="w3-btn w3-amber w3-margin btn350"  >
                                     <div>
                                         <i class='far fa-thumbs-down' style='float: left; font-size:24px;color:green;'></i>
                                         <div style="float: right;">Reject</div>
                                     </div>
                                 </h:commandLink> 
-                                <h:commandLink rendered="#{webUserController.currentProject.pecRejected}"
-                                               class="w3-btn w3-amber w3-margin  btn350" 
-                                               action="/upload_files_to_project_proposal" 
-                                               >
+                                <h:commandLink rendered="#{webUserController.currentProject.cabinetRejected}"
+                                               class="w3-btn w3-amber w3-margin  btn350">
                                     <p:printer target="details" ></p:printer>
                                     <div>
                                         <i class='fa fa-print' style='float: left; font-size:24px;color:green;'></i>

@@ -27,22 +27,25 @@
                             Edit User Details
                         </f:facet>
 
-
-                        <h:outputLabel value="#{bundle.EditWebUserLabel_name}" for="name" />
-                        <h:inputText disabled="true" id="name" value="#{webUserController.selected.name}" title="#{bundle.EditWebUserTitle_name}" required="true" requiredMessage="#{bundle.EditWebUserRequiredMessage_name}"/>
-
-                        <h:outputLabel value="#{bundle.EditWebUserLabel_webUserPerson}" for="webUserPerson" />
+                        <h:outputLabel value="Name" for="webUserPerson" />
                         <h:inputText id="webUserPerson" value="#{webUserController.selected.webUserPerson.name}" title="#{bundle.EditWebUserTitle_webUserPerson}" >
                         </h:inputText>
 
 
-                        <h:outputLabel value="#{bundle.EditWebUserLabel_email}" for="email" />
+                        <h:outputLabel value="Username" for="name" />
+                        <h:inputText disabled="true" id="name" value="#{webUserController.selected.name}" title="#{bundle.EditWebUserTitle_name}" required="true" requiredMessage="#{bundle.EditWebUserRequiredMessage_name}"/>
+
+
+
+
+                        <h:outputLabel value="Email" for="email" />
                         <h:inputText id="email" value="#{webUserController.selected.email}" title="#{bundle.EditWebUserTitle_email}" />
-                        <h:outputLabel value="#{bundle.EditWebUserLabel_telNo}" for="telNo" />
+                        
+                        <h:outputLabel value="Phone" for="telNo" />
                         <h:inputText id="telNo" value="#{webUserController.selected.telNo}" title="#{bundle.EditWebUserTitle_telNo}" />
 
 
-                        <h:outputLabel value="#{bundle.EditWebUserLabel_institution}" for="institution" />
+                        <h:outputLabel value="Institution" for="institution" />
                         <h:selectOneMenu id="institution" value="#{webUserController.selected.institution}" title="#{bundle.EditWebUserTitle_institution}" >
                             <f:selectItem itemLabel="Select" ></f:selectItem>
                             <f:selectItems value="#{institutionController.items}"/>
@@ -50,11 +53,11 @@
 
 
 
-                        <h:outputLabel value="#{bundle.EditWebUserLabel_webUserRole}" for="webUserRole" />
+                        <h:outputLabel value="Role" for="webUserRole" />
                         <h:selectOneMenu value="#{webUserController.selected.webUserRole}" >
                             <f:selectItems value="#{commonController.webUserRoles}" ></f:selectItems>
                         </h:selectOneMenu>
-                        
+
                         <h:outputLabel value="Language"  />
                         <h:selectOneMenu value="#{webUserController.selected.defLocale}" >
                             <f:selectItem itemLabel="Sinhala" itemValue="si" ></f:selectItem>

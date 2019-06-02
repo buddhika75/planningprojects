@@ -911,9 +911,24 @@ public class WebUserController implements Serializable {
         getCurrentProject().setCabinetApprovedAt(new Date());
         getCurrentProject().setCabinetApproved(true);
         getProjectFacade().edit(currentProject);
-        JsfUtil.addSuccessMessage("Marked as DNP Approved.");
+        JsfUtil.addSuccessMessage("Marked as Approved by Cabinet.");
     }
 
+    
+    public void markAsCabinetRejected() {
+        if (currentProject == null) {
+            JsfUtil.addErrorMessage("Nothing selected");
+            return;
+        }
+        getCurrentProject().setCurrentStageType(ProjectStageType.Cabinet_Rejected);
+        getCurrentProject().setCabinetRejectedUser(loggedUser);
+        getCurrentProject().setCabinetRejectedAt(new Date());
+        getCurrentProject().setCabinetRejected(true);
+        getProjectFacade().edit(currentProject);
+        JsfUtil.addSuccessMessage("Marked as Cabinet Rejected.");
+    }
+
+    
     /**
      *
      *
@@ -1317,6 +1332,8 @@ public class WebUserController implements Serializable {
 
     public String prepareCreate() {
         current = new WebUser();
+        password = "";
+        passwordReenter = "";
         return "/webUser/Create";
         //970224568
         
@@ -1385,6 +1402,8 @@ public class WebUserController implements Serializable {
         try {
             getFacade().edit(current);
             JsfUtil.addSuccessMessage(("Updated"));
+            password="";
+            passwordReenter="";
             return "/index";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, e.getMessage());
