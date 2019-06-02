@@ -180,13 +180,11 @@
                                                 class="w3-btn w3-amber w3-margin btn350"  >
                                     <div>
                                         <i class='far fa-thumbs-up' style='float: left; font-size:24px;color:green;'></i>
-                                        <div style="float: right;">Approve</div>
+                                        <div style="float: right;">Mark as Submitted to Cabinet</div>
                                     </div>
                                 </h:commandLink> 
                                 <h:commandLink rendered="#{webUserController.currentProject.pecApproved}"
-                                               class="w3-btn w3-amber w3-margin  btn350" 
-                                               action="/upload_files_to_project_proposal" 
-                                               >
+                                               class="w3-btn w3-amber w3-margin  btn350" >
                                     <p:printer target="details" ></p:printer>
                                     <div>
                                         <i class='fa fa-print' style='float: left; font-size:24px;color:green;'></i>
