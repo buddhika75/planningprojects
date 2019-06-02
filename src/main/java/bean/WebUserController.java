@@ -128,7 +128,7 @@ public class WebUserController implements Serializable {
     private Area district;
     private Institution location;
     private Boolean allIslandProjects;
-    private String titleSearchKeyword;
+    private String searchKeyword;
 
     private String loginRequestResponse;
 
@@ -318,6 +318,7 @@ public class WebUserController implements Serializable {
     }
 
     public String listAllProjects() {
+        allIslandProjects = false;
         listOfProjects = listProjects();
         return "/project_lists";
     }
@@ -361,7 +362,7 @@ public class WebUserController implements Serializable {
         listOfProjects = listProjects(ProjectStageType.Cabinet_Rejected);
         return "/project_lists";
     }
-    
+
     public String listProjectsCabinetApproved() {
         listOfProjects = listProjects(ProjectStageType.Cabinet_Approved);
         return "/project_lists";
@@ -392,7 +393,16 @@ public class WebUserController implements Serializable {
     public String searchProjectsByProvince() {
         allIslandProjects = false;
         if (province != null) {
-            listOfProjects = listProjects(null, year, false, province, null);
+            String j = "select p from Project p where p.province=:province ";
+            Map m = new HashMap();
+            if (year != null) {
+                j += " and p.projectYear=:y ";
+                m.put("y", year);
+            }
+            j += " order by p.id";
+
+            m.put("province", province);
+            listOfProjects = getProjectFacade().findBySQL(j, m);
         } else {
             listOfProjects = null;
         }
@@ -402,7 +412,16 @@ public class WebUserController implements Serializable {
     public String searchProjectsByDistrict() {
         allIslandProjects = false;
         if (district != null) {
-            listOfProjects = listProjects(null, year, false, null, district);
+            String j = "select p from Project p where p.district=:district ";
+            Map m = new HashMap();
+            if (year != null) {
+                j += " and p.projectYear=:y ";
+                m.put("y", year);
+            }
+            j += " order by p.id";
+
+            m.put("district", district);
+            listOfProjects = getProjectFacade().findBySQL(j, m);
         } else {
             listOfProjects = null;
         }
@@ -411,19 +430,31 @@ public class WebUserController implements Serializable {
 
     public String searchProjectsByTitle() {
         allIslandProjects = false;
-        if (titleSearchKeyword != null && !titleSearchKeyword.trim().equals("")) {
-            listOfProjects = listProjects(null, year, null, null, null, titleSearchKeyword);
+        if (searchKeyword != null && !searchKeyword.trim().equals("")) {
+            String j = "select p from Project p where lower(p.projectTitle) like :fn ";
+            Map m = new HashMap();
+            if (year != null) {
+                j += " and p.projectYear=:y ";
+                m.put("y", year);
+            }
+            j += " order by p.id";
+
+            m.put("fn", "%" + searchKeyword.trim().toLowerCase() + "%");
+            listOfProjects = getProjectFacade().findBySQL(j, m);
         } else {
             listOfProjects = null;
         }
         return "/projects_search_by_title";
     }
-    
-    
+
     public String searchProjectsByFileNumber() {
         allIslandProjects = false;
-        if (titleSearchKeyword != null && !titleSearchKeyword.trim().equals("")) {
-            listOfProjects = listProjects(null, year, null, null, null, null,titleSearchKeyword);
+        if (searchKeyword != null && !searchKeyword.trim().equals("")) {
+            String j = "select p from Project p where lower(p.fileNumber) like :fn ";
+            Map m = new HashMap();
+            j += " order by p.id";
+            m.put("fn", "%" + searchKeyword.trim().toLowerCase() + "%");
+            listOfProjects = getProjectFacade().findBySQL(j, m);
         } else {
             listOfProjects = null;
         }
@@ -449,18 +480,18 @@ public class WebUserController implements Serializable {
 
     public List<Project> listProjects(ProjectStageType type, Integer y, Boolean allIsland, Area province, Area district, String titleSearchQry) {
         return listProjects(type, y, allIsland, province, district, titleSearchQry, null);
-    
+
     }
-    
+
     public List<Project> listProjects(ProjectStageType type, Integer y, Boolean allIsland, Area province, Area district, String titleSearchQry, String fileNo) {
         Calendar c = Calendar.getInstance();
         c.setTime(getToDate());
         c.add(Calendar.DATE, 2);
         String j = "select p from Project p "
-                + " where p.retired=:f ";
+                + " where p.id <> :f ";
 
         Map m = new HashMap();
-        m.put("f", false);
+        m.put("f", 0);
 
         if (type != null) {
             j += " and p.currentStageType=:t ";
@@ -491,18 +522,22 @@ public class WebUserController implements Serializable {
             j += " and lower(p.projectTitle) like :tq ";
             m.put("tq", "%" + titleSearchQry.trim().toLowerCase() + "%");
         }
-        
-         if (fileNo != null && !fileNo.trim().equals("")) {
+
+        if (fileNo != null && !fileNo.trim().equals("")) {
             j += " and lower(p.fileNumber) like :fn ";
             m.put("fn", "%" + fileNo.trim().toLowerCase() + "%");
         }
 
         j += " order by p.id";
+
+        System.out.println("m = " + m);
+        System.out.println("j = " + j);
+
         return getProjectFacade().findBySQL(j, m, TemporalType.DATE);
     }
 
     public List<Project> listProjects(ProjectStageType type, Integer y, Boolean allIsland, Area province, Area district) {
-        return listProjects(type, y, allIsland, province, district, null);
+        return listProjects(type, y, allIsland, province, district, null, null);
     }
 
     public List<Project> listProjects() {
@@ -1611,12 +1646,12 @@ public class WebUserController implements Serializable {
         this.allIslandProjects = allIslandProjects;
     }
 
-    public String getTitleSearchKeyword() {
-        return titleSearchKeyword;
+    public String getSearchKeyword() {
+        return searchKeyword;
     }
 
-    public void setTitleSearchKeyword(String titleSearchKeyword) {
-        this.titleSearchKeyword = titleSearchKeyword;
+    public void setSearchKeyword(String searchKeyword) {
+        this.searchKeyword = searchKeyword;
     }
 
     public String getLoginRequestResponse() {

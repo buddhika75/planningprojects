@@ -37,22 +37,11 @@
                                 <table >
                                     <tr>
                                         <td>
-                                            Year
-                                        </td>
-                                        <td>
-
-                                            <ez:yearRangeMenu/>
-
-                                        </td>
-                                        <td>
-                                            <p:spacer height="1" width="20" ></p:spacer>
-                                        </td>
-                                        <td>
 
                                             <p:outputLabel value="File Number" ></p:outputLabel>
                                         </td>
                                         <td>
-                                            <h:inputText value="#{webUserController.titleSearchKeyword}" >
+                                            <h:inputText value="#{webUserController.searchKeyword}" >
                                                 <f:ajax event="blur" execute="@this" ></f:ajax>
                                             </h:inputText>
                                         </td>
