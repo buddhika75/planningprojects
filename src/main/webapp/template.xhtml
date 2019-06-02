@@ -66,7 +66,7 @@
 
             <div class="w3-row w3-center w3-amber">
                 <h3 class="w3-opacity">
-                    #{bundle.title}
+                    #{bundle.Title}
                 </h3>
             </div>
 
@@ -82,47 +82,47 @@
                         <h:panelGroup rendered="#{webUserController.loggedUser.systemAdministrator or webUserController.loggedUser.superUser or webUserController.loggedUser.user}" >
                             <ui:insert name="addProject">
                                 <li>
-                                    <h:commandLink value="#{bundle.add_project}" action="#{webUserController.addNewProject()}"></h:commandLink>
+                                    <h:commandLink value="#{bundle.AddProject}" action="#{webUserController.addNewProject()}"></h:commandLink>
                                 </li>
                             </ui:insert>
 
                             <li>
-                                <h:commandLink value="#{bundle.list_project}" action="#{webUserController.listAllProjects}"></h:commandLink>
+                                <h:commandLink value="#{bundle.ListProjects}" action="#{webUserController.listAllProjects}"></h:commandLink>
                             </li>
 
                             <li>
-                                <h:commandLink value="#{bundle.search_projects}" action="#{webUserController.searchProjects()}"></h:commandLink>
+                                <h:commandLink value="#{bundle.SearchProjects}" action="#{webUserController.searchProjects()}"></h:commandLink>
                             </li>
                         </h:panelGroup>
 
 
                         <h:panelGroup rendered="#{webUserController.loggedUser.systemAdministrator}" >
                             <li>
-                                <h:commandLink  value="#{bundle.system_management}" action="/system_management"></h:commandLink>
+                                <h:commandLink  value="#{bundle.SystemManagement}" action="/system_management"></h:commandLink>
                             </li>
                         </h:panelGroup>
 
                         <h:panelGroup rendered="#{webUserController.loggedUser ne null}" >
                             <li>
-                                <h:commandLink  class="spacer1x boldedText" value="#{bundle.change_password}" action="/advertisement_management"></h:commandLink>
+                                <h:commandLink  class="spacer1x boldedText" value="#{bundle.ChangePassword}" action="/advertisement_management"></h:commandLink>
                             </li>
                             <li>
-                                <h:commandLink  class="spacer1x boldedText" value="#{bundle.change_my_details}" action="/system_management"></h:commandLink>
+                                <h:commandLink  class="spacer1x boldedText" value="#{bundle.ChangeMyDetails}" action="/system_management"></h:commandLink>
                             </li>
                             <li>
-                                <h:commandLink  value="#{bundle.sign_out}" action="#{webUserController.logOut()}"></h:commandLink>
+                                <h:commandLink  value="#{bundle.SignOut}" action="#{webUserController.logOut()}"></h:commandLink>
                             </li>
                         </h:panelGroup>
 
                         <h:panelGroup rendered="#{webUserController.loggedUser eq null}" >
                             <li>
-                                <h:commandLink class="nonUnderline"  value="#{bundle.help}" action="#{webUserController.logOut()}"></h:commandLink>
+                                <h:commandLink class="nonUnderline"  value="#{bundle.Help}" action="#{webUserController.logOut()}"></h:commandLink>
                             </li>
                             <li>
-                                <h:commandLink class="nonUnderline" value="#{bundle.sign_in}" action="#{webUserController.toLogin()}"></h:commandLink>
+                                <h:commandLink class="nonUnderline" value="#{bundle.SignIn}" action="#{webUserController.toLogin()}"></h:commandLink>
                             </li>
                             <li>
-                                <h:commandLink class="nonUnderline"  value="#{bundle.sign_up}" action="#{webUserController.prepareRegisterAsClient()}"></h:commandLink>
+                                <h:commandLink class="nonUnderline"  value="#{bundle.SignUp}" action="#{webUserController.prepareRegisterAsClient()}"></h:commandLink>
                             </li>
                         </h:panelGroup>
                     </ul>
@@ -152,7 +152,7 @@
                         <table style="width: 98%; margin: auto;">
                             <tr>
                                 <td>
-                                    &copy; #{bundle.hiu}, 2019
+                                    &copy; #{bundle.Hiu}, 2019
                                 </td>
                                 <td>
 
@@ -167,7 +167,7 @@
                                             <f:selectItem itemLabel="Sinhala" itemValue="si" ></f:selectItem>
                                             <f:selectItem itemLabel="Tamil" itemValue="ta" ></f:selectItem>
                                             <f:selectItem itemLabel="English" itemValue="en" ></f:selectItem>
-                                            <f:ajax execute="@this" render="@all" listener="#{webUserController.update()}" ></f:ajax>
+                                            <f:ajax execute="@this" render="@all" listener="#{webUserController.updateLoggedUser()}" ></f:ajax>
                                         </h:selectOneMenu>
                                     </h:panelGroup>
                                 </td>
