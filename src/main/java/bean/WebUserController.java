@@ -1298,6 +1298,8 @@ public class WebUserController implements Serializable {
     public String prepareCreate() {
         current = new WebUser();
         return "/webUser/Create";
+        //970224568
+        
     }
 
     public String create() {
@@ -1326,7 +1328,7 @@ public class WebUserController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("updated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("Updated"));
             return "manage_users";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, e.getMessage());
@@ -1334,6 +1336,20 @@ public class WebUserController implements Serializable {
         }
     }
 
+    
+    public void updateLoggedUser() {
+        if(loggedUser==null){
+            return ;
+        }
+        try {
+            getFacade().edit(loggedUser);
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("Updated"));
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, e.getMessage());
+        }
+    }
+
+    
     public String updatePassword() {
         if (!password.equals(current.getWebUserPassword())) {
             JsfUtil.addErrorMessage("Passwords do NOT match");
