@@ -113,6 +113,7 @@ public class WebUserController implements Serializable {
     private WebUser loggedUser;
     private String userName;
     private String password;
+    private String passwordReenter;
     private MapModel emptyModel;
 
     private UploadedFile file;
@@ -139,6 +140,25 @@ public class WebUserController implements Serializable {
         emptyModel = new DefaultMapModel();
     }
 
+    
+    public String toChangeMyDetails(){
+        if(loggedUser==null){
+            return "";
+        }
+        current = loggedUser;
+        return "/change_my_details";
+    }
+    
+    public String toChangeMyPassword(){
+        if(loggedUser==null){
+            return "";
+        }
+        password= "";
+        passwordReenter="";
+        current = loggedUser;
+        return "/change_my_password";
+    }
+    
     public void removeSelectedProvince() {
         if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing to add");
@@ -891,9 +911,24 @@ public class WebUserController implements Serializable {
         getCurrentProject().setCabinetApprovedAt(new Date());
         getCurrentProject().setCabinetApproved(true);
         getProjectFacade().edit(currentProject);
-        JsfUtil.addSuccessMessage("Marked as DNP Approved.");
+        JsfUtil.addSuccessMessage("Marked as Approved by Cabinet.");
     }
 
+    
+    public void markAsCabinetRejected() {
+        if (currentProject == null) {
+            JsfUtil.addErrorMessage("Nothing selected");
+            return;
+        }
+        getCurrentProject().setCurrentStageType(ProjectStageType.Cabinet_Rejected);
+        getCurrentProject().setCabinetRejectedUser(loggedUser);
+        getCurrentProject().setCabinetRejectedAt(new Date());
+        getCurrentProject().setCabinetRejected(true);
+        getProjectFacade().edit(currentProject);
+        JsfUtil.addSuccessMessage("Marked as Cabinet Rejected.");
+    }
+
+    
     /**
      *
      *
@@ -1297,6 +1332,8 @@ public class WebUserController implements Serializable {
 
     public String prepareCreate() {
         current = new WebUser();
+        password = "";
+        passwordReenter = "";
         return "/webUser/Create";
         //970224568
         
@@ -1309,9 +1346,9 @@ public class WebUserController implements Serializable {
         }
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("WebUserCreated"));
+            JsfUtil.addSuccessMessage(("WebUserCreated"));
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ("PersistenceErrorOccured"));
             return "";
         }
         return prepareCreate();
@@ -1328,13 +1365,52 @@ public class WebUserController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("Updated"));
+            JsfUtil.addSuccessMessage(("Updated"));
             return "manage_users";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, e.getMessage());
             return null;
         }
     }
+
+
+    public String updateMyDetails() {
+        try {
+            getFacade().edit(current);
+            JsfUtil.addSuccessMessage(("Updated"));
+            return "index";
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, e.getMessage());
+            return null;
+        }
+    }
+
+    
+
+    public String updateMyPassword() {
+        current = loggedUser;
+        if(current==null){
+            JsfUtil.addSuccessMessage(("Error. No Logged User"));
+            return "";
+        }
+        
+        if(!password.equals(passwordReenter)){
+            JsfUtil.addSuccessMessage(("Password Mismatch."));
+            return "";
+        }
+        current.setWebUserPassword(password);
+        try {
+            getFacade().edit(current);
+            JsfUtil.addSuccessMessage(("Updated"));
+            password="";
+            passwordReenter="";
+            return "/index";
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, e.getMessage());
+            return "";
+        }
+    }
+
 
     
     public void updateLoggedUser() {
@@ -1343,7 +1419,7 @@ public class WebUserController implements Serializable {
         }
         try {
             getFacade().edit(loggedUser);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("Updated"));
+            JsfUtil.addSuccessMessage(("Updated"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, e.getMessage());
         }
@@ -1357,10 +1433,10 @@ public class WebUserController implements Serializable {
         }
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("WebUserUpdated"));
+            JsfUtil.addSuccessMessage(("WebUserUpdated"));
             return "manage_users";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ("PersistenceErrorOccured"));
             return null;
         }
     }
@@ -1374,9 +1450,9 @@ public class WebUserController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("WebUserDeleted"));
+            JsfUtil.addSuccessMessage(("WebUserDeleted"));
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ("PersistenceErrorOccured"));
         }
     }
 
@@ -1702,7 +1778,17 @@ public class WebUserController implements Serializable {
     public ItemController getItemController() {
         return itemController;
     }
+
+    public String getPasswordReenter() {
+        return passwordReenter;
+    }
+
+    public void setPasswordReenter(String passwordReenter) {
+        this.passwordReenter = passwordReenter;
+    }
     
+
+
     
     
     /**

@@ -8,6 +8,9 @@
             <base-name>/Bundle</base-name>
             <var>bundle</var>
         </resource-bundle>
+        <locale-config>
+            <default-locale>en</default-locale>
+        </locale-config>
     </application>
     <navigation-rule>
         <from-view-id>*</from-view-id>
