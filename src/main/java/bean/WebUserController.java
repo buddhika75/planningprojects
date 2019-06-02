@@ -1,10 +1,13 @@
 package bean;
 
 import entity.Area;
+import entity.AreaType;
 import entity.WebUser;
 
 import entity.Institution;
 import entity.InstitutionType;
+import entity.Item;
+import entity.ItemType;
 import entity.Project;
 import entity.ProjectArea;
 import entity.ProjectStageType;
@@ -43,6 +46,10 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.persistence.TemporalType;
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
 import org.apache.commons.io.IOUtils;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -75,6 +82,12 @@ public class WebUserController implements Serializable {
      */
     @Inject
     private CommonController commonController;
+    @Inject
+    private AreaController areaController;
+    @Inject
+    private InstitutionController institutionController;
+    @Inject
+    private ItemController itemController;
 
     /*
     Variables
@@ -314,7 +327,7 @@ public class WebUserController implements Serializable {
         listOfProjects = listProjects(null, year, true, null, null);
         return "/projects_search_all_island";
     }
-    
+
     public String searchAllIslandProjectsMobile() {
         allIslandProjects = true;
         listOfProjects = listProjects(null, year, true, null, null);
@@ -995,6 +1008,139 @@ public class WebUserController implements Serializable {
 
     }
 
+    public String importProjectsFromExcel() {
+        String strYear;
+        String strProvince;
+        String strFileNumber;
+        String strDistrict;
+        String strLocation;
+        String strTile;
+        String strDiscription;
+        String strCost;
+        String strFundSource;
+
+        Double dblCost;
+        Integer intYear;
+        Institution insLocation;
+        Area areaProvince;
+        Area areaDistrict;
+        Item itemFundSource;
+
+        File inputWorkbook;
+        Workbook w;
+        Cell cell;
+        InputStream in;
+
+        int startRow = 1;
+
+        JsfUtil.addSuccessMessage(file.getFileName());
+
+        try {
+            JsfUtil.addSuccessMessage(file.getFileName());
+            in = file.getInputstream();
+            File f;
+            f = new File(Calendar.getInstance().getTimeInMillis() + file.getFileName());
+            FileOutputStream out = new FileOutputStream(f);
+            int read = 0;
+            byte[] bytes = new byte[1024];
+            while ((read = in.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+            in.close();
+            out.flush();
+            out.close();
+
+            inputWorkbook = new File(f.getAbsolutePath());
+
+            JsfUtil.addSuccessMessage("Excel File Opened");
+            w = Workbook.getWorkbook(inputWorkbook);
+            Sheet sheet = w.getSheet(0);
+
+            for (int i = startRow; i < sheet.getRows(); i++) {
+
+                Project np = new Project();
+                np.setCreatedAt(new Date());
+                np.setCreater(loggedUser);
+                np.setCurrentStageType(ProjectStageType.Awaiting_PEC_Approval);
+
+                Map m = new HashMap();
+
+                //Year
+                cell = sheet.getCell(0, i);
+                strYear = cell.getContents();
+                try {
+                    intYear = Integer.parseInt(strYear);
+                    np.setProjectYear(intYear);
+                } catch (Exception e) {
+                    System.out.println("e = " + i + " in " + e);
+                }
+
+                cell = sheet.getCell(1, i);
+                strProvince = cell.getContents();
+
+                cell = sheet.getCell(3, i);
+                strDistrict = cell.getContents();
+                
+                if(strProvince.trim().equalsIgnoreCase("All Island")){
+                    np.setAllIsland(true);
+                    np.setProvince(null);
+                    np.setDistrict(null);
+                }else{
+                    areaProvince = areaController.getArea(strProvince, AreaType.Province);
+                    areaDistrict = areaController.getArea(strDistrict, AreaType.District);
+                    np.setProvince(areaProvince);
+                    np.setDistrict(areaDistrict);
+                }
+                
+                
+                cell = sheet.getCell(2, i);
+                strFileNumber = cell.getContents();
+                np.setFileNumber(strFileNumber);
+                
+
+                cell = sheet.getCell(4, i);
+                strLocation = cell.getContents();
+                insLocation = institutionController.getInstitution(strLocation, InstitutionType.Other, true);
+                np.setProjectLocation(insLocation);
+
+                cell = sheet.getCell(5, i);
+                strTile = cell.getContents();
+                np.setProjectTitle(strTile);
+
+                cell = sheet.getCell(6, i);
+                strDiscription = cell.getContents();
+                np.setProjectDescription(strDiscription);
+
+                cell = sheet.getCell(7, i);
+                strCost = cell.getContents();
+                try{
+                    dblCost = Double.parseDouble(strCost);
+                    np.setProjectCost(dblCost);
+                }catch (Exception e){
+                    System.out.println( i + ". e = " + e);
+                }
+
+                cell = sheet.getCell(8, i);
+                strFundSource = cell.getContents();
+                itemFundSource = itemController.getItem(strFundSource, ItemType.Source_of_Funds, true);
+                np.setSourceOfFunds(itemFundSource);
+                
+                getProjectFacade().create(np);
+                System.out.println("Added SUccessfully = " + i);
+
+            }
+
+            JsfUtil.addSuccessMessage("Succesful. All the data in Excel File Impoted to the database");
+            return "";
+        } catch (IOException ex) {
+            JsfUtil.addErrorMessage(ex.getMessage());
+            return "";
+        } catch (BiffException e) {
+            JsfUtil.addErrorMessage(e.getMessage());
+            return "";
+        }
+    }
+
     public List<Upload> getUploads(Project p) {
         return getUploads(p, null);
     }
@@ -1419,6 +1565,21 @@ public class WebUserController implements Serializable {
     public void setLocale(String locale) {
         this.locale = locale;
     }
+
+    public AreaController getAreaController() {
+        return areaController;
+    }
+
+    public InstitutionController getInstitutionController() {
+        return institutionController;
+    }
+
+    public ItemController getItemController() {
+        return itemController;
+    }
+    
+    
+    
 
     @FacesConverter(forClass = WebUser.class)
     public static class WebUserControllerConverter implements Converter {

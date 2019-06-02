@@ -7,6 +7,7 @@ import facade.InstitutionFacade;
 import facade.util.JsfUtil;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -193,6 +194,29 @@ public class InstitutionController implements Serializable {
 
     public Institution getInstitution(java.lang.Long id) {
         return ejbFacade.find(id);
+    }
+    
+    
+    public Institution getInstitution(String name, InstitutionType type, boolean createNew){
+        String j;
+        Map m = new HashMap();
+        j = "select a "
+                + " from Institution a "
+                + " where (upper(a.name) =:n)  ";
+        if(type!=null){
+            j+= " and a.institutionType=:t ";
+            m.put("t", type);
+        }
+        m.put("n", name.toUpperCase());
+        Institution ti = getFacade().findFirstBySQL(j, m);
+        if(createNew==true && ti==null){
+            ti = new Institution();
+            ti.setName(name);
+            ti.setCreatedAt(new Date());
+            ti.setInstitutionType(type);
+            getFacade().create(ti);
+        }
+        return ti ;
     }
 
     public Institution getCurrent() {

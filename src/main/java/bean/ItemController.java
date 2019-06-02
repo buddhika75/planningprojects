@@ -18,6 +18,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import facade.util.JsfUtil.PersistAction;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -134,6 +135,29 @@ public class ItemController implements Serializable {
 
     public Item getItem(java.lang.Long id) {
         return getFacade().find(id);
+    }
+    
+    
+    public Item getItem(String name, ItemType type, boolean createNew){
+         String j;
+        Map m = new HashMap();
+        j = "select a "
+                + " from Item a "
+                + " where (upper(a.name) =:n)  ";
+        if(type!=null){
+            j+= " and a.type=:t ";
+            m.put("t", type);
+        }
+        m.put("n", name.toUpperCase());
+        Item ti = getFacade().findFirstBySQL(j, m);
+        if(createNew==true && ti==null){
+            ti = new Item();
+            ti.setName(name);
+            ti.setCreatedAt(new Date());
+            ti.setType(type);
+            getFacade().create(ti);
+        }
+        return ti ;
     }
 
     public List<Item> getItemsAvailableSelectMany() {

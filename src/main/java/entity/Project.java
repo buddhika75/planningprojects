@@ -103,6 +103,14 @@ public class Project implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date cabinetRejectedDate;
 
+    private Boolean onoing;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date ongoingDate;
+
+    private Boolean completed;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date completedDate;
+
     @Lob
     private String remarks;
 
@@ -199,6 +207,22 @@ public class Project implements Serializable {
     @Lob
     private String cabinetRejectRecommendation;
 
+    //Ongoing
+    @ManyToOne
+    private WebUser ongoingMarkedUser;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date ongoingMarkedAt;
+    @Lob
+    private String ongoingRecommendation;
+
+    //Completed
+    @ManyToOne
+    private WebUser completedMarkedUser;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date completeMarkedAt;
+    @Lob
+    private String completeRecommendation;
+
     @Transient
     private boolean canApproveAtPec = false;
     @Transient
@@ -217,6 +241,11 @@ public class Project implements Serializable {
     private boolean canApproveAtCabinet = false;
     @Transient
     private boolean canRejectAtCabinet = false;
+
+    @Transient
+    private boolean canMarkAsOngoing;
+    @Transient
+    private boolean canMarkAsCompleted = false;
 
     @Override
     public int hashCode() {
@@ -795,9 +824,6 @@ public class Project implements Serializable {
         this.cabinetRejectedAt = cabinetRejectedAt;
     }
 
-    
-    
-    
     public String getCabinetRejectRecommendation() {
         return cabinetRejectRecommendation;
     }
@@ -806,8 +832,11 @@ public class Project implements Serializable {
         this.cabinetRejectRecommendation = cabinetRejectRecommendation;
     }
 
+    
+    
+    
     public boolean isCanApproveAtPec() {
-        if (currentStageType == ProjectStageType.Awaiting_PEC_Approval || currentStageType==ProjectStageType.PEC_Rejected) {
+        if (currentStageType == ProjectStageType.Awaiting_PEC_Approval || currentStageType == ProjectStageType.PEC_Rejected) {
             canApproveAtPec = true;
         } else {
             canApproveAtPec = false;
@@ -878,6 +907,27 @@ public class Project implements Serializable {
         return canRejectAtCabinet;
     }
 
+    public boolean isCanMarkAsOngoing() {
+        if (currentStageType == ProjectStageType.Cabinet_Approved) {
+            canMarkAsOngoing = true;
+        } else {
+            canMarkAsOngoing = false;
+        }
+        return canMarkAsOngoing;
+    }
+
+    public boolean isCanMarkAsCompleted() {
+        if (currentStageType == ProjectStageType.Ongoing) {
+            canMarkAsCompleted = true;
+        } else {
+            canMarkAsCompleted = false;
+        }
+        return canMarkAsCompleted;
+    }
+
+    
+    
+    
     public Boolean getCabinetRejected() {
         return cabinetRejected;
     }
@@ -892,6 +942,86 @@ public class Project implements Serializable {
 
     public void setCabinetRejectedDate(Date cabinetRejectedDate) {
         this.cabinetRejectedDate = cabinetRejectedDate;
+    }
+
+    public Boolean getOnoing() {
+        return onoing;
+    }
+
+    public void setOnoing(Boolean onoing) {
+        this.onoing = onoing;
+    }
+
+    public Date getOngoingDate() {
+        return ongoingDate;
+    }
+
+    public void setOngoingDate(Date ongoingDate) {
+        this.ongoingDate = ongoingDate;
+    }
+
+    public Boolean getCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(Boolean completed) {
+        this.completed = completed;
+    }
+
+    public Date getCompletedDate() {
+        return completedDate;
+    }
+
+    public void setCompletedDate(Date completedDate) {
+        this.completedDate = completedDate;
+    }
+
+    public WebUser getOngoingMarkedUser() {
+        return ongoingMarkedUser;
+    }
+
+    public void setOngoingMarkedUser(WebUser ongoingMarkedUser) {
+        this.ongoingMarkedUser = ongoingMarkedUser;
+    }
+
+    public Date getOngoingMarkedAt() {
+        return ongoingMarkedAt;
+    }
+
+    public void setOngoingMarkedAt(Date ongoingMarkedAt) {
+        this.ongoingMarkedAt = ongoingMarkedAt;
+    }
+
+    public String getOngoingRecommendation() {
+        return ongoingRecommendation;
+    }
+
+    public void setOngoingRecommendation(String ongoingRecommendation) {
+        this.ongoingRecommendation = ongoingRecommendation;
+    }
+
+    public WebUser getCompletedMarkedUser() {
+        return completedMarkedUser;
+    }
+
+    public void setCompletedMarkedUser(WebUser completedMarkedUser) {
+        this.completedMarkedUser = completedMarkedUser;
+    }
+
+    public Date getCompleteMarkedAt() {
+        return completeMarkedAt;
+    }
+
+    public void setCompleteMarkedAt(Date completeMarkedAt) {
+        this.completeMarkedAt = completeMarkedAt;
+    }
+
+    public String getCompleteRecommendation() {
+        return completeRecommendation;
+    }
+
+    public void setCompleteRecommendation(String completeRecommendation) {
+        this.completeRecommendation = completeRecommendation;
     }
 
 }

@@ -17,7 +17,9 @@ public enum ProjectStageType {
     Awaiting_Cabinet_Submission,
     Awaiting_Cabinet_Approval,
     Cabinet_Approved,
-    Cabinet_Rejected;
+    Cabinet_Rejected,
+    Ongoing,
+    Completed;
 
     public String getLabel() {
         switch (this) {
@@ -43,7 +45,12 @@ public enum ProjectStageType {
                 return "Approved by the Cabinet";
             case Cabinet_Rejected:
                 return "Rejected by the Cabinet";
-            default: return this.toString();
+            case Ongoing:
+                return "Ongoing";
+            case Completed:
+                return "Completed";
+            default:
+                return this.toString();
         }
     }
 }
