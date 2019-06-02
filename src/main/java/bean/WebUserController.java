@@ -418,6 +418,17 @@ public class WebUserController implements Serializable {
         }
         return "/projects_search_by_title";
     }
+    
+    
+    public String searchProjectsByFileNumber() {
+        allIslandProjects = false;
+        if (titleSearchKeyword != null && !titleSearchKeyword.trim().equals("")) {
+            listOfProjects = listProjects(null, year, null, null, null, null,titleSearchKeyword);
+        } else {
+            listOfProjects = null;
+        }
+        return "/projects_search_by_file_number";
+    }
 
     public String searchProjects() {
         listOfProjects = null;
@@ -437,6 +448,11 @@ public class WebUserController implements Serializable {
     }
 
     public List<Project> listProjects(ProjectStageType type, Integer y, Boolean allIsland, Area province, Area district, String titleSearchQry) {
+        return listProjects(type, y, allIsland, province, district, titleSearchQry, null);
+    
+    }
+    
+    public List<Project> listProjects(ProjectStageType type, Integer y, Boolean allIsland, Area province, Area district, String titleSearchQry, String fileNo) {
         Calendar c = Calendar.getInstance();
         c.setTime(getToDate());
         c.add(Calendar.DATE, 2);
@@ -474,6 +490,11 @@ public class WebUserController implements Serializable {
         if (titleSearchQry != null && !titleSearchQry.trim().equals("")) {
             j += " and lower(p.projectTitle) like :tq ";
             m.put("tq", "%" + titleSearchQry.trim().toLowerCase() + "%");
+        }
+        
+         if (fileNo != null && !fileNo.trim().equals("")) {
+            j += " and lower(p.fileNumber) like :fn ";
+            m.put("fn", "%" + fileNo.trim().toLowerCase() + "%");
         }
 
         j += " order by p.id";
