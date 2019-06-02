@@ -56,142 +56,106 @@
     </h:head>
 
     <h:body class="w3-theme-l5">
-        
+
         <f:view locale="#{webUserController.locale}" >
-        
-        
-        
-        
-        
-        
-        <div class="w3-row w3-center w3-amber">
-            <h3 class="w3-opacity">
-                #{bundle.title}
-            </h3>
-        </div>
-
-       
-        
-
-        <div class="w3-row" >
-            <h:form>
-                <ul>
-                    <li>
-                        <h:commandLink class="nonUnderline"  value="#{bundle.Home}" action="/index" ></h:commandLink>
-                    </li>
-                    <h:panelGroup rendered="#{webUserController.loggedUser.systemAdministrator}" >
-                        <li>
-                            <ui:insert name="viewProjects">
-                                <h:commandLink value="#{bundle.list_project}" action="/listAllProjects"></h:commandLink>
-                            </ui:insert>
-                        </li>
-                        <li>
-                            <h:commandLink  value="#{bundle.system_management}" action="/system_management"></h:commandLink>
-                        </li>
-                    </h:panelGroup>
-
-                    <h:panelGroup rendered="#{webUserController.loggedUser.superUser}" >
-                        <li>
-                            <h:commandLink value="LIST PROJECTS" action="#{webUserController.listAllProjects}"></h:commandLink>
-                        </li>
-                        <li>
-                            <h:commandLink value="SEARCH PROJECTS" action="#{webUserController.searchProjects()}"></h:commandLink>
-                        </li>
-                    </h:panelGroup>
-                    <h:panelGroup rendered="#{webUserController.loggedUser.user}" >
-
-                        <ui:insert name="addProject">
-                            <li>
-                                <h:commandLink value="ADD PROJECT" action="#{webUserController.addNewProject()}"></h:commandLink>
-                            </li>
-                        </ui:insert>
-
-                        <li>
-                            <h:commandLink value="LIST PROJECTS" action="#{webUserController.listAllProjects}"></h:commandLink>
-                        </li>
-                        
-                        <li>
-                            <h:commandLink value="SEARCH PROJECTS" action="#{webUserController.searchProjects()}"></h:commandLink>
-                        </li>
-                    </h:panelGroup>
-
-                    <h:panelGroup rendered="#{webUserController.loggedUser.institutionUser}" >
-                        <li>
-                            <h:commandLink value="SUBMIT PROJECT" action="#{webUserController.listAllProjects}"></h:commandLink>
-                        </li>
-                        <li>
-                            <h:commandLink  class="spacer1x boldedText" value="VIEW MY PROJECTS" action="#{webUserController.viewMyProject()}"></h:commandLink>
-                        </li>
-
-                    </h:panelGroup>
-
-                    <h:panelGroup rendered="#{webUserController.loggedUser.institutionAdministrator}" >
-                        <li>
-                            <h:commandLink value="SUBMIT PROJECT" action="#{webUserController.listAllProjects}"></h:commandLink>
-                        </li>
-                        <li>
-                            <h:commandLink  class="spacer1x boldedText" value="VIEW MY PROJECTS" action="#{webUserController.viewMyProject()}"></h:commandLink>
-                        </li>
-                        <li>
-                            <h:commandLink  class="spacer1x boldedText" value="USER MANAGEMENT" action="/system_management"></h:commandLink>
-                        </li>
-                    </h:panelGroup>
-
-
-                    <h:panelGroup rendered="#{webUserController.loggedUser ne null}" >
-                        <li>
-                            <h:commandLink  class="spacer1x boldedText" value="#{bundle.change_password}" action="/advertisement_management"></h:commandLink>
-                        </li>
-                        <li>
-                            <h:commandLink  class="spacer1x boldedText" value="#{bundle.change_my_details}" action="/system_management"></h:commandLink>
-                        </li>
-                        <li>
-                            <h:commandLink  value="#{bundle.sign_out}" action="#{webUserController.logOut()}"></h:commandLink>
-                        </li>
-                    </h:panelGroup>
-
-                    <h:panelGroup rendered="#{webUserController.loggedUser eq null}" >
-                        <li>
-                            <h:commandLink class="nonUnderline"  value="HELP" action="#{webUserController.logOut()}"></h:commandLink>
-                        </li>
-                        <li>
-                            <h:commandLink class="nonUnderline" value="SIGN IN" action="#{webUserController.toLogin()}"></h:commandLink>
-                        </li>
-                        <li>
-                            <h:commandLink class="nonUnderline"  value="SIGN UP" action="#{webUserController.prepareRegisterAsClient()}"></h:commandLink>
-                        </li>
-                    </h:panelGroup>
-                </ul>
-            </h:form>
-        </div>
 
 
 
-        <p:growl autoUpdate="true"  ></p:growl>
 
 
-        <ui:insert name="content">
 
-            <div class="w3-row w3-theme-l5" >
-
+            <div class="w3-row w3-center w3-amber">
+                <h3 class="w3-opacity">
+                    #{bundle.title}
+                </h3>
             </div>
 
 
-        </ui:insert>
+
+
+            <div class="w3-row" >
+                <h:form>
+                    <ul>
+                        <li>
+                            <h:commandLink class="nonUnderline"  value="#{bundle.Home}" action="/index" ></h:commandLink>
+                        </li>
+                        <h:panelGroup rendered="#{webUserController.loggedUser.systemAdministrator or webUserController.loggedUser.superUser or webUserController.loggedUser.user}" >
+                            <ui:insert name="addProject">
+                                <li>
+                                    <h:commandLink value="ADD PROJECT" action="#{webUserController.addNewProject()}"></h:commandLink>
+                                </li>
+                            </ui:insert>
+
+                            <li>
+                                <h:commandLink value="#{bundle.list_project}" action="#{webUserController.listAllProjects}"></h:commandLink>
+                            </li>
+
+                            <li>
+                                <h:commandLink value="SEARCH PROJECTS" action="#{webUserController.searchProjects()}"></h:commandLink>
+                            </li>
+                        </h:panelGroup>
+
+
+                        <h:panelGroup rendered="#{webUserController.loggedUser.systemAdministrator}" >
+                            <li>
+                                <h:commandLink  value="#{bundle.system_management}" action="/system_management"></h:commandLink>
+                            </li>
+                        </h:panelGroup>
+
+                        <h:panelGroup rendered="#{webUserController.loggedUser ne null}" >
+                            <li>
+                                <h:commandLink  class="spacer1x boldedText" value="#{bundle.change_password}" action="/advertisement_management"></h:commandLink>
+                            </li>
+                            <li>
+                                <h:commandLink  class="spacer1x boldedText" value="#{bundle.change_my_details}" action="/system_management"></h:commandLink>
+                            </li>
+                            <li>
+                                <h:commandLink  value="#{bundle.sign_out}" action="#{webUserController.logOut()}"></h:commandLink>
+                            </li>
+                        </h:panelGroup>
+
+                        <h:panelGroup rendered="#{webUserController.loggedUser eq null}" >
+                            <li>
+                                <h:commandLink class="nonUnderline"  value="HELP" action="#{webUserController.logOut()}"></h:commandLink>
+                            </li>
+                            <li>
+                                <h:commandLink class="nonUnderline" value="SIGN IN" action="#{webUserController.toLogin()}"></h:commandLink>
+                            </li>
+                            <li>
+                                <h:commandLink class="nonUnderline"  value="SIGN UP" action="#{webUserController.prepareRegisterAsClient()}"></h:commandLink>
+                            </li>
+                        </h:panelGroup>
+                    </ul>
+                </h:form>
+            </div>
+
+
+
+            <p:growl autoUpdate="true"  ></p:growl>
+
+
+            <ui:insert name="content">
+
+                <div class="w3-row w3-theme-l5" >
+
+                </div>
+
+
+            </ui:insert>
 
 
 
 
-        <div class="footer w3-amber">
-            <p>
-                <ui:insert name="bottom">
-                    &copy; Health Information Unit, 2019
-                </ui:insert>
-            </p>
-        </div>
+            <div class="footer w3-amber">
+                <p>
+                    <ui:insert name="bottom">
+                        &copy; Health Information Unit, 2019
+                    </ui:insert>
+                </p>
+            </div>
 
         </f:view>
-        
+
     </h:body>
 
 </html>
