@@ -119,10 +119,10 @@
                                 <h:commandLink class="nonUnderline"  value="#{bundle.Help}" action="#{webUserController.logOut()}"></h:commandLink>
                             </li>
                             <li>
-                                <h:commandLink class="nonUnderline" value="#{bundle.SignIn}" action="#{webUserController.toLogin()}"></h:commandLink>
+                                <h:commandLink class="nonUnderline" value="#{bundle.SingIn}" action="#{webUserController.toLogin()}"></h:commandLink>
                             </li>
                             <li>
-                                <h:commandLink class="nonUnderline"  value="#{bundle.SignUp}" action="#{webUserController.prepareRegisterAsClient()}"></h:commandLink>
+                                <h:commandLink class="nonUnderline"  value="#{bundle.SingUp}" action="#{webUserController.prepareRegisterAsClient()}"></h:commandLink>
                             </li>
                         </h:panelGroup>
                     </ul>
@@ -161,7 +161,7 @@
 
                                 </td>
                                 <td>
-                                    <h:panelGroup rendered="#{webUserController.loggedUser ne null}" >
+                                    <h:panelGroup rendered="#{webUserController.loggedUser ne null and false}" >
                                         <h:outputLabel value="Language"  />
                                         <h:selectOneMenu value="#{webUserController.loggedUser.defLocale}" >
                                             <f:selectItem itemLabel="Sinhala" itemValue="si" ></f:selectItem>
