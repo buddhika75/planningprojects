@@ -54,7 +54,7 @@ public class Project implements Serializable {
     private Date pcpFirstReceivedDate;
 
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date pcpLastReceivedDate;
+    private Date pcpFinalizedDate;
 
     private Boolean engineersEstimateAvailable;
 
@@ -70,24 +70,36 @@ public class Project implements Serializable {
 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date pcpLastSendToNdpDate;
-
-    private Boolean pecApproved;
+    
+    Boolean incompletePcp;
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date pecApprovedDate;
+    Date incompletePcpDecidedDate;
+
+    private Boolean pecRecomended;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date pecRecommendedOn;
+    
+    private Boolean pecRevision;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date pecRevisionStartedOn;
 
     private Boolean pecRejected;
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date pecRejectedDate;
+    private Date pecRejectedOn;
 
-    private Boolean dnpSubmitted;
+    private Boolean ndpSubmitted;
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dnpSubmittedDate;
+    private Date ndpSubmittedOn;
 
-    private Boolean dnpApproved;
+    private Boolean ndpRecommended;
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dnpApprovedDate;
+    private Date ndpRecommendedOn;
 
-    private Boolean dnpRejected;
+    Boolean ndpRevision;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    Date ndpRevisionStartedOn;
+    
+    private Boolean ndpRejected;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dnpRejectedDate;
 
@@ -102,6 +114,10 @@ public class Project implements Serializable {
     private Boolean cabinetRejected;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date cabinetRejectedDate;
+    
+    Boolean fundsAllocated;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    Date fundsAllocatedDate;
 
     private Boolean onoing;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -143,6 +159,15 @@ public class Project implements Serializable {
     @Lob
     private String retireComments;
 
+    
+    //Incomplete PCP
+    @ManyToOne
+    WebUser pcpMarkedAsIncompleteUser;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    Date pcpMarkedAsIncompleteAt;
+   @Lob
+   String pcpIncompleteComments;
+    
     //PCE Approval
     @ManyToOne
     private WebUser pecApprovedUser;
@@ -166,6 +191,16 @@ public class Project implements Serializable {
     private Date dnpSubmissionAt;
     @Lob
     private String dnpSubmissionRecommendation;
+    
+    
+      //NDP Revision
+    @ManyToOne
+    private WebUser ndpRevisionRecordedUser;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date ndpRevisionRecordedAt;
+    @Lob
+    private String ndpRevisionComments;
+    
 
     //DNP Approval
     @ManyToOne
@@ -296,12 +331,12 @@ public class Project implements Serializable {
         this.pcpFirstReceivedDate = pcpFirstReceivedDate;
     }
 
-    public Date getPcpLastReceivedDate() {
-        return pcpLastReceivedDate;
+    public Date getPcpFinalizedDate() {
+        return pcpFinalizedDate;
     }
 
-    public void setPcpLastReceivedDate(Date pcpLastReceivedDate) {
-        this.pcpLastReceivedDate = pcpLastReceivedDate;
+    public void setPcpFinalizedDate(Date pcpFinalizedDate) {
+        this.pcpFinalizedDate = pcpFinalizedDate;
     }
 
     public Boolean getEngineersEstimateAvailable() {
@@ -352,20 +387,20 @@ public class Project implements Serializable {
         this.pcpLastSendToNdpDate = pcpLastSendToNdpDate;
     }
 
-    public Boolean getDnpApproved() {
-        return dnpApproved;
+    public Boolean getNdpRecommended() {
+        return ndpRecommended;
     }
 
-    public void setDnpApproved(Boolean dnpApproved) {
-        this.dnpApproved = dnpApproved;
+    public void setNdpRecommended(Boolean ndpRecommended) {
+        this.ndpRecommended = ndpRecommended;
     }
 
-    public Date getDnpApprovedDate() {
-        return dnpApprovedDate;
+    public Date getNdpRecommendedOn() {
+        return ndpRecommendedOn;
     }
 
-    public void setDnpApprovedDate(Date dnpApprovedDate) {
-        this.dnpApprovedDate = dnpApprovedDate;
+    public void setNdpRecommendedOn(Date ndpRecommendedOn) {
+        this.ndpRecommendedOn = ndpRecommendedOn;
     }
 
     public Boolean getCabinetApproved() {
@@ -724,20 +759,20 @@ public class Project implements Serializable {
         this.cabinetApprovalRecommendation = cabinetApprovalRecommendation;
     }
 
-    public Boolean getPecApproved() {
-        return pecApproved;
+    public Boolean getPecRecomended() {
+        return pecRecomended;
     }
 
-    public void setPecApproved(Boolean pecApproved) {
-        this.pecApproved = pecApproved;
+    public void setPecRecomended(Boolean pecRecomended) {
+        this.pecRecomended = pecRecomended;
     }
 
-    public Date getPecApprovedDate() {
-        return pecApprovedDate;
+    public Date getPecRecommendedOn() {
+        return pecRecommendedOn;
     }
 
-    public void setPecApprovedDate(Date pecApprovedDate) {
-        this.pecApprovedDate = pecApprovedDate;
+    public void setPecRecommendedOn(Date pecRecommendedOn) {
+        this.pecRecommendedOn = pecRecommendedOn;
     }
 
     public Boolean getPecRejected() {
@@ -748,20 +783,20 @@ public class Project implements Serializable {
         this.pecRejected = pecRejected;
     }
 
-    public Date getPecRejectedDate() {
-        return pecRejectedDate;
+    public Date getPecRejectedOn() {
+        return pecRejectedOn;
     }
 
-    public void setPecRejectedDate(Date pecRejectedDate) {
-        this.pecRejectedDate = pecRejectedDate;
+    public void setPecRejectedOn(Date pecRejectedOn) {
+        this.pecRejectedOn = pecRejectedOn;
     }
 
-    public Boolean getDnpRejected() {
-        return dnpRejected;
+    public Boolean getNdpRejected() {
+        return ndpRejected;
     }
 
-    public void setDnpRejected(Boolean dnpRejected) {
-        this.dnpRejected = dnpRejected;
+    public void setNdpRejected(Boolean ndpRejected) {
+        this.ndpRejected = ndpRejected;
     }
 
     public Date getDnpRejectedDate() {
@@ -772,20 +807,20 @@ public class Project implements Serializable {
         this.dnpRejectedDate = dnpRejectedDate;
     }
 
-    public Boolean getDnpSubmitted() {
-        return dnpSubmitted;
+    public Boolean getNdpSubmitted() {
+        return ndpSubmitted;
     }
 
-    public void setDnpSubmitted(Boolean dnpSubmitted) {
-        this.dnpSubmitted = dnpSubmitted;
+    public void setNdpSubmitted(Boolean ndpSubmitted) {
+        this.ndpSubmitted = ndpSubmitted;
     }
 
-    public Date getDnpSubmittedDate() {
-        return dnpSubmittedDate;
+    public Date getNdpSubmittedOn() {
+        return ndpSubmittedOn;
     }
 
-    public void setDnpSubmittedDate(Date dnpSubmittedDate) {
-        this.dnpSubmittedDate = dnpSubmittedDate;
+    public void setNdpSubmittedOn(Date ndpSubmittedOn) {
+        this.ndpSubmittedOn = ndpSubmittedOn;
     }
 
     public WebUser getPecApprovedUser() {

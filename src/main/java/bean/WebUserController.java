@@ -734,7 +734,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
-        currentProject.setPecApprovedDate(new Date());
+        currentProject.setPecRecommendedOn(new Date());
         getProjectFacade().edit(currentProject);
         return "/pec_approval";
     }
@@ -744,7 +744,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
-        currentProject.setPecRejectedDate(new Date());
+        currentProject.setPecRejectedOn(new Date());
         getProjectFacade().edit(currentProject);
         return "/pec_rejection";
     }
@@ -754,7 +754,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
-        currentProject.setDnpSubmittedDate(new Date());
+        currentProject.setNdpSubmittedOn(new Date());
         getProjectFacade().edit(currentProject);
         return "/dnp_submission";
     }
@@ -764,7 +764,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
-        currentProject.setDnpApprovedDate(new Date());
+        currentProject.setNdpRecommendedOn(new Date());
         getProjectFacade().edit(currentProject);
         return "/dnp_approval";
     }
@@ -831,7 +831,7 @@ public class WebUserController implements Serializable {
         getCurrentProject().setCurrentStageType(ProjectStageType.Awaiting_DNP_Submission);
         getCurrentProject().setPecApprovedUser(loggedUser);
         getCurrentProject().setPecApprovedAt(new Date());
-        getCurrentProject().setPecApproved(true);
+        getCurrentProject().setPecRecomended(true);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as PEC Approved.");
     }
@@ -857,7 +857,7 @@ public class WebUserController implements Serializable {
         getCurrentProject().setCurrentStageType(ProjectStageType.Awaiting_DNP_Approval);
         getCurrentProject().setDnpSubmissionUser(loggedUser);
         getCurrentProject().setDnpSubmissionAt(new Date());
-        getCurrentProject().setDnpSubmitted(true);
+        getCurrentProject().setNdpSubmitted(true);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as Submitted to DNP.");
     }
@@ -870,7 +870,7 @@ public class WebUserController implements Serializable {
         getCurrentProject().setCurrentStageType(ProjectStageType.Awaiting_Cabinet_Submission);
         getCurrentProject().setDnpApprovedUser(loggedUser);
         getCurrentProject().setDnpApprovedAt(new Date());
-        getCurrentProject().setDnpApproved(true);
+        getCurrentProject().setNdpRecommended(true);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as DNP Approved.");
     }
@@ -883,7 +883,7 @@ public class WebUserController implements Serializable {
         getCurrentProject().setCurrentStageType(ProjectStageType.DNP_Rejected);
         getCurrentProject().setDnpRejectedUser(loggedUser);
         getCurrentProject().setDnpRejectedAt(new Date());
-        getCurrentProject().setDnpRejected(true);
+        getCurrentProject().setNdpRejected(true);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as Rejected by DNP.");
     }
