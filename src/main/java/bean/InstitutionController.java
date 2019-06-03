@@ -93,10 +93,10 @@ public class InstitutionController implements Serializable {
         try {
             current.setInstitutionType(InstitutionType.Provincial_Department_of_Health_Services);
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("InstitutionCreated"));
+            JsfUtil.addSuccessMessage(("InstitutionCreated"));
             return prepareListOfProviders();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ("PersistenceErrorOccured"));
             return null;
         }
     }
@@ -105,10 +105,10 @@ public class InstitutionController implements Serializable {
         try {
             current.setInstitutionType(InstitutionType.Regional_Department_of_Health_Department);
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("InstitutionCreated"));
+            JsfUtil.addSuccessMessage(("InstitutionCreated"));
             return prepareListOfClients();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ("PersistenceErrorOccured"));
             return null;
         }
     }
@@ -137,10 +137,10 @@ public class InstitutionController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("InstitutionUpdated"));
+            JsfUtil.addSuccessMessage(("InstitutionUpdated"));
             return "Manage";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ("PersistenceErrorOccured"));
             return null;
         }
     }
@@ -148,10 +148,10 @@ public class InstitutionController implements Serializable {
     public String updateCompany() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("InstitutionUpdated"));
+            JsfUtil.addSuccessMessage(("InstitutionUpdated"));
             return "/system_management";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ("PersistenceErrorOccured"));
             return null;
         }
     }
@@ -165,9 +165,9 @@ public class InstitutionController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("InstitutionDeleted"));
+            JsfUtil.addSuccessMessage(("InstitutionDeleted"));
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ("PersistenceErrorOccured"));
         }
     }
 

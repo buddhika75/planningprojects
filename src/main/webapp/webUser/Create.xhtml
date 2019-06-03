@@ -27,19 +27,16 @@
                             Add New User
                         </f:facet>
 
-
-                        <h:outputLabel value="#{bundle.EditWebUserLabel_name}" for="name" />
-                        <p:inputText id="name" value="#{webUserController.selected.name}" 
-                                     title="#{bundle.EditWebUserTitle_name}" 
-                                     required="true" 
-                                     requiredMessage="#{bundle.EditWebUserRequiredMessage_name}"
-                                     autocomplete="off"
-                                     
-                                     />
-
-                        <h:outputLabel value="#{bundle.EditWebUserLabel_webUserPerson}" for="webUserPerson" />
+                        <h:outputLabel value="Name" for="webUserPerson" />
                         <p:inputText id="webUserPerson" value="#{webUserController.selected.webUserPerson.name}" title="#{bundle.EditWebUserTitle_webUserPerson}" >
                         </p:inputText>
+
+                        <h:outputLabel value="Username" for="name" />
+                        <p:inputText id="name" value="#{webUserController.selected.name}" 
+                                     title="Username" 
+                                     required="true" 
+                                     requiredMessage="Username Required"
+                                     autocomplete="off" />
 
                         <h:outputLabel value="Password"  />
                         <p:password value="#{webUserController.selected.webUserPassword}" ></p:password>
@@ -49,13 +46,14 @@
                         <p:password value="#{webUserController.password}" ></p:password>
 
 
-                        <h:outputLabel value="#{bundle.EditWebUserLabel_email}" for="email" />
-                        <p:inputText id="email" value="#{webUserController.selected.email}" title="#{bundle.EditWebUserTitle_email}" />
-                        <h:outputLabel value="#{bundle.EditWebUserLabel_telNo}" for="telNo" />
-                        <p:inputText id="telNo" value="#{webUserController.selected.telNo}" title="#{bundle.EditWebUserTitle_telNo}" />
+                        <h:outputLabel value="Email" for="email" />
+                        <p:inputText id="email" value="#{webUserController.selected.email}" title="Email" />
+                        
+                        <h:outputLabel value="Phone" for="telNo" />
+                        <p:inputText id="telNo" value="#{webUserController.selected.telNo}" title="Phone" />
 
 
-                        <h:outputLabel value="#{bundle.EditWebUserLabel_institution}" for="acIns" />
+                        <h:outputLabel value="Institution" for="acIns" />
                         <p:autoComplete id="acIns" value="#{webUserController.selected.institution}"
                                         completeMethod="#{institutionController.completeInstitutions}"
                                         var="ins" itemLabel="#{ins.name}" itemValue="#{ins}"
@@ -64,13 +62,13 @@
                                         ></p:autoComplete>
 
 
-                        <h:outputLabel value="#{bundle.EditWebUserLabel_webUserRole}" for="webUserRole" />
+                        <h:outputLabel value="Role" for="webUserRole" />
                         <h:selectOneMenu value="#{webUserController.selected.webUserRole}" >
                             <f:selectItems value="#{commonController.webUserRoles}" ></f:selectItems>
                         </h:selectOneMenu>
 
-                        
-                         <h:outputLabel value="Language"  />
+
+                        <h:outputLabel value="Language"  />
                         <h:selectOneMenu value="#{webUserController.selected.defLocale}" >
                             <f:selectItem itemLabel="Sinhala" itemValue="si" ></f:selectItem>
                             <f:selectItem itemLabel="Tamil" itemValue="ta" ></f:selectItem>

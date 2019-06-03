@@ -2,40 +2,31 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
+    <body>
 
-    <h:head>
-        <h:outputStylesheet library="css" name="main.css" ></h:outputStylesheet>
-    </h:head>
+        <ui:composition template="./template.xhtml">
 
-    <h:body>
-
-        <ui:composition template="/system_management.xhtml">
-
-
-            <ui:define name="right">
-                <h:panelGroup id="messagePanel" layout="block">
-                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-                </h:panelGroup>
-                <h:form>
+            <ui:define name="content">
+                
+                   <h:form>
                     <p:panelGrid columns="2" columnClasses="alignLeft alignLeft" class="pageCenter">
 
                         <f:facet name="header" >
-                            Edit User Details
+                            Change My Details
                         </f:facet>
+
 
                         <h:outputLabel value="Name" for="webUserPerson" />
                         <h:inputText id="webUserPerson" value="#{webUserController.selected.webUserPerson.name}" title="#{bundle.EditWebUserTitle_webUserPerson}" >
                         </h:inputText>
 
-
+                        
                         <h:outputLabel value="Username" for="name" />
                         <h:inputText disabled="true" id="name" value="#{webUserController.selected.name}" title="#{bundle.EditWebUserTitle_name}" required="true" requiredMessage="#{bundle.EditWebUserRequiredMessage_name}"/>
-
-
 
 
                         <h:outputLabel value="Email" for="email" />
@@ -51,13 +42,6 @@
                             <f:selectItems value="#{institutionController.items}"/>
                         </h:selectOneMenu>
 
-
-
-                        <h:outputLabel value="Role" for="webUserRole" />
-                        <h:selectOneMenu value="#{webUserController.selected.webUserRole}" >
-                            <f:selectItems value="#{commonController.webUserRoles}" ></f:selectItems>
-                        </h:selectOneMenu>
-
                         <h:outputLabel value="Language"  />
                         <h:selectOneMenu value="#{webUserController.selected.defLocale}" >
                             <f:selectItem itemLabel="Sinhala" itemValue="si" ></f:selectItem>
@@ -67,21 +51,16 @@
 
 
                         <p:spacer></p:spacer>
-                        <p:commandButton ajax="false" action="#{webUserController.update()}" value="Save" ></p:commandButton>
+                        <p:commandButton ajax="false" action="#{webUserController.updateMyDetails()}" value="Save" ></p:commandButton>
 
                     </p:panelGrid>
 
                 </h:form>
+                
+                
             </ui:define>
+
         </ui:composition>
 
-
-
-    </h:body>
-
-
-
-
-
-
+    </body>
 </html>

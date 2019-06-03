@@ -104,10 +104,10 @@
 
                         <h:panelGroup rendered="#{webUserController.loggedUser ne null}" >
                             <li>
-                                <h:commandLink  class="spacer1x boldedText" value="#{bundle.ChangePassword}" action="/advertisement_management"></h:commandLink>
+                                <h:commandLink  class="spacer1x boldedText" value="#{bundle.ChangePassword}" action="#{webUserController.toChangeMyPassword()}"></h:commandLink>
                             </li>
                             <li>
-                                <h:commandLink  class="spacer1x boldedText" value="#{bundle.ChangeMyDetails}" action="/system_management"></h:commandLink>
+                                <h:commandLink  class="spacer1x boldedText" value="#{bundle.ChangeMyDetails}" action="#{webUserController.toChangeMyDetails()}"></h:commandLink>
                             </li>
                             <li>
                                 <h:commandLink  value="#{bundle.SignOut}" action="#{webUserController.logOut()}"></h:commandLink>
