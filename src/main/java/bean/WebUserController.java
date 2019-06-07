@@ -774,7 +774,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
-        currentProject.setDnpRejectedDate(new Date());
+        currentProject.setDnpRejectedOn(new Date());
         getProjectFacade().edit(currentProject);
         return "/dnp_rejection";
     }
@@ -784,7 +784,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
-        currentProject.setCabinetSubmittedDate(new Date());
+        currentProject.setCabinetSubmittedOn(new Date());
         getProjectFacade().edit(currentProject);
         return "/cabinet_submission";
     }
@@ -794,7 +794,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
-        currentProject.setCabinetApprovalDate(new Date());
+        currentProject.setCabinetApprovalOn(new Date());
         getProjectFacade().edit(currentProject);
         return "/cabinet_approval";
     }
@@ -829,8 +829,8 @@ public class WebUserController implements Serializable {
             return;
         }
         getCurrentProject().setCurrentStageType(ProjectStageType.Awaiting_DNP_Submission);
-        getCurrentProject().setPecApprovedUser(loggedUser);
-        getCurrentProject().setPecApprovedAt(new Date());
+        getCurrentProject().setPecRecommendationRecordedBy(loggedUser);
+        getCurrentProject().setPecRecommendationRecordedAt(new Date());
         getCurrentProject().setPecRecomended(true);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as PEC Approved.");
@@ -842,8 +842,8 @@ public class WebUserController implements Serializable {
             return;
         }
         getCurrentProject().setCurrentStageType(ProjectStageType.PEC_Rejected);
-        getCurrentProject().setPecRejectedUser(loggedUser);
-        getCurrentProject().setPecRejectedAt(new Date());
+        getCurrentProject().setPecRejectionRecordedBy(loggedUser);
+        getCurrentProject().setPecRejectionRecordedAt(new Date());
         getCurrentProject().setPecRejected(true);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as Rejected by PEC.");
@@ -855,8 +855,8 @@ public class WebUserController implements Serializable {
             return;
         }
         getCurrentProject().setCurrentStageType(ProjectStageType.Awaiting_DNP_Approval);
-        getCurrentProject().setDnpSubmissionUser(loggedUser);
-        getCurrentProject().setDnpSubmissionAt(new Date());
+        getCurrentProject().setDnpSubmissionRecordedUser(loggedUser);
+        getCurrentProject().setDnpSubmissionRecordedAt(new Date());
         getCurrentProject().setNdpSubmitted(true);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as Submitted to DNP.");
@@ -868,8 +868,8 @@ public class WebUserController implements Serializable {
             return;
         }
         getCurrentProject().setCurrentStageType(ProjectStageType.Awaiting_Cabinet_Submission);
-        getCurrentProject().setDnpApprovedUser(loggedUser);
-        getCurrentProject().setDnpApprovedAt(new Date());
+        getCurrentProject().setNdpRecommendationRecordedBy(loggedUser);
+        getCurrentProject().setNdpApprovalRecordedAt(new Date());
         getCurrentProject().setNdpRecommended(true);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as DNP Approved.");
@@ -881,8 +881,8 @@ public class WebUserController implements Serializable {
             return;
         }
         getCurrentProject().setCurrentStageType(ProjectStageType.DNP_Rejected);
-        getCurrentProject().setDnpRejectedUser(loggedUser);
-        getCurrentProject().setDnpRejectedAt(new Date());
+        getCurrentProject().setNdpRejectionRecordedBy(loggedUser);
+        getCurrentProject().setNdpRejectionRecorderAt(new Date());
         getCurrentProject().setNdpRejected(true);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as Rejected by DNP.");
@@ -894,8 +894,8 @@ public class WebUserController implements Serializable {
             return;
         }
         getCurrentProject().setCurrentStageType(ProjectStageType.Awaiting_Cabinet_Approval);
-        getCurrentProject().setCabinetSubmissionUser(loggedUser);
-        getCurrentProject().setCabinetSubmissionAt(new Date());
+        getCurrentProject().setCabinetSubmissionRecordedBy(loggedUser);
+        getCurrentProject().setCabinetSubmissionRecordedAt(new Date());
         getCurrentProject().setCabinetSubmitted(true);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as Submitted to Cabinet.");
@@ -907,8 +907,8 @@ public class WebUserController implements Serializable {
             return;
         }
         getCurrentProject().setCurrentStageType(ProjectStageType.Cabinet_Approved);
-        getCurrentProject().setCabinetApprovedUser(loggedUser);
-        getCurrentProject().setCabinetApprovedAt(new Date());
+        getCurrentProject().setCabinetApprovalRecordedBy(loggedUser);
+        getCurrentProject().setCabinetApprovalRecordedAt(new Date());
         getCurrentProject().setCabinetApproved(true);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as Approved by Cabinet.");
@@ -921,8 +921,8 @@ public class WebUserController implements Serializable {
             return;
         }
         getCurrentProject().setCurrentStageType(ProjectStageType.Cabinet_Rejected);
-        getCurrentProject().setCabinetRejectedUser(loggedUser);
-        getCurrentProject().setCabinetRejectedAt(new Date());
+        getCurrentProject().setCabinetRejectionRecordedBy(loggedUser);
+        getCurrentProject().setCabinetRejectionRecordedAt(new Date());
         getCurrentProject().setCabinetRejected(true);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as Cabinet Rejected.");

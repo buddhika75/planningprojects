@@ -119,19 +119,19 @@
                                     </h:panelGroup>
 
                                     <h:outputText value="PEC Rejection Comments"/>
-                                    <h:outputText value="#{webUserController.currentProject.pecRejectRecommendation}" title="ProjectComments"/>
+                                    <h:outputText value="#{webUserController.currentProject.pecRejectionComments}" title="ProjectComments"/>
 
 
                                     <h:outputText value="PEC Rejection Documentation:"/>
                                     <h:panelGroup >
                                         <h:outputText value="By "/>
-                                        <h:outputText value="#{webUserController.currentProject.pecRejectedUser.webUserPerson.nameWithTitle}" title="Creater"/>
+                                        <h:outputText value="#{webUserController.currentProject.pecRejectionRecordedBy.webUserPerson.nameWithTitle}" title="Creater"/>
                                         <h:outputText value=" at "/>
-                                        <h:outputText value="#{webUserController.currentProject.pecRejectedAt}" title="CreatedAt">
+                                        <h:outputText value="#{webUserController.currentProject.pecRejectionRecordedAt}" title="CreatedAt">
                                             <f:convertDateTime pattern="HH:mm a" />
                                         </h:outputText>
                                         <h:outputText value=" on "/>
-                                        <h:outputText value="#{webUserController.currentProject.pecRejectedAt}" title="CreatedAt">
+                                        <h:outputText value="#{webUserController.currenpecRejectionRecordedAtejectedAt}" title="CreatedAt">
                                             <f:convertDateTime pattern="dd/MMMM/yyyy" />
                                         </h:outputText>
                                         <h:outputText value="."/>
@@ -153,7 +153,7 @@
                                 </p:calendar>
 
                                 <h:outputLabel value="Cabinet Recommendation" ></h:outputLabel>
-                                <h:inputTextarea value="#{webUserController.currentProject.cabinetRejectRecommendation}" 
+                                <h:inputTextarea value="#{webUserController.currentProject.cabinetRejectionComments}" 
                                                  title="Project Description" class="btn350" style="height: 150px;"
                                                  />
                                 <h:commandLink  action="#{webUserController.markAsCabinetRejected()}" 
