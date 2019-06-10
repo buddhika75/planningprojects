@@ -97,7 +97,7 @@
                                     </h:selectOneMenu>
                                     <p:commandButton id="btnD" value="Add District" 
                                                      action="#{webUserController.addSelectedDistrictToProject()}" 
-                                                     process="cmbDistrict @this" update="tblDs @this" >
+                                                     process="cmbDistrict @this" update="tblDs cmbDistrict @this" >
                                     </p:commandButton>
                                 </h:panelGrid>
 
@@ -113,13 +113,13 @@
                                 <h:panelGrid columns="1" >
                                     <p:autoComplete value="#{webUserController.selectedLocation}"
                                                     completeMethod="#{institutionController.completeInstitutions}"
-                                                    var="ins" forceSelection="true" id="acLoc"
+                                                    var="ins" forceSelection="true" id="acLoc" 
                                                     placeholder="Search Location by typing few letters ..."
                                                     itemLabel="#{ins.name}" inputStyle="width:100%;" style="width: 100%;"
                                                     itemValue="#{ins}"></p:autoComplete>
                                     <p:commandButton id="btnL" value="Add Location" 
                                                      action="#{webUserController.addSelectedLocationToProject()}" 
-                                                     process="acLoc @this" update="@this" >
+                                                     process="acLoc @this" update="tblLs acLoc" >
                                     </p:commandButton>
                                 </h:panelGrid>
 
