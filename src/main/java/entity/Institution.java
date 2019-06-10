@@ -13,12 +13,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Dr M H B Ariyaratne, buddhika.ari@gmail.com
  */
 @Entity
+@XmlRootElement
 public class Institution implements Serializable {
 
     private static final long serialVersionUID = 1L;
