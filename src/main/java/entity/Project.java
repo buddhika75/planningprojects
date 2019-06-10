@@ -1,15 +1,20 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -27,6 +32,12 @@ public class Project implements Serializable {
 
     @ManyToOne
     private Area province;
+    
+    @OneToMany(mappedBy = "project",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<ProjectProvince> projectProvinces;
+    
+    @OneToMany(mappedBy = "project",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<ProjectDistrict> projectDistricts;
 
     private String fileNumber;
 
@@ -35,6 +46,11 @@ public class Project implements Serializable {
 
     @ManyToOne
     private Institution projectLocation;
+    
+    @OneToMany(mappedBy = "project",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<ProjectInstitution> projectLocations;
+    
+    
 
     private String projectTitle;
 
@@ -48,6 +64,11 @@ public class Project implements Serializable {
 
     @ManyToOne
     private Item sourceOfFunds;
+    
+    @OneToMany(mappedBy = "project",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<ProjectSourceOfFund> sourcesOfFunds;
+    
+    
 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date proposalDate;
@@ -1255,4 +1276,50 @@ public class Project implements Serializable {
         return canAllocateFunds;
     }
 
+    public List<ProjectProvince> getProjectProvinces() {
+        if(projectProvinces==null){
+            projectProvinces = new ArrayList<>();
+        }
+        return projectProvinces;
+    }
+
+    public void setProjectProvinces(List<ProjectProvince> projectProvinces) {
+        this.projectProvinces = projectProvinces;
+    }
+
+    public List<ProjectDistrict> getProjectDistricts() {
+        if(projectDistricts==null){
+            projectDistricts = new ArrayList<>();
+        }
+        return projectDistricts;
+    }
+
+    public void setProjectDistricts(List<ProjectDistrict> projectDistricts) {
+        this.projectDistricts = projectDistricts;
+    }
+
+    public List<ProjectInstitution> getProjectLocations() {
+        if(projectLocations==null){
+            projectLocations = new ArrayList<>();
+        }
+        return projectLocations;
+    }
+
+    public void setProjectLocations(List<ProjectInstitution> projectLocations) {
+        this.projectLocations = projectLocations;
+    }
+
+    public List<ProjectSourceOfFund> getSourcesOfFunds() {
+        if(sourcesOfFunds==null){
+            sourcesOfFunds = new ArrayList<>();
+        }
+        return sourcesOfFunds;
+    }
+
+    public void setSourcesOfFunds(List<ProjectSourceOfFund> sourcesOfFunds) {
+        this.sourcesOfFunds = sourcesOfFunds;
+    }
+
+    
+    
 }
