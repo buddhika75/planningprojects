@@ -23,7 +23,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Project implements Serializable {
 
-    static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -32,11 +36,11 @@ public class Project implements Serializable {
 
     @ManyToOne
     private Area province;
-    
-    @OneToMany(mappedBy = "project",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ProjectProvince> projectProvinces;
-    
-    @OneToMany(mappedBy = "project",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ProjectDistrict> projectDistricts;
 
     private String fileNumber;
@@ -46,11 +50,9 @@ public class Project implements Serializable {
 
     @ManyToOne
     private Institution projectLocation;
-    
-    @OneToMany(mappedBy = "project",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ProjectInstitution> projectLocations;
-    
-    
 
     private String projectTitle;
 
@@ -64,11 +66,9 @@ public class Project implements Serializable {
 
     @ManyToOne
     private Item sourceOfFunds;
-    
-    @OneToMany(mappedBy = "project",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ProjectSourceOfFund> sourcesOfFunds;
-    
-    
 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date proposalDate;
@@ -197,8 +197,7 @@ public class Project implements Serializable {
     private Date pecReviewRecordedAt;
     @Lob
     private String pecReviewComments;
-    
-    
+
     //PCE Approval
     @ManyToOne
     private WebUser pecRecommendationRecordedBy;
@@ -270,8 +269,7 @@ public class Project implements Serializable {
     private Date cabinetRejectionRecordedAt;
     @Lob
     private String cabinetRejectionComments;
-    
-    
+
     //Fund Allocation
     @ManyToOne
     private WebUser fundAllocationDoneRecordedBy;
@@ -279,7 +277,6 @@ public class Project implements Serializable {
     private Date fundAllocationRecordedAt;
     @Lob
     private String fundAllocationComments;
-    
 
     //Ongoing
     @ManyToOne
@@ -302,7 +299,7 @@ public class Project implements Serializable {
     @Transient
     private boolean canRejectAtPec = false;
     @Transient
-    private boolean canReviewAtPec=false;
+    private boolean canReviewAtPec = false;
 
     @Transient
     private boolean canSubmitToNdp;
@@ -311,7 +308,7 @@ public class Project implements Serializable {
     @Transient
     private boolean canRejectAtNdp = false;
     @Transient
-    private boolean canReviewAtNdp=false;
+    private boolean canReviewAtNdp = false;
 
     @Transient
     private boolean canSubmitToCabinet;
@@ -319,13 +316,22 @@ public class Project implements Serializable {
     private boolean canApproveAtCabinet = false;
     @Transient
     private boolean canRejectAtCabinet = false;
-    
+
     @Transient
-   private boolean canAllocateFunds;
+    private boolean canAllocateFunds;
     @Transient
     private boolean canMarkAsOngoing;
     @Transient
     private boolean canMarkAsCompleted = false;
+
+    @Transient
+    private String provincesStr;
+    @Transient
+    private String districtsStr;
+    @Transient
+    private String locationsStr;
+    @Transient
+    private String sourcesOfFundsStr;
 
     @Override
     public int hashCode() {
@@ -1001,8 +1007,6 @@ public class Project implements Serializable {
         }
         return canMarkAsCompleted;
     }
-    
-    
 
     public Boolean getCabinetRejected() {
         return cabinetRejected;
@@ -1168,10 +1172,6 @@ public class Project implements Serializable {
         this.fundAllocationComments = fundAllocationComments;
     }
 
-
-
-
-
     public void setCabinetRejected(Boolean cabinetRejected) {
         this.cabinetRejected = cabinetRejected;
     }
@@ -1277,7 +1277,7 @@ public class Project implements Serializable {
     }
 
     public List<ProjectProvince> getProjectProvinces() {
-        if(projectProvinces==null){
+        if (projectProvinces == null) {
             projectProvinces = new ArrayList<>();
         }
         return projectProvinces;
@@ -1288,7 +1288,7 @@ public class Project implements Serializable {
     }
 
     public List<ProjectDistrict> getProjectDistricts() {
-        if(projectDistricts==null){
+        if (projectDistricts == null) {
             projectDistricts = new ArrayList<>();
         }
         return projectDistricts;
@@ -1299,7 +1299,7 @@ public class Project implements Serializable {
     }
 
     public List<ProjectInstitution> getProjectLocations() {
-        if(projectLocations==null){
+        if (projectLocations == null) {
             projectLocations = new ArrayList<>();
         }
         return projectLocations;
@@ -1310,7 +1310,7 @@ public class Project implements Serializable {
     }
 
     public List<ProjectSourceOfFund> getSourcesOfFunds() {
-        if(sourcesOfFunds==null){
+        if (sourcesOfFunds == null) {
             sourcesOfFunds = new ArrayList<>();
         }
         return sourcesOfFunds;
@@ -1320,6 +1320,32 @@ public class Project implements Serializable {
         this.sourcesOfFunds = sourcesOfFunds;
     }
 
-    
-    
+    public String getProvincesStr() {
+        provincesStr = "";
+        for (ProjectProvince pa : getProjectProvinces()) {
+            provincesStr += " " + pa.getArea().getName();
+        }
+        return provincesStr;
+    }
+
+    public String getDistrictsStr() {
+        districtsStr = "";
+        for (ProjectDistrict pa : getProjectDistricts()) {
+            districtsStr += " " + pa.getArea().getName();
+        }
+        return districtsStr;
+    }
+
+    public String getLocationsStr() {
+        locationsStr = "";
+        for(ProjectInstitution pi: getProjectLocations()){
+            locationsStr += " " + pi.getInstitution().getName();
+        }
+        return locationsStr;
+    }
+
+    public String getSourcesOfFundsStr() {
+        return sourcesOfFundsStr;
+    }
+
 }

@@ -346,14 +346,17 @@ public class WebUserController implements Serializable {
         pa.setSourceOfFund(selectedSourceOfFund);
         pa.setFundUnit(selectedFundUnit);
         pa.setFundValue(selectedFundValue);
+        pa.setComments(selectedFundComments);
         projectSourceOfFundFacade.create(pa);
         currentProject.getSourcesOfFunds().add(pa);
         updateProject();
         System.out.println("added");
 
-        selectedSourceOfFund=null;
+        selectedSourceOfFund = null;
         selectedFundUnit = null;
-        selectedFundValue=null;
+        selectedFundValue = null;
+        selectedFundComments = null;
+        
     }
 
     public void removeSelectedDsArea() {
@@ -456,6 +459,12 @@ public class WebUserController implements Serializable {
         return "/project_lists";
     }
 
+    public String tolistProjects() {
+        allIslandProjects = false;
+        listOfProjects = new ArrayList<>();
+        return "/project_lists";
+    }
+    
     public String listProjectsAwaitingPecApproval() {
         listOfProjects = listProjects(ProjectStageType.Awaiting_PEC_Approval);
         return "/project_lists";
@@ -511,28 +520,18 @@ public class WebUserController implements Serializable {
         return "/project_lists";
     }
 
-    public String searchAllIslandProjects() {
-        allIslandProjects = true;
-        listOfProjects = listProjects(null, year, true, null, null);
-        return "/projects_search_all_island";
-    }
-
-    public String searchAllIslandProjectsMobile() {
-        allIslandProjects = true;
-        listOfProjects = listProjects(null, year, true, null, null);
-        return "/mobile/projects_search_all_island";
-    }
+    
 
     public String searchProjectsByProvince() {
         allIslandProjects = false;
         if (province != null) {
-            String j = "select p from Project p where p.province=:province ";
+            String j = "select pp.project from ProjectProvince pp where pp.area=:province ";
             Map m = new HashMap();
             if (year != null) {
-                j += " and p.projectYear=:y ";
+                j += " and pp.project.projectYear=:y ";
                 m.put("y", year);
             }
-            j += " order by p.id";
+            j += " order by pp.project.id";
 
             m.put("province", province);
             listOfProjects = getProjectFacade().findBySQL(j, m);
@@ -545,13 +544,13 @@ public class WebUserController implements Serializable {
     public String searchProjectsByDistrict() {
         allIslandProjects = false;
         if (district != null) {
-            String j = "select p from Project p where p.district=:district ";
+            String j = "select pp.project from ProjectDistrict p where p.district=:district ";
             Map m = new HashMap();
             if (year != null) {
-                j += " and p.projectYear=:y ";
+                j += " and pp.project.projectYear=:y ";
                 m.put("y", year);
             }
-            j += " order by p.id";
+            j += " order by pp.project.id";
 
             m.put("district", district);
             listOfProjects = getProjectFacade().findBySQL(j, m);
@@ -1338,16 +1337,12 @@ public class WebUserController implements Serializable {
                 cell = sheet.getCell(3, i);
                 strDistrict = cell.getContents();
 
-                if (strProvince.trim().equalsIgnoreCase("All Island")) {
-                    np.setAllIsland(true);
-                    np.setProvince(null);
-                    np.setDistrict(null);
-                } else {
-                    areaProvince = areaController.getArea(strProvince, AreaType.Province, false, null);
-                    areaDistrict = areaController.getArea(strDistrict, AreaType.District, true, areaProvince);
-                    np.setProvince(areaProvince);
-                    np.setDistrict(areaDistrict);
-                }
+                areaProvince = areaController.getArea(strProvince, AreaType.Province, true, null);
+                
+                areaDistrict = areaController.getArea(strDistrict, AreaType.District, true, areaProvince);
+                
+                np.setProvince(areaProvince);
+                np.setDistrict(areaDistrict);
 
                 cell = sheet.getCell(2, i);
                 strFileNumber = cell.getContents();
@@ -1382,38 +1377,36 @@ public class WebUserController implements Serializable {
 
                 getProjectFacade().create(np);
                 System.out.println("Added SUccessfully = " + i);
-                
-                if(np.getProvince()!=null){
+
+                if (np.getProvince() != null) {
                     ProjectProvince pp = new ProjectProvince();
                     pp.setProject(np);
                     pp.setArea(np.getProvince());
                     getProjectAreaFacade().create(pp);
                     np.getProjectProvinces().add(pp);
                 }
-                if(np.getDistrict()!=null){
+                if (np.getDistrict() != null) {
                     ProjectDistrict pp = new ProjectDistrict();
                     pp.setProject(np);
                     pp.setArea(np.getDistrict());
                     getProjectAreaFacade().create(pp);
                     np.getProjectDistricts().add(pp);
                 }
-                if(np.getProjectLocation()!=null){
+                if (np.getProjectLocation() != null) {
                     ProjectInstitution pp = new ProjectInstitution();
                     pp.setProject(np);
                     pp.setInstitution(np.getProjectLocation());
                     getProjectInstitutionFacade().create(pp);
                     np.getProjectLocations().add(pp);
                 }
-                if(np.getSourceOfFunds()!=null){
+                if (np.getSourceOfFunds() != null) {
                     ProjectSourceOfFund pp = new ProjectSourceOfFund();
                     pp.setProject(np);
                     pp.setSourceOfFund(np.getSourceOfFunds());
                     getProjectSourceOfFundFacade().create(pp);
                     np.getSourcesOfFunds().add(pp);
                 }
-                
-                
-                
+
                 getProjectFacade().edit(np);
 
             }
@@ -1810,12 +1803,12 @@ public class WebUserController implements Serializable {
                 ps.add(pa.getArea());
             }
         }
-        if(ps.isEmpty()){
+        if (ps.isEmpty()) {
             districtsAvailableForSelection = new ArrayList<>();
-        }else{
+        } else {
             districtsAvailableForSelection = getAreas(AreaType.District, ps);
         }
-        
+
         return districtsAvailableForSelection;
     }
 

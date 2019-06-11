@@ -832,6 +832,9 @@ public class AreaController implements Serializable {
     }
 
     public Area getArea(String nameOrCode, AreaType areaType, boolean createNew, Area parentArea) {
+        if(nameOrCode.trim().equals("")){
+            return null;
+        }
         String j;
         Map m = new HashMap();
         j = "select a "

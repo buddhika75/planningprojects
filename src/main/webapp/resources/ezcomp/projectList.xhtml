@@ -68,13 +68,11 @@
                     </h:outputLabel>
                     <h:outputLabel value=" #{p.projectCostUnit.name}" ></h:outputLabel>
                 </p:column>
-                <p:column headerText="Province" rendered="#{webUserController.allIslandProjects ne true}" >
+                <p:column headerText="Province"  >
                     <h:outputLabel value="#{p.province.name}" >
                     </h:outputLabel>
-                    <h:outputLabel value="#{p.allIsland?'All Island':''}" >
-                    </h:outputLabel>
                 </p:column>
-                <p:column headerText="District"  rendered="#{webUserController.allIslandProjects ne true}" >
+                <p:column headerText="District"  >
                     <h:outputLabel value="#{p.district.name}" >
                     </h:outputLabel>
                 </p:column>
