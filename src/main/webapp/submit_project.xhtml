@@ -67,7 +67,7 @@
                                                 </h:selectManyListbox>
                                                 <h:outputText value="This is a Modal Dialog." />
                                                 <p:commandButton oncomplete="PF('dlgProvinces').hide();" value="Add" 
-                                                                 action="#{webUserController.addSelectedProvincesToProject()}"
+                                                                 action="#{webUserController.addSelectedProvinceToProject()}"
                                                                  process="lstPs" update="tblP" ajax="false"
                                                                  ></p:commandButton>
                                             </p:dialog> 
@@ -92,7 +92,7 @@
                                             <p:commandButton value="Add District" type="button" onclick="PF('dlgDis').show();" />
                                             <p:dialog header="Add District" widgetVar="dlgDis" modal="true" height="500" style="background-color: yellow;">
 
-                                                <p:autoComplete id="lstDs" value="#{webUserController.selectedDistricts}" completeMethod="#{areaController.completeDistricts}"
+                                                <p:autoComplete id="lstDs" value="#{webUserController.districtsAvailableForSelection}" completeMethod="#{areaController.completeDistricts}"
                                                                 var="d1" itemLabel="#{d1.name}" itemValue="#{d1}" multiple="true" converter="areaConverter" >
                                                 </p:autoComplete>
 

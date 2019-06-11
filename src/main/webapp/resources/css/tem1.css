@@ -117,6 +117,10 @@
     vertical-align: top;
 }
 
+.alignTop td {
+    vertical-align: top;
+}
+
 .noClass select{
     float: none;
 }

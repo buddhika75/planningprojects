@@ -10,6 +10,10 @@ import entity.Item;
 import entity.ItemType;
 import entity.Project;
 import entity.ProjectArea;
+import entity.ProjectDistrict;
+import entity.ProjectInstitution;
+import entity.ProjectProvince;
+import entity.ProjectSourceOfFund;
 import entity.ProjectStageType;
 import entity.Upload;
 import entity.UploadType;
@@ -17,6 +21,8 @@ import entity.WebUserRole;
 import facade.InstitutionFacade;
 import facade.ProjectAreaFacade;
 import facade.ProjectFacade;
+import facade.ProjectInstitutionFacade;
+import facade.ProjectSourceOfFundFacade;
 import facade.UploadFacade;
 import facade.WebUserFacade;
 import facade.util.JsfUtil;
@@ -34,7 +40,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -76,7 +81,10 @@ public class WebUserController implements Serializable {
     private UploadFacade uploadFacade;
     @EJB
     private ProjectAreaFacade projectAreaFacade;
-
+    @EJB
+    private ProjectInstitutionFacade projectInstitutionFacade;
+    @EJB
+    private ProjectSourceOfFundFacade projectSourceOfFundFacade;
     /*
     Controllers
      */
@@ -98,10 +106,21 @@ public class WebUserController implements Serializable {
     private List<Upload> companyUploads;
     private List<Project> listOfProjects;
 
-    private Area[] selectedProvinces;
-    private List<Area> selectedDistricts;
+    private Area selectedProvince;
+    private Area selectedDistrict;
+    private Area selectedDsArea;
+    private Area selectedGnArea;
+    private Institution selectedLocation;
+    private Item selectedSourceOfFund;
+    private Double selectedFundValue;
+    private Item selectedFundUnit;
+    private String selectedFundComments;
+
+    private List<Area> districtsAvailableForSelection;
+
     private List<Area> selectedDsAreas;
     private List<Area> selectedGnAreas;
+    private Area[] selectedProvinces;
 
     private ProjectArea selectedProjectArea;
 
@@ -140,25 +159,46 @@ public class WebUserController implements Serializable {
         emptyModel = new DefaultMapModel();
     }
 
-    
-    public String toChangeMyDetails(){
-        if(loggedUser==null){
+    public List<Area> getAreas(AreaType areaType, List<Area> superAreas) {
+        String j;
+        Map m = new HashMap();
+        j = "select a "
+                + " from Area a "
+                + " where a.name is not null ";
+        if (areaType != null) {
+            j += " and a.type=:t";
+            m.put("t", areaType);
+        }
+        if (superAreas != null) {
+            j += " and a.parentArea in :pa ";
+            m.put("pa", superAreas);
+        }
+        j += " order by a.name";
+        System.out.println("m = " + m);
+        System.out.println("j = " + j);
+        List<Area> areas = getFacade().findBySQL(j, m);
+        System.out.println("areas = " + areas);
+        return areas;
+    }
+
+    public String toChangeMyDetails() {
+        if (loggedUser == null) {
             return "";
         }
         current = loggedUser;
         return "/change_my_details";
     }
-    
-    public String toChangeMyPassword(){
-        if(loggedUser==null){
+
+    public String toChangeMyPassword() {
+        if (loggedUser == null) {
             return "";
         }
-        password= "";
-        passwordReenter="";
+        password = "";
+        passwordReenter = "";
         current = loggedUser;
         return "/change_my_password";
     }
-    
+
     public void removeSelectedProvince() {
         if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing to add");
@@ -175,30 +215,37 @@ public class WebUserController implements Serializable {
         }
     }
 
-    public void addSelectedProvincesToProject() {
-        System.out.println("addSelectedProvincesToProject");
+    public void addSelectedProvinceToProject() {
         if (currentProject == null) {
-            JsfUtil.addErrorMessage("Nothing to add");
+            JsfUtil.addErrorMessage("Select a project to add");
             return;
         }
-        for (Area a : selectedProvinces) {
-//            boolean alreadyAdded=false;
-//            for(ProjectArea pa: currentProject.getProvinces()){
-//                if(pa.getArea().equals(a)){
-//                    alreadyAdded= true;
-//                }
-//            }
-//            System.out.println("alreadyAdded = " + alreadyAdded);
-//            if(!alreadyAdded){
-//                ProjectArea pa = new ProjectArea();
-//                pa.setProject(currentProject);
-//                pa.setArea(a);
-//                projectAreaFacade.create(pa); 
-//                getCurrentProject().getProvinces().add(pa);
-//                System.out.println("added");
-//            }
+        updateProject();
+        if (selectedProvince == null) {
+            JsfUtil.addErrorMessage("Select a province to add");
+            return;
         }
-        selectedProvinces = null;
+        boolean alreadyAdded = false;
+        for (ProjectProvince pa : currentProject.getProjectProvinces()) {
+            if (pa.getArea().equals(selectedProvince)) {
+                alreadyAdded = true;
+            }
+        }
+        System.out.println("alreadyAdded = " + alreadyAdded);
+        if (!alreadyAdded) {
+            ProjectProvince pa = new ProjectProvince();
+            pa.setProject(currentProject);
+            pa.setArea(selectedProvince);
+            projectAreaFacade.create(pa);
+            currentProject.getProjectProvinces().add(pa);
+            projectFacade.edit(currentProject);
+            System.out.println("added");
+        } else {
+            JsfUtil.addErrorMessage("Selected province is already added.");
+            return;
+        }
+
+        selectedProvince = null;
     }
 
     public void removeSelectedDistrict() {
@@ -218,29 +265,95 @@ public class WebUserController implements Serializable {
     }
 
     public void addSelectedDistrictToProject() {
-        System.out.println("addSelectedProvincesToProject");
+        System.out.println("addSelectedDistrictToProject");
         if (currentProject == null) {
-            JsfUtil.addErrorMessage("Nothing to add");
+            JsfUtil.addErrorMessage("Select a project to add");
             return;
         }
-        for (Area a : selectedDistricts) {
-            boolean alreadyAdded = false;
-//            for(ProjectArea pa: currentProject.getDistricts()){
-//                if(pa.getArea().equals(a)){
-//                    alreadyAdded= true;
-//                }
-//            }
-            System.out.println("alreadyAdded = " + alreadyAdded);
-            if (!alreadyAdded) {
-                ProjectArea pa = new ProjectArea();
-                pa.setProject(currentProject);
-                pa.setArea(a);
-                projectAreaFacade.create(pa);
-//                getCurrentProject().getDistricts().add(pa);
-                System.out.println("added");
+        if (selectedDistrict == null) {
+            JsfUtil.addErrorMessage("Select a district to add");
+            return;
+        }
+        boolean alreadyAdded = false;
+        for (ProjectDistrict pa : currentProject.getProjectDistricts()) {
+            if (pa.getArea().equals(selectedDistrict)) {
+                alreadyAdded = true;
             }
         }
-        selectedDistricts = null;
+        System.out.println("alreadyAdded = " + alreadyAdded);
+        if (!alreadyAdded) {
+            ProjectDistrict pa = new ProjectDistrict();
+            pa.setProject(currentProject);
+            pa.setArea(selectedDistrict);
+            projectAreaFacade.create(pa);
+            currentProject.getProjectDistricts().add(pa);
+            updateProject();
+            System.out.println("added");
+        } else {
+            JsfUtil.addErrorMessage("Selected district is already added.");
+            return;
+        }
+
+        selectedDistrict = null;
+    }
+
+    public void addSelectedLocationToProject() {
+        System.out.println("addSelectedLocationToProject");
+        if (currentProject == null) {
+            JsfUtil.addErrorMessage("Select a project to add");
+            return;
+        }
+        if (selectedLocation == null) {
+            JsfUtil.addErrorMessage("Select a Location to add");
+            return;
+        }
+        boolean alreadyAdded = false;
+        for (ProjectInstitution pa : currentProject.getProjectLocations()) {
+            if (pa.getInstitution().equals(selectedLocation)) {
+                alreadyAdded = true;
+            }
+        }
+        System.out.println("alreadyAdded = " + alreadyAdded);
+        if (!alreadyAdded) {
+            ProjectInstitution pa = new ProjectInstitution();
+            pa.setProject(currentProject);
+            pa.setInstitution(selectedLocation);
+            projectInstitutionFacade.create(pa);
+            currentProject.getProjectLocations().add(pa);
+            updateProject();
+            System.out.println("added");
+        } else {
+            JsfUtil.addErrorMessage("Selected Location is already added.");
+            return;
+        }
+
+        selectedLocation = null;
+    }
+
+    public void addSelectedSourceOfFundsToProject() {
+        System.out.println("addSelectedSourceOfFundsToProject");
+        if (currentProject == null) {
+            JsfUtil.addErrorMessage("Select a project to add");
+            return;
+        }
+        if (selectedSourceOfFund == null) {
+            JsfUtil.addErrorMessage("Select a Source of Fund to add");
+            return;
+        }
+
+        ProjectSourceOfFund pa = new ProjectSourceOfFund();
+        pa.setProject(currentProject);
+        pa.setSourceOfFund(selectedSourceOfFund);
+        pa.setFundUnit(selectedFundUnit);
+        pa.setFundValue(selectedFundValue);
+        projectSourceOfFundFacade.create(pa);
+        currentProject.getSourcesOfFunds().add(pa);
+        updateProject();
+        System.out.println("added");
+
+        selectedSourceOfFund=null;
+        selectedFundUnit = null;
+        selectedFundValue=null;
     }
 
     public void removeSelectedDsArea() {
@@ -734,7 +847,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
-        currentProject.setPecApprovedDate(new Date());
+        currentProject.setPecRecommendedOn(new Date());
         getProjectFacade().edit(currentProject);
         return "/pec_approval";
     }
@@ -744,7 +857,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
-        currentProject.setPecRejectedDate(new Date());
+        currentProject.setPecRejectedOn(new Date());
         getProjectFacade().edit(currentProject);
         return "/pec_rejection";
     }
@@ -754,7 +867,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
-        currentProject.setDnpSubmittedDate(new Date());
+        currentProject.setNdpSubmittedOn(new Date());
         getProjectFacade().edit(currentProject);
         return "/dnp_submission";
     }
@@ -764,7 +877,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
-        currentProject.setDnpApprovedDate(new Date());
+        currentProject.setNdpRecommendedOn(new Date());
         getProjectFacade().edit(currentProject);
         return "/dnp_approval";
     }
@@ -774,7 +887,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
-        currentProject.setDnpRejectedDate(new Date());
+        currentProject.setDnpRejectedOn(new Date());
         getProjectFacade().edit(currentProject);
         return "/dnp_rejection";
     }
@@ -784,7 +897,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
-        currentProject.setCabinetSubmittedDate(new Date());
+        currentProject.setCabinetSubmittedOn(new Date());
         getProjectFacade().edit(currentProject);
         return "/cabinet_submission";
     }
@@ -794,7 +907,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
-        currentProject.setCabinetApprovalDate(new Date());
+        currentProject.setCabinetApprovalOn(new Date());
         getProjectFacade().edit(currentProject);
         return "/cabinet_approval";
     }
@@ -829,9 +942,9 @@ public class WebUserController implements Serializable {
             return;
         }
         getCurrentProject().setCurrentStageType(ProjectStageType.Awaiting_DNP_Submission);
-        getCurrentProject().setPecApprovedUser(loggedUser);
-        getCurrentProject().setPecApprovedAt(new Date());
-        getCurrentProject().setPecApproved(true);
+        getCurrentProject().setPecRecommendationRecordedBy(loggedUser);
+        getCurrentProject().setPecRecommendationRecordedAt(new Date());
+        getCurrentProject().setPecRecomended(true);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as PEC Approved.");
     }
@@ -842,8 +955,8 @@ public class WebUserController implements Serializable {
             return;
         }
         getCurrentProject().setCurrentStageType(ProjectStageType.PEC_Rejected);
-        getCurrentProject().setPecRejectedUser(loggedUser);
-        getCurrentProject().setPecRejectedAt(new Date());
+        getCurrentProject().setPecRejectionRecordedBy(loggedUser);
+        getCurrentProject().setPecRejectionRecordedAt(new Date());
         getCurrentProject().setPecRejected(true);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as Rejected by PEC.");
@@ -855,9 +968,9 @@ public class WebUserController implements Serializable {
             return;
         }
         getCurrentProject().setCurrentStageType(ProjectStageType.Awaiting_DNP_Approval);
-        getCurrentProject().setDnpSubmissionUser(loggedUser);
-        getCurrentProject().setDnpSubmissionAt(new Date());
-        getCurrentProject().setDnpSubmitted(true);
+        getCurrentProject().setDnpSubmissionRecordedUser(loggedUser);
+        getCurrentProject().setDnpSubmissionRecordedAt(new Date());
+        getCurrentProject().setNdpSubmitted(true);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as Submitted to DNP.");
     }
@@ -868,9 +981,9 @@ public class WebUserController implements Serializable {
             return;
         }
         getCurrentProject().setCurrentStageType(ProjectStageType.Awaiting_Cabinet_Submission);
-        getCurrentProject().setDnpApprovedUser(loggedUser);
-        getCurrentProject().setDnpApprovedAt(new Date());
-        getCurrentProject().setDnpApproved(true);
+        getCurrentProject().setNdpRecommendationRecordedBy(loggedUser);
+        getCurrentProject().setNdpApprovalRecordedAt(new Date());
+        getCurrentProject().setNdpRecommended(true);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as DNP Approved.");
     }
@@ -881,9 +994,9 @@ public class WebUserController implements Serializable {
             return;
         }
         getCurrentProject().setCurrentStageType(ProjectStageType.DNP_Rejected);
-        getCurrentProject().setDnpRejectedUser(loggedUser);
-        getCurrentProject().setDnpRejectedAt(new Date());
-        getCurrentProject().setDnpRejected(true);
+        getCurrentProject().setNdpRejectionRecordedBy(loggedUser);
+        getCurrentProject().setNdpRejectionRecorderAt(new Date());
+        getCurrentProject().setNdpRejected(true);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as Rejected by DNP.");
     }
@@ -894,8 +1007,8 @@ public class WebUserController implements Serializable {
             return;
         }
         getCurrentProject().setCurrentStageType(ProjectStageType.Awaiting_Cabinet_Approval);
-        getCurrentProject().setCabinetSubmissionUser(loggedUser);
-        getCurrentProject().setCabinetSubmissionAt(new Date());
+        getCurrentProject().setCabinetSubmissionRecordedBy(loggedUser);
+        getCurrentProject().setCabinetSubmissionRecordedAt(new Date());
         getCurrentProject().setCabinetSubmitted(true);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as Submitted to Cabinet.");
@@ -907,28 +1020,26 @@ public class WebUserController implements Serializable {
             return;
         }
         getCurrentProject().setCurrentStageType(ProjectStageType.Cabinet_Approved);
-        getCurrentProject().setCabinetApprovedUser(loggedUser);
-        getCurrentProject().setCabinetApprovedAt(new Date());
+        getCurrentProject().setCabinetApprovalRecordedBy(loggedUser);
+        getCurrentProject().setCabinetApprovalRecordedAt(new Date());
         getCurrentProject().setCabinetApproved(true);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as Approved by Cabinet.");
     }
 
-    
     public void markAsCabinetRejected() {
         if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing selected");
             return;
         }
         getCurrentProject().setCurrentStageType(ProjectStageType.Cabinet_Rejected);
-        getCurrentProject().setCabinetRejectedUser(loggedUser);
-        getCurrentProject().setCabinetRejectedAt(new Date());
+        getCurrentProject().setCabinetRejectionRecordedBy(loggedUser);
+        getCurrentProject().setCabinetRejectionRecordedAt(new Date());
         getCurrentProject().setCabinetRejected(true);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as Cabinet Rejected.");
     }
 
-    
     /**
      *
      *
@@ -1271,6 +1382,39 @@ public class WebUserController implements Serializable {
 
                 getProjectFacade().create(np);
                 System.out.println("Added SUccessfully = " + i);
+                
+                if(np.getProvince()!=null){
+                    ProjectProvince pp = new ProjectProvince();
+                    pp.setProject(np);
+                    pp.setArea(np.getProvince());
+                    getProjectAreaFacade().create(pp);
+                    np.getProjectProvinces().add(pp);
+                }
+                if(np.getDistrict()!=null){
+                    ProjectDistrict pp = new ProjectDistrict();
+                    pp.setProject(np);
+                    pp.setArea(np.getDistrict());
+                    getProjectAreaFacade().create(pp);
+                    np.getProjectDistricts().add(pp);
+                }
+                if(np.getProjectLocation()!=null){
+                    ProjectInstitution pp = new ProjectInstitution();
+                    pp.setProject(np);
+                    pp.setInstitution(np.getProjectLocation());
+                    getProjectInstitutionFacade().create(pp);
+                    np.getProjectLocations().add(pp);
+                }
+                if(np.getSourceOfFunds()!=null){
+                    ProjectSourceOfFund pp = new ProjectSourceOfFund();
+                    pp.setProject(np);
+                    pp.setSourceOfFund(np.getSourceOfFunds());
+                    getProjectSourceOfFundFacade().create(pp);
+                    np.getSourcesOfFunds().add(pp);
+                }
+                
+                
+                
+                getProjectFacade().edit(np);
 
             }
 
@@ -1336,7 +1480,7 @@ public class WebUserController implements Serializable {
         passwordReenter = "";
         return "/webUser/Create";
         //970224568
-        
+
     }
 
     public String create() {
@@ -1373,7 +1517,6 @@ public class WebUserController implements Serializable {
         }
     }
 
-
     public String updateMyDetails() {
         try {
             getFacade().edit(current);
@@ -1385,16 +1528,14 @@ public class WebUserController implements Serializable {
         }
     }
 
-    
-
     public String updateMyPassword() {
         current = loggedUser;
-        if(current==null){
+        if (current == null) {
             JsfUtil.addSuccessMessage(("Error. No Logged User"));
             return "";
         }
-        
-        if(!password.equals(passwordReenter)){
+
+        if (!password.equals(passwordReenter)) {
             JsfUtil.addSuccessMessage(("Password Mismatch."));
             return "";
         }
@@ -1402,8 +1543,8 @@ public class WebUserController implements Serializable {
         try {
             getFacade().edit(current);
             JsfUtil.addSuccessMessage(("Updated"));
-            password="";
-            passwordReenter="";
+            password = "";
+            passwordReenter = "";
             return "/index";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, e.getMessage());
@@ -1411,11 +1552,9 @@ public class WebUserController implements Serializable {
         }
     }
 
-
-    
     public void updateLoggedUser() {
-        if(loggedUser==null){
-            return ;
+        if (loggedUser == null) {
+            return;
         }
         try {
             getFacade().edit(loggedUser);
@@ -1425,7 +1564,6 @@ public class WebUserController implements Serializable {
         }
     }
 
-    
     public String updatePassword() {
         if (!password.equals(current.getWebUserPassword())) {
             JsfUtil.addErrorMessage("Passwords do NOT match");
@@ -1665,15 +1803,24 @@ public class WebUserController implements Serializable {
         return projectAreaFacade;
     }
 
-    public List<Area> getSelectedDistricts() {
-        if (selectedDistricts == null) {
-            selectedDistricts = new ArrayList<>();
+    public List<Area> getDistrictsAvailableForSelection() {
+        List<Area> ps = new ArrayList<>();
+        if (currentProject != null) {
+            for (ProjectArea pa : currentProject.getProjectProvinces()) {
+                ps.add(pa.getArea());
+            }
         }
-        return selectedDistricts;
+        if(ps.isEmpty()){
+            districtsAvailableForSelection = new ArrayList<>();
+        }else{
+            districtsAvailableForSelection = getAreas(AreaType.District, ps);
+        }
+        
+        return districtsAvailableForSelection;
     }
 
-    public void setSelectedDistricts(List<Area> selectedDistricts) {
-        this.selectedDistricts = selectedDistricts;
+    public void setDistrictsAvailableForSelection(List<Area> districtsAvailableForSelection) {
+        this.districtsAvailableForSelection = districtsAvailableForSelection;
     }
 
     public List<Area> getSelectedDsAreas() {
@@ -1786,35 +1933,93 @@ public class WebUserController implements Serializable {
     public void setPasswordReenter(String passwordReenter) {
         this.passwordReenter = passwordReenter;
     }
-    
 
+    public Area getSelectedProvince() {
+        return selectedProvince;
+    }
 
-    
-    
+    public void setSelectedProvince(Area selectedProvince) {
+        this.selectedProvince = selectedProvince;
+    }
+
+    public Area getSelectedDistrict() {
+        return selectedDistrict;
+    }
+
+    public void setSelectedDistrict(Area selectedDistrict) {
+        this.selectedDistrict = selectedDistrict;
+    }
+
+    public Area getSelectedDsArea() {
+        return selectedDsArea;
+    }
+
+    public void setSelectedDsArea(Area selectedDsArea) {
+        this.selectedDsArea = selectedDsArea;
+    }
+
+    public Area getSelectedGnArea() {
+        return selectedGnArea;
+    }
+
+    public void setSelectedGnArea(Area selectedGnArea) {
+        this.selectedGnArea = selectedGnArea;
+    }
+
+    public Institution getSelectedLocation() {
+        return selectedLocation;
+    }
+
+    public void setSelectedLocation(Institution selectedLocation) {
+        this.selectedLocation = selectedLocation;
+    }
+
+    public Item getSelectedSourceOfFund() {
+        return selectedSourceOfFund;
+    }
+
+    public void setSelectedSourceOfFund(Item selectedSourceOfFund) {
+        this.selectedSourceOfFund = selectedSourceOfFund;
+    }
+
+    public Double getSelectedFundValue() {
+        return selectedFundValue;
+    }
+
+    public void setSelectedFundValue(Double selectedFundValue) {
+        this.selectedFundValue = selectedFundValue;
+    }
+
+    public Item getSelectedFundUnit() {
+        return selectedFundUnit;
+    }
+
+    public void setSelectedFundUnit(Item selectedFundUnit) {
+        this.selectedFundUnit = selectedFundUnit;
+    }
+
+    public String getSelectedFundComments() {
+        return selectedFundComments;
+    }
+
+    public void setSelectedFundComments(String selectedFundComments) {
+        this.selectedFundComments = selectedFundComments;
+    }
+
+    public ProjectSourceOfFundFacade getProjectSourceOfFundFacade() {
+        return projectSourceOfFundFacade;
+    }
+
+    public ProjectInstitutionFacade getProjectInstitutionFacade() {
+        return projectInstitutionFacade;
+    }
+
     /**
      * Gayan's Code Start
      */
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-      /**
+    /**
      * Gayan's Code End
      */
-    
-    
-    
-    
-    
-    
-    
-
     @FacesConverter(forClass = WebUser.class)
     public static class WebUserControllerConverter implements Converter {
 

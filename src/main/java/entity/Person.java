@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlRootElement;
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
@@ -22,6 +23,7 @@ import org.joda.time.PeriodType;
  * Informatics)
  */
 @Entity
+@XmlRootElement
 public class Person implements Serializable {
 
     static final long serialVersionUID = 1L;

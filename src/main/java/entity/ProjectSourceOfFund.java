@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @XmlRootElement
-public class ProjectInstitution implements Serializable {
+public class ProjectSourceOfFund implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -29,12 +29,13 @@ public class ProjectInstitution implements Serializable {
     @ManyToOne
     private Project project;
     @ManyToOne
-    private Institution institution;
+    private Item sourceOfFund;
+    private Double fundValue;
+    @ManyToOne
+    private Item fundUnit;
     @Lob
-    private String natureOfIntervention;
-    @Lob
-    private String currentStatusOfIntervention;
-    private Boolean isIncludeDevelopmentActivity;
+    private String comments;
+    
 
     public Long getId() {
         return id;
@@ -57,10 +58,10 @@ public class ProjectInstitution implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ProjectInstitution)) {
+        if (!(object instanceof ProjectSourceOfFund)) {
             return false;
         }
-        ProjectInstitution other = (ProjectInstitution) object;
+        ProjectSourceOfFund other = (ProjectSourceOfFund) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -80,36 +81,38 @@ public class ProjectInstitution implements Serializable {
         this.project = project;
     }
 
-    public Institution getInstitution() {
-        return institution;
+    public Item getFundUnit() {
+        return fundUnit;
     }
 
-    public void setInstitution(Institution institution) {
-        this.institution = institution;
+    public void setFundUnit(Item fundUnit) {
+        this.fundUnit = fundUnit;
     }
 
-    public String getNatureOfIntervention() {
-        return natureOfIntervention;
+    public Item getSourceOfFund() {
+        return sourceOfFund;
     }
 
-    public void setNatureOfIntervention(String natureOfIntervention) {
-        this.natureOfIntervention = natureOfIntervention;
+    public void setSourceOfFund(Item sourceOfFund) {
+        this.sourceOfFund = sourceOfFund;
     }
 
-    public String getCurrentStatusOfIntervention() {
-        return currentStatusOfIntervention;
+    public Double getFundValue() {
+        return fundValue;
     }
 
-    public void setCurrentStatusOfIntervention(String currentStatusOfIntervention) {
-        this.currentStatusOfIntervention = currentStatusOfIntervention;
+    public void setFundValue(Double fundValue) {
+        this.fundValue = fundValue;
     }
 
-    public Boolean getIsIncludeDevelopmentActivity() {
-        return isIncludeDevelopmentActivity;
+    public String getComments() {
+        return comments;
     }
 
-    public void setIsIncludeDevelopmentActivity(Boolean isIncludeDevelopmentActivity) {
-        this.isIncludeDevelopmentActivity = isIncludeDevelopmentActivity;
+    public void setComments(String comments) {
+        this.comments = comments;
     }
+
+   
 
 }
