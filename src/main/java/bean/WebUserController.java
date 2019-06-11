@@ -346,6 +346,7 @@ public class WebUserController implements Serializable {
         pa.setSourceOfFund(selectedSourceOfFund);
         pa.setFundUnit(selectedFundUnit);
         pa.setFundValue(selectedFundValue);
+        pa.setComments(selectedFundComments);
         projectSourceOfFundFacade.create(pa);
         currentProject.getSourcesOfFunds().add(pa);
         updateProject();
@@ -354,6 +355,8 @@ public class WebUserController implements Serializable {
         selectedSourceOfFund = null;
         selectedFundUnit = null;
         selectedFundValue = null;
+        selectedFundComments = null;
+        
     }
 
     public void removeSelectedDsArea() {

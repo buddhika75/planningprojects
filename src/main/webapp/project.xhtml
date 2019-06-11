@@ -138,10 +138,10 @@
                                                  title="Project Cost" style="width: 60%;"
                                                  />
                                     <p:spacer height="1" width="15" ></p:spacer>
-                                    <p:selectOneMenu style="width: 30%;" value="#{webUserController.currentProject.projectCostUnit}" >
+                                    <h:selectOneMenu style="width: 30%;" value="#{webUserController.currentProject.projectCostUnit}" >
                                         <f:selectItem itemLabel="Select Unit" ></f:selectItem>
                                         <f:selectItems value="#{itemController.costUnits}" ></f:selectItems>
-                                    </p:selectOneMenu>
+                                    </h:selectOneMenu>
                                 </h:panelGrid>
                                 <p:spacer></p:spacer>
 
@@ -152,6 +152,8 @@
                                     <p:column headerText="Source of Funds">
                                         <p:outputLabel value="#{f.sourceOfFund.name}" ></p:outputLabel>
                                         <p:outputLabel value=" " ></p:outputLabel>
+                                        <p:outputLabel value="#{f.fundValue}" ></p:outputLabel>
+                                        <p:outputLabel value=" " ></p:outputLabel>
                                         <p:outputLabel value="#{f.fundUnit.name}" ></p:outputLabel>
                                     </p:column>
                                     <p:column headerText="Comments">
@@ -160,17 +162,18 @@
                                 </p:dataTable>
 
                                 <h:panelGrid id="gridSof" columns="1" >
-                                    <p:selectOneMenu id="cmbSsof" value="#{webUserController.selectedSourceOfFund}" style="max-width: 300px;" >
+                                    <h:selectOneMenu id="cmbSsof" value="#{webUserController.selectedSourceOfFund}" style="max-width: 300px;" >
                                         <f:selectItem itemLabel="Select Source of Fund" ></f:selectItem>
                                         <f:selectItems value="#{itemController.sourcesOfFunds}" ></f:selectItems>
-                                    </p:selectOneMenu>
-                                    <p:selectOneMenu id="cmbSsofu" value="#{webUserController.selectedFundUnit}" >
+                                    </h:selectOneMenu>
+                                    <p:inputText id="txtSofv" value="#{webUserController.selectedFundValue}" ></p:inputText>
+                                    <h:selectOneMenu id="cmbSsofu" value="#{webUserController.selectedFundUnit}" >
                                         <f:selectItems value="#{itemController.costUnits}" ></f:selectItems>
-                                    </p:selectOneMenu>
+                                    </h:selectOneMenu>
                                     <p:inputTextarea id="cmbSofCom" value="#{webUserController.selectedFundComments}" placeholder="Add Comments on this fund source"></p:inputTextarea>
                                     <p:commandButton id="btnF" value="Add Source of Fund" 
                                                      action="#{webUserController.addSelectedSourceOfFundsToProject()}" 
-                                                     process="cmbSsof cmbSsofu cmbSofCom @this" update="gridSof" >
+                                                     process="cmbSsof txtSofv cmbSsofu cmbSofCom @this" update="gridSof tblFs" >
                                     </p:commandButton>
                                 </h:panelGrid>
 
