@@ -1382,6 +1382,39 @@ public class WebUserController implements Serializable {
 
                 getProjectFacade().create(np);
                 System.out.println("Added SUccessfully = " + i);
+                
+                if(np.getProvince()!=null){
+                    ProjectProvince pp = new ProjectProvince();
+                    pp.setProject(np);
+                    pp.setArea(np.getProvince());
+                    getProjectAreaFacade().create(pp);
+                    np.getProjectProvinces().add(pp);
+                }
+                if(np.getDistrict()!=null){
+                    ProjectDistrict pp = new ProjectDistrict();
+                    pp.setProject(np);
+                    pp.setArea(np.getDistrict());
+                    getProjectAreaFacade().create(pp);
+                    np.getProjectDistricts().add(pp);
+                }
+                if(np.getProjectLocation()!=null){
+                    ProjectInstitution pp = new ProjectInstitution();
+                    pp.setProject(np);
+                    pp.setInstitution(np.getProjectLocation());
+                    getProjectInstitutionFacade().create(pp);
+                    np.getProjectLocations().add(pp);
+                }
+                if(np.getSourceOfFunds()!=null){
+                    ProjectSourceOfFund pp = new ProjectSourceOfFund();
+                    pp.setProject(np);
+                    pp.setSourceOfFund(np.getSourceOfFunds());
+                    getProjectSourceOfFundFacade().create(pp);
+                    np.getSourcesOfFunds().add(pp);
+                }
+                
+                
+                
+                getProjectFacade().edit(np);
 
             }
 
