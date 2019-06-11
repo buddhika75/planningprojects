@@ -456,6 +456,12 @@ public class WebUserController implements Serializable {
         return "/project_lists";
     }
 
+    public String tolistProjects() {
+        allIslandProjects = false;
+        listOfProjects = new ArrayList<>();
+        return "/project_lists";
+    }
+    
     public String listProjectsAwaitingPecApproval() {
         listOfProjects = listProjects(ProjectStageType.Awaiting_PEC_Approval);
         return "/project_lists";
@@ -511,28 +517,18 @@ public class WebUserController implements Serializable {
         return "/project_lists";
     }
 
-    public String searchAllIslandProjects() {
-        allIslandProjects = true;
-        listOfProjects = listProjects(null, year, true, null, null);
-        return "/projects_search_all_island";
-    }
-
-    public String searchAllIslandProjectsMobile() {
-        allIslandProjects = true;
-        listOfProjects = listProjects(null, year, true, null, null);
-        return "/mobile/projects_search_all_island";
-    }
+    
 
     public String searchProjectsByProvince() {
         allIslandProjects = false;
         if (province != null) {
-            String j = "select p from Project p where p.province=:province ";
+            String j = "select pp.project from ProjectProvince pp where pp.area=:province ";
             Map m = new HashMap();
             if (year != null) {
-                j += " and p.projectYear=:y ";
+                j += " and pp.project.projectYear=:y ";
                 m.put("y", year);
             }
-            j += " order by p.id";
+            j += " order by pp.project.id";
 
             m.put("province", province);
             listOfProjects = getProjectFacade().findBySQL(j, m);
@@ -545,13 +541,13 @@ public class WebUserController implements Serializable {
     public String searchProjectsByDistrict() {
         allIslandProjects = false;
         if (district != null) {
-            String j = "select p from Project p where p.district=:district ";
+            String j = "select pp.project from ProjectDistrict p where p.district=:district ";
             Map m = new HashMap();
             if (year != null) {
-                j += " and p.projectYear=:y ";
+                j += " and pp.project.projectYear=:y ";
                 m.put("y", year);
             }
-            j += " order by p.id";
+            j += " order by pp.project.id";
 
             m.put("district", district);
             listOfProjects = getProjectFacade().findBySQL(j, m);
