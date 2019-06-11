@@ -20,49 +20,53 @@
                     }
 
                 </style>
-                
+
                 <div class="w3-row w3-container w3-padding-16" >
                     <h:panelGroup >
+                        <h:form >
+                            <div class="w3-row" >
+                                <h2>All Island Projects</h2>
+                            </div>
+                            <div class="w3-row">
+                                <div class="w3-col w3-container s6 m4 l3">
+                                    Year
+                                </div>
+                                <div class="w3-col w3-container s6 m8 l9">
+                                    <ez:yearRangeMenu/>
+                                </div>
+                            </div>
+                            <div class="w3-row">
+                                <div class="w3-col w3-container s6 m4 l3">
+                                    <h:commandLink class="w3-btn w3-amber w3-margin  btn150" 
+                                                   action="#{webUserController.searchAllIslandProjects()}" 
+                                                   >
+                                        <div>
+                                            <i class='fa fa-refresh' style='float: left; font-size:24px;color:green;'></i>
+                                            <div style="float: right;">Refresh</div>
+                                        </div>  
+                                    </h:commandLink>
+                                </div>
+                                <div class="w3-col w3-container s6 m8 l9">
+                                    <h:commandLink class="w3-btn w3-amber w3-margin  btn150" 
+                                                   action="projects_search" 
+                                                   >
+                                        <div>
+                                            <i class='fa fa-arrow-left' style='float: left; font-size:24px;color:green;'></i>
+                                            <div style="float: right;">Back</div>
+                                        </div>  
+                                    </h:commandLink>
+                                </div>
+                            </div>
 
-                        <p:panel header="All Island Projects" >
-                            <h:form >
-                                <table >
-                                    <tr>
-                                        <td>
-                                            Year
-                                        </td>
-                                        <td>
+                        </h:form>
 
-                                            <ez:yearRangeMenu/>
 
-                                        </td>
-                                        <td>
-                                            <h:commandLink class="w3-btn w3-amber w3-margin  btn150" 
-                                                           action="#{webUserController.searchAllIslandProjects()}" 
-                                                           >
-                                                <div>
-                                                    <i class='fa fa-refresh' style='float: left; font-size:24px;color:green;'></i>
-                                                    <div style="float: right;">Refresh</div>
-                                                </div>  
-                                            </h:commandLink>
-                                        </td>
-                                        <td>
-                                            <h:commandLink class="w3-btn w3-amber w3-margin  btn150" 
-                                                           action="#{webUserController.searchProjects()}" 
-                                                           >
-                                                <div>
-                                                    <i class='fa fa-arrow-left' style='float: left; font-size:24px;color:green;'></i>
-                                                    <div style="float: right;">Back</div>
-                                                </div>  
-                                            </h:commandLink>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </h:form>
 
-                            <ez:projectList/>
 
-                        </p:panel>
+
+                        <ez:projectListMobile/>
+
+
 
                     </h:panelGroup>
                 </div>
