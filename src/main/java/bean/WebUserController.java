@@ -116,6 +116,11 @@ public class WebUserController implements Serializable {
     private Item selectedFundUnit;
     private String selectedFundComments;
 
+    private ProjectProvince removingProjectProvince;
+    private ProjectDistrict removingProjectDistrict;
+    private ProjectInstitution removingProjectInstitution;
+    private ProjectSourceOfFund removingProjectSourceOfFund;
+
     private List<Area> districtsAvailableForSelection;
 
     private List<Area> selectedDsAreas;
@@ -159,6 +164,48 @@ public class WebUserController implements Serializable {
         emptyModel = new DefaultMapModel();
     }
 
+    public void removeProjectProvince() {
+        if (removingProjectProvince == null) {
+            JsfUtil.addErrorMessage("Nothing to remove");
+            return;
+        }
+        getCurrentProject().getProjectProvinces().remove(removingProjectProvince);
+        getProjectAreaFacade().remove(removingProjectProvince);
+        removingProjectProvince = null;
+    }
+    
+     public void removeProjectDistrict() {
+        if (removingProjectDistrict == null) {
+            JsfUtil.addErrorMessage("Nothing to remove");
+            return;
+        }
+        getCurrentProject().getProjectDistricts().remove(removingProjectDistrict);
+        getProjectAreaFacade().remove(removingProjectDistrict);
+        removingProjectDistrict = null;
+    }
+     
+     
+     public void removeProjectLocation() {
+        if (removingProjectInstitution == null) {
+            JsfUtil.addErrorMessage("Nothing to remove");
+            return;
+        }
+        getCurrentProject().getProjectLocations().remove(removingProjectInstitution);
+        getProjectInstitutionFacade().remove(removingProjectInstitution);
+        removingProjectInstitution = null;
+    }
+
+     
+      public void removeProjectSourceOfFunds() {
+        if (removingProjectSourceOfFund == null) {
+            JsfUtil.addErrorMessage("Nothing to remove");
+            return;
+        }
+        getCurrentProject().getSourcesOfFunds().remove(removingProjectSourceOfFund);
+        getProjectSourceOfFundFacade().remove(removingProjectSourceOfFund);
+        removingProjectSourceOfFund = null;
+    }
+     
     public List<Area> getAreas(AreaType areaType, List<Area> superAreas) {
         String j;
         Map m = new HashMap();
@@ -356,7 +403,7 @@ public class WebUserController implements Serializable {
         selectedFundUnit = null;
         selectedFundValue = null;
         selectedFundComments = null;
-        
+
     }
 
     public void removeSelectedDsArea() {
@@ -464,7 +511,7 @@ public class WebUserController implements Serializable {
         listOfProjects = new ArrayList<>();
         return "/project_lists";
     }
-    
+
     public String listProjectsAwaitingPecApproval() {
         listOfProjects = listProjects(ProjectStageType.Awaiting_PEC_Approval);
         return "/project_lists";
@@ -519,8 +566,6 @@ public class WebUserController implements Serializable {
         listOfProjects = listProjects(ProjectStageType.Completed);
         return "/project_lists";
     }
-
-    
 
     public String searchProjectsByProvince() {
         allIslandProjects = false;
@@ -1338,9 +1383,9 @@ public class WebUserController implements Serializable {
                 strDistrict = cell.getContents();
 
                 areaProvince = areaController.getArea(strProvince, AreaType.Province, true, null);
-                
+
                 areaDistrict = areaController.getArea(strDistrict, AreaType.District, true, areaProvince);
-                
+
                 np.setProvince(areaProvince);
                 np.setDistrict(areaDistrict);
 
@@ -2005,6 +2050,38 @@ public class WebUserController implements Serializable {
 
     public ProjectInstitutionFacade getProjectInstitutionFacade() {
         return projectInstitutionFacade;
+    }
+
+    public ProjectProvince getRemovingProjectProvince() {
+        return removingProjectProvince;
+    }
+
+    public void setRemovingProjectProvince(ProjectProvince removingProjectProvince) {
+        this.removingProjectProvince = removingProjectProvince;
+    }
+
+    public ProjectDistrict getRemovingProjectDistrict() {
+        return removingProjectDistrict;
+    }
+
+    public void setRemovingProjectDistrict(ProjectDistrict removingProjectDistrict) {
+        this.removingProjectDistrict = removingProjectDistrict;
+    }
+
+    public ProjectInstitution getRemovingProjectInstitution() {
+        return removingProjectInstitution;
+    }
+
+    public void setRemovingProjectInstitution(ProjectInstitution removingProjectInstitution) {
+        this.removingProjectInstitution = removingProjectInstitution;
+    }
+
+    public ProjectSourceOfFund getRemovingProjectSourceOfFund() {
+        return removingProjectSourceOfFund;
+    }
+
+    public void setRemovingProjectSourceOfFund(ProjectSourceOfFund removingProjectSourceOfFund) {
+        this.removingProjectSourceOfFund = removingProjectSourceOfFund;
     }
 
     /**
