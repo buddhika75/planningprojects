@@ -67,6 +67,12 @@
                                              value="#{webUserController.currentProject.projectProvinces}" var="p" >
                                     <p:column headerText="Provinces">
                                         <p:outputLabel value="#{p.area.name}" ></p:outputLabel>
+                                        <p:commandLink id="lnkRp" value="x" action="#{webUserController.removeProjectProvince()}"
+                                                       process="@this" update="tblPs" style="float: right;"   >
+                                            <f:setPropertyActionListener value="#{p}" target="#{webUserController.removingProjectProvince}" >
+                                            </f:setPropertyActionListener>
+                                        </p:commandLink>
+                                        <p:tooltip for="lnkRp" value="Remove" ></p:tooltip>
                                     </p:column>
                                 </p:dataTable>
                                 <h:panelGrid columns="1">
@@ -88,6 +94,12 @@
                                              value="#{webUserController.currentProject.projectDistricts}" var="d" >
                                     <p:column headerText="District">
                                         <p:outputLabel value="#{d.area.name}" ></p:outputLabel>
+                                        <p:commandLink id="lnkRd" value="x" action="#{webUserController.removeProjectDistrict()}"
+                                                       process="@this" update="tblDs" style="float: right;"   >
+                                            <f:setPropertyActionListener value="#{d}" target="#{webUserController.removingProjectDistrict}" >
+                                            </f:setPropertyActionListener>
+                                        </p:commandLink>
+                                        <p:tooltip for="lnkRd" value="Remove" ></p:tooltip>
                                     </p:column>
                                 </p:dataTable>
                                 <h:panelGrid columns="1" >
@@ -107,6 +119,13 @@
                                              value="#{webUserController.currentProject.projectLocations}" var="l" >
                                     <p:column headerText="Location">
                                         <p:outputLabel value="#{l.institution.name}" ></p:outputLabel>
+
+                                        <p:commandLink id="lnkLd" value="x" action="#{webUserController.removeProjectLocation()}"
+                                                       process="@this" update="tblLs" style="float: right;"   >
+                                            <f:setPropertyActionListener value="#{l}" target="#{webUserController.removingProjectInstitution}" >
+                                            </f:setPropertyActionListener>
+                                        </p:commandLink>
+                                        <p:tooltip for="lnkLd" value="Remove" ></p:tooltip>
                                     </p:column>
                                 </p:dataTable>
 
@@ -114,8 +133,10 @@
                                     <p:autoComplete value="#{webUserController.selectedLocation}"
                                                     completeMethod="#{institutionController.completeInstitutions}"
                                                     var="ins" forceSelection="true" id="acLoc" 
+                                                    
+                                                    
                                                     placeholder="Search Location by typing few letters ..."
-                                                    itemLabel="#{ins.name}" inputStyle="width:100%;" style="width: 100%;"
+                                                    itemLabel="#{ins.name}" inputStyle="width:300px;" style="width: 300px;"
                                                     itemValue="#{ins}"></p:autoComplete>
                                     <p:commandButton id="btnL" value="Add Location" 
                                                      action="#{webUserController.addSelectedLocationToProject()}" 
@@ -155,6 +176,16 @@
                                         <p:outputLabel value="#{f.fundValue}" ></p:outputLabel>
                                         <p:outputLabel value=" " ></p:outputLabel>
                                         <p:outputLabel value="#{f.fundUnit.name}" ></p:outputLabel>
+
+
+                                        <p:commandLink id="lnkRf" value="x" action="#{webUserController.removeProjectSourceOfFunds()}"
+                                                       process="@this" update="tblFs" style="float: right;"   >
+                                            <f:setPropertyActionListener value="#{f}" target="#{webUserController.removingProjectSourceOfFund}" >
+                                            </f:setPropertyActionListener>
+                                        </p:commandLink>
+                                        <p:tooltip for="lnkRf" value="Remove" ></p:tooltip>
+
+
                                     </p:column>
                                     <p:column headerText="Comments">
                                         <p:outputLabel value="#{f.comments}" ></p:outputLabel>
