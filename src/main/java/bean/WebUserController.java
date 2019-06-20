@@ -1104,6 +1104,47 @@ public class WebUserController implements Serializable {
         return "";
     }
 
+    
+    public String toAllocateFunds() {
+        if (currentProject == null) {
+            JsfUtil.addErrorMessage("Nothing to update");
+            return "";
+        }
+        currentProject.setFundAllocationRecordedAt(new Date());
+        projectStageWorkingOn = ProjectStageType.Funds_Allocated;
+        projectStageWorkingOnDate = new Date();
+        projectStageWorkingOnComments = "";
+        getProjectFacade().edit(currentProject);
+        return "";
+    }
+    
+     public String toMarkOngoing() {
+        if (currentProject == null) {
+            JsfUtil.addErrorMessage("Nothing to update");
+            return "";
+        }
+        currentProject.setOngoingMarkedAt(new Date());
+        projectStageWorkingOn = ProjectStageType.Ongoing;
+        projectStageWorkingOnDate = new Date();
+        projectStageWorkingOnComments = "";
+        getProjectFacade().edit(currentProject);
+        return "";
+    }
+     
+      public String toMarkAsCompleted() {
+        if (currentProject == null) {
+            JsfUtil.addErrorMessage("Nothing to update");
+            return "";
+        }
+        currentProject.setCompleteMarkedAt(new Date());
+        projectStageWorkingOn = ProjectStageType.Completed;
+        projectStageWorkingOnDate = new Date();
+        projectStageWorkingOnComments = "";
+        getProjectFacade().edit(currentProject);
+        return "";
+    }
+
+    
     /**
      *
      *
@@ -1156,7 +1197,7 @@ public class WebUserController implements Serializable {
                 markAsOngoing();
                 break;
             case Completed:
-                markAsCompleted();
+                markAsProjectComopleted();
                 break;
             case Awaiting_PEC_Approval:
                 markAsPecApproved();
@@ -1184,6 +1225,23 @@ public class WebUserController implements Serializable {
         JsfUtil.addSuccessMessage("Marked as PEC Approved.");
     }
 
+    public void markAsProjectComopleted() {
+        if (currentProject == null) {
+            JsfUtil.addErrorMessage("Nothing selected");
+            return;
+        }
+        getCurrentProject().setCurrentStageType(ProjectStageType.Completed);
+        getCurrentProject().setCompletedMarkedUser(loggedUser);
+        getCurrentProject().setCompleteMarkedAt(new Date());
+        getCurrentProject().setCompleted(true);
+        getCurrentProject().setCompleteRecommendation(projectStageWorkingOnComments);
+        getCurrentProject().setCompletedOn(projectStageWorkingOnDate);
+        getProjectFacade().edit(currentProject);
+        JsfUtil.addSuccessMessage("Marked as PEC Approved.");
+    }
+
+    
+    
     public void markAsPecRejected() {
         if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing selected");

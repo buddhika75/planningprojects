@@ -273,21 +273,22 @@
 
                                 <p:commandLink action="#{webUserController.toPecApproval()}" oncomplete="PF('dlg1').show();"
                                                rendered="#{webUserController.currentProject.canApproveAtPec}"
+                                               process="@this" update="dlg1"    
                                                class="w3-btn w3-amber w3-margin  btn350" 
                                                >
-                                    <f:ajax execute="@this" render="dlg1" ></f:ajax>
+
                                     <div>
                                         <i class="fas far fa-thumbs-up" style='float: left; font-size:24px;color:yellow;'></i>
                                         <div style="float: right;">PEC Recommendation</div>
                                     </div>
                                 </p:commandLink> 
-                                
-                                
-                                <p:commandLink action="#{webUserController.toPecRejection()}"  oncomplete="PF('dlg1').show();"
 
+
+                                <p:commandLink action="#{webUserController.toPecRejection()}"  oncomplete="PF('dlg1').show();"
+                                               process="@this" update="dlg1"    
                                                rendered="#{webUserController.currentProject.canRejectAtPec}"
                                                class="w3-btn w3-amber w3-margin  btn350" >
-                                    <f:ajax execute="@this" render="dlg1" ></f:ajax>
+
                                     <div>
                                         <i class="fas far fa-thumbs-down" style='float: left; font-size:24px;color:yellow;'></i>
                                         <div style="float: right;">Reject at PEC</div>
@@ -295,9 +296,8 @@
                                 </p:commandLink> 
 
                                 <p:commandLink action="#{webUserController.toDnpSubmission()}"  oncomplete="PF('dlg1').show();"
-                                               rendered="#{webUserController.currentProject.canSubmitToNdp}"
+                                               process="@this" update="dlg1"     rendered="#{webUserController.currentProject.canSubmitToNdp}"
                                                class="w3-btn w3-amber w3-margin  btn350 " >
-                                    <f:ajax execute="@this" render="dlg1" ></f:ajax>
                                     <div>
                                         <i class="fa fa-arrow-right" style='float: left; font-size:24px;color:blueviolet ;'></i>
                                         <div style="float: right;">To DNP Submission</div>
@@ -305,8 +305,9 @@
                                 </p:commandLink> 
                                 <p:commandLink action="#{webUserController.toDnpApproval()}"   oncomplete="PF('dlg1').show();"
                                                rendered="#{webUserController.currentProject.canApproveAtNdp}"
+                                               process="@this" update="dlg1"    
                                                class="w3-btn w3-amber w3-margin  btn350" >
-                                    <f:ajax execute="@this" render="dlg1" ></f:ajax>
+
                                     <div>
                                         <i class="fas far fa-thumbs-up" style='float: left; font-size:24px;color:blueviolet;'></i>
                                         <div style="float: right;">To Approve at DNP</div>
@@ -314,6 +315,7 @@
                                 </p:commandLink> 
                                 <p:commandLink action="#{webUserController.toDnpRejection()}"   oncomplete="PF('dlg1').show();"
                                                rendered="#{webUserController.currentProject.canRejectAtNdp}"
+                                               process="@this" update="dlg1"    
                                                class="w3-btn w3-amber w3-margin  btn350" >
                                     <div>
                                         <i class="fas far fa-thumbs-down" style='float: left; font-size:24px;color:blueviolet;'></i>
@@ -322,8 +324,9 @@
                                 </p:commandLink> 
                                 <p:commandLink action="#{webUserController.toCabinetSubmission()}"   oncomplete="PF('dlg1').show();"
                                                rendered="#{webUserController.currentProject.canSubmitToCabinet}"
+                                               process="@this" update="dlg1"    
                                                class="w3-btn w3-amber w3-margin  btn350" >
-                                    <f:ajax execute="@this" render="dlg1" ></f:ajax>
+
                                     <div>
                                         <i class="fa fa-arrow-right" style='float: left; font-size:24px;color:blueviolet ;'></i>
                                         <div style="float: right;">To Cabinet Submission</div>
@@ -332,25 +335,58 @@
 
                                 <p:commandLink action="#{webUserController.toCabinetApproval()}"   oncomplete="PF('dlg1').show();"
                                                rendered="#{webUserController.currentProject.canApproveAtCabinet}"
+                                               process="@this" update="dlg1"    
                                                class="w3-btn w3-amber w3-margin  btn350" >
                                     <div>
                                         <i class="fas far fa-thumbs-up" style='float: left; font-size:24px;color:blueviolet;'></i>
                                         <div style="float: right;">To Approve at Cabinet</div>
                                     </div>
                                 </p:commandLink> 
-                                <p:commandLink action="#{webUserController.toCabinetRejection()}" 
+                                <p:commandLink action="#{webUserController.toCabinetRejection()}"  oncomplete="PF('dlg1').show();"
+                                               process="@this" update="dlg1"
                                                rendered="#{webUserController.currentProject.canRejectAtCabinet}"
                                                class="w3-btn w3-amber w3-margin  btn350" >
-                                    <f:ajax execute="@this" render="dlg1" ></f:ajax>
                                     <div>
                                         <i class="fas far fa-thumbs-down" style='float: left; font-size:24px;color:blueviolet;'></i>
-                                        <div style="float: right;">To Reject at Cabinet</div>
+                                        <div style="float: right;">Reject at Cabinet</div>
                                     </div>
                                 </p:commandLink> 
+                                
+                                <p:commandLink action="#{webUserController.toAllocateFunds()}"  oncomplete="PF('dlg1').show();"
+                                               process="@this" update="dlg1"
+                                               rendered="#{webUserController.currentProject.canAllocateFunds}"
+                                               class="w3-btn w3-amber w3-margin  btn350" >
+                                    <div>
+                                        <i class="fas far fa-thumbs-down" style='float: left; font-size:24px;color:blueviolet;'></i>
+                                        <div style="float: right;">Allocate Funds</div>
+                                    </div>
+                                </p:commandLink> 
+                                
+                                
+                                <p:commandLink action="#{webUserController.toMarkOngoing()}"  oncomplete="PF('dlg1').show();"
+                                               rendered="#{webUserController.currentProject.canMarkAsOngoing}"
+                                               process="@this" update="dlg1"
+                                               class="w3-btn w3-amber w3-margin  btn350" >
+                                    <div>
+                                        <i class="fas far fa-thumbs-down" style='float: left; font-size:24px;color:blueviolet;'></i>
+                                        <div style="float: right;">Mark as Ongoing</div>
+                                    </div>
+                                </p:commandLink> 
+                                
+                                <p:commandLink action="#{webUserController.toMarkAsCompleted()}"  oncomplete="PF('dlg1').show();"
+                                               rendered="#{webUserController.currentProject.canMarkAsCompleted}"
+                                               class="w3-btn w3-amber w3-margin  btn350" >
+                                    <div>
+                                        <i class="fas far fa-thumbs-down" style='float: left; font-size:24px;color:blueviolet;'></i>
+                                        <div style="float: right;">To Mark as Completed</div>
+                                    </div>
+                                </p:commandLink> 
+                                
+                                
                             </p:panelGrid>
 
 
-                            <p:dialog id="dlg1" header="Basic Dialog" widgetVar="dlg1" minHeight="40">
+                            <p:dialog id="dlg1" header="#{webUserController.projectStageWorkingOnTitle}" widgetVar="dlg1" minHeight="40">
                                 <p:panel header="#{webUserController.projectStageWorkingOnTitle}" >
                                     <p:panelGrid columns="2" >
 
