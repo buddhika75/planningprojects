@@ -124,7 +124,7 @@ public class Project implements Serializable {
 
     private Boolean ndpRejected;
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dnpRejectedOn;
+    private Date ndpRejectedOn;
 
     private Boolean cabinetSubmitted;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -136,7 +136,7 @@ public class Project implements Serializable {
 
     private Boolean cabinetRejected;
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date cabinetRejectedDate;
+    private Date cabinetRejectedOn;
 
     Boolean fundsAllocated;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -216,11 +216,11 @@ public class Project implements Serializable {
 
     //Sento to DNP
     @ManyToOne
-    private WebUser dnpSubmissionRecordedUser;
+    private WebUser ndpSubmissionRecordedUser;
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dnpSubmissionRecordedAt;
+    private Date ndpSubmissionRecordedAt;
     @Lob
-    private String dnpSubmissionComments;
+    private String ndpSubmissionComments;
 
     //NDP Revision
     @ManyToOne
@@ -690,28 +690,28 @@ public class Project implements Serializable {
         this.pecRejectionComments = pecRejectionComments;
     }
 
-    public WebUser getDnpSubmissionRecordedUser() {
-        return dnpSubmissionRecordedUser;
+    public WebUser getNdpSubmissionRecordedUser() {
+        return ndpSubmissionRecordedUser;
     }
 
-    public void setDnpSubmissionRecordedUser(WebUser dnpSubmissionRecordedUser) {
-        this.dnpSubmissionRecordedUser = dnpSubmissionRecordedUser;
+    public void setNdpSubmissionRecordedUser(WebUser ndpSubmissionRecordedUser) {
+        this.ndpSubmissionRecordedUser = ndpSubmissionRecordedUser;
     }
 
-    public Date getDnpSubmissionRecordedAt() {
-        return dnpSubmissionRecordedAt;
+    public Date getNdpSubmissionRecordedAt() {
+        return ndpSubmissionRecordedAt;
     }
 
-    public void setDnpSubmissionRecordedAt(Date dnpSubmissionRecordedAt) {
-        this.dnpSubmissionRecordedAt = dnpSubmissionRecordedAt;
+    public void setNdpSubmissionRecordedAt(Date ndpSubmissionRecordedAt) {
+        this.ndpSubmissionRecordedAt = ndpSubmissionRecordedAt;
     }
 
-    public String getDnpSubmissionComments() {
-        return dnpSubmissionComments;
+    public String getNdpSubmissionComments() {
+        return ndpSubmissionComments;
     }
 
-    public void setDnpSubmissionComments(String dnpSubmissionComments) {
-        this.dnpSubmissionComments = dnpSubmissionComments;
+    public void setNdpSubmissionComments(String ndpSubmissionComments) {
+        this.ndpSubmissionComments = ndpSubmissionComments;
     }
 
     public WebUser getNdpRecommendationRecordedBy() {
@@ -850,12 +850,12 @@ public class Project implements Serializable {
         this.ndpRejected = ndpRejected;
     }
 
-    public Date getDnpRejectedOn() {
-        return dnpRejectedOn;
+    public Date getNdpRejectedOn() {
+        return ndpRejectedOn;
     }
 
-    public void setDnpRejectedOn(Date dnpRejectedOn) {
-        this.dnpRejectedOn = dnpRejectedOn;
+    public void setNdpRejectedOn(Date ndpRejectedOn) {
+        this.ndpRejectedOn = ndpRejectedOn;
     }
 
     public Boolean getNdpSubmitted() {
@@ -1176,12 +1176,12 @@ public class Project implements Serializable {
         this.cabinetRejected = cabinetRejected;
     }
 
-    public Date getCabinetRejectedDate() {
-        return cabinetRejectedDate;
+    public Date getCabinetRejectedOn() {
+        return cabinetRejectedOn;
     }
 
-    public void setCabinetRejectedDate(Date cabinetRejectedDate) {
-        this.cabinetRejectedDate = cabinetRejectedDate;
+    public void setCabinetRejectedOn(Date cabinetRejectedOn) {
+        this.cabinetRejectedOn = cabinetRejectedOn;
     }
 
     public Boolean getOnoing() {

@@ -961,7 +961,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
-        currentProject.setDnpRejectedOn(new Date());
+        currentProject.setNdpRejectedOn(new Date());
         getProjectFacade().edit(currentProject);
         return "/dnp_rejection";
     }
@@ -991,7 +991,7 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
-        currentProject.setCabinetRejectedDate(new Date());
+        currentProject.setCabinetRejectedOn(new Date());
         getProjectFacade().edit(currentProject);
         return "/cabinet_rejection";
     }
@@ -1011,17 +1011,47 @@ public class WebUserController implements Serializable {
      *
      */
     public void markAsCompleted() {
-        if(projectStageWorkingOn==null){
+        if (projectStageWorkingOn == null) {
             JsfUtil.addErrorMessage("Nothing to change");
             return;
         }
-        
+
         switch (projectStageWorkingOn) {
             case Awaiting_Cabinet_Approval:
                 markAsPecApproved();
                 break;
             case PEC_Rejected:
                 markAsPecRejected();
+                break;
+            case Awaiting_DNP_Submission:
+                markAsSubmittedToDnp();
+                break;
+            case Awaiting_DNP_Approval:
+                markAsDnpRecommended();
+                break;
+            case DNP_Rejected:
+                markAsDnpRejected();
+                break;
+            case Awaiting_Cabinet_Submission:
+                markAsSubmittedToCabinet();
+                break;
+            case Cabinet_Approved:
+                markAsCabinetApproved();
+                break;
+            case Cabinet_Rejected:
+                markAsCabinetRejected();
+                break;
+            case Funds_Allocated:
+                break;
+            case Ongoing:
+                break;
+            case Completed:
+                break;
+            case Awaiting_PEC_Approval:
+                break;
+            case DNP_Revision:
+                break;
+            case Incomplete_Pcp:
                 break;
 
         }
@@ -1036,7 +1066,6 @@ public class WebUserController implements Serializable {
         getCurrentProject().setPecRecommendationRecordedBy(loggedUser);
         getCurrentProject().setPecRecommendationRecordedAt(new Date());
         getCurrentProject().setPecRecomended(true);
-        getCurrentProject().setPecRecommendation(comments);
         getCurrentProject().setPecRecommendationComments(projectStageWorkingOnComments);
         getCurrentProject().setPecRecommendedOn(projectStageWorkingOnDate);
         getProjectFacade().edit(currentProject);
@@ -1052,6 +1081,8 @@ public class WebUserController implements Serializable {
         getCurrentProject().setPecRejectionRecordedBy(loggedUser);
         getCurrentProject().setPecRejectionRecordedAt(new Date());
         getCurrentProject().setPecRejected(true);
+        getCurrentProject().setPecRejectionComments(projectStageWorkingOnComments);
+        getCurrentProject().setPecRejectedOn(projectStageWorkingOnDate);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as Rejected by PEC.");
     }
@@ -1062,14 +1093,16 @@ public class WebUserController implements Serializable {
             return;
         }
         getCurrentProject().setCurrentStageType(ProjectStageType.Awaiting_DNP_Approval);
-        getCurrentProject().setDnpSubmissionRecordedUser(loggedUser);
-        getCurrentProject().setDnpSubmissionRecordedAt(new Date());
+        getCurrentProject().setNdpSubmissionRecordedUser(loggedUser);
+        getCurrentProject().setNdpSubmissionRecordedAt(new Date());
         getCurrentProject().setNdpSubmitted(true);
+        getCurrentProject().setNdpSubmissionComments(projectStageWorkingOnComments);
+        getCurrentProject().setNdpSubmittedOn(projectStageWorkingOnDate);
         getProjectFacade().edit(currentProject);
-        JsfUtil.addSuccessMessage("Marked as Submitted to DNP.");
+        JsfUtil.addSuccessMessage("Marked as Submitted to NDP.");
     }
 
-    public void markAsDnpApproved() {
+    public void markAsDnpRecommended() {
         if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing selected");
             return;
@@ -1078,8 +1111,10 @@ public class WebUserController implements Serializable {
         getCurrentProject().setNdpRecommendationRecordedBy(loggedUser);
         getCurrentProject().setNdpApprovalRecordedAt(new Date());
         getCurrentProject().setNdpRecommended(true);
+        getCurrentProject().setNdpRecommendationComments(projectStageWorkingOnComments);
+        getCurrentProject().setNdpRecommendedOn(projectStageWorkingOnDate);
         getProjectFacade().edit(currentProject);
-        JsfUtil.addSuccessMessage("Marked as DNP Approved.");
+        JsfUtil.addSuccessMessage("Marked as DNP Recommended.");
     }
 
     public void markAsDnpRejected() {
@@ -1091,6 +1126,8 @@ public class WebUserController implements Serializable {
         getCurrentProject().setNdpRejectionRecordedBy(loggedUser);
         getCurrentProject().setNdpRejectionRecorderAt(new Date());
         getCurrentProject().setNdpRejected(true);
+        getCurrentProject().setNdpRejectionComments(projectStageWorkingOnComments);
+        getCurrentProject().setNdpRejectedOn(projectStageWorkingOnDate);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as Rejected by DNP.");
     }
@@ -1104,6 +1141,8 @@ public class WebUserController implements Serializable {
         getCurrentProject().setCabinetSubmissionRecordedBy(loggedUser);
         getCurrentProject().setCabinetSubmissionRecordedAt(new Date());
         getCurrentProject().setCabinetSubmitted(true);
+        getCurrentProject().setCabinetSubmissionComments(projectStageWorkingOnComments);
+        getCurrentProject().setCabinetSubmittedOn(projectStageWorkingOnDate);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as Submitted to Cabinet.");
     }
@@ -1117,6 +1156,8 @@ public class WebUserController implements Serializable {
         getCurrentProject().setCabinetApprovalRecordedBy(loggedUser);
         getCurrentProject().setCabinetApprovalRecordedAt(new Date());
         getCurrentProject().setCabinetApproved(true);
+        getCurrentProject().setCabinetApprovalComments(projectStageWorkingOnComments);
+        getCurrentProject().setCabinetApprovalOn(projectStageWorkingOnDate);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as Approved by Cabinet.");
     }
@@ -1130,6 +1171,10 @@ public class WebUserController implements Serializable {
         getCurrentProject().setCabinetRejectionRecordedBy(loggedUser);
         getCurrentProject().setCabinetRejectionRecordedAt(new Date());
         getCurrentProject().setCabinetRejected(true);
+        
+        getCurrentProject().setCabinetRejectionComments(projectStageWorkingOnComments);
+        getCurrentProject().setCabinetRejectedOn(projectStageWorkingOnDate);
+        
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as Cabinet Rejected.");
     }
