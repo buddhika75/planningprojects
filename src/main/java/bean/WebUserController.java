@@ -1031,9 +1031,12 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
+        projectStageWorkingOn = ProjectStageType.Awaiting_DNP_Submission;
+        projectStageWorkingOnDate = new Date();
+        projectStageWorkingOnComments = "";
         currentProject.setNdpSubmittedOn(new Date());
         getProjectFacade().edit(currentProject);
-        return "/dnp_submission";
+        return "";
     }
 
     public String toDnpApproval() {
@@ -1042,8 +1045,11 @@ public class WebUserController implements Serializable {
             return "";
         }
         currentProject.setNdpRecommendedOn(new Date());
+        projectStageWorkingOn = ProjectStageType.Awaiting_DNP_Approval;
+        projectStageWorkingOnDate = new Date();
+        projectStageWorkingOnComments = "";
         getProjectFacade().edit(currentProject);
-        return "/dnp_approval";
+        return "";
     }
 
     public String toDnpRejection() {
@@ -1052,8 +1058,11 @@ public class WebUserController implements Serializable {
             return "";
         }
         currentProject.setNdpRejectedOn(new Date());
+        projectStageWorkingOn = ProjectStageType.DNP_Rejected;
+        projectStageWorkingOnDate = new Date();
+        projectStageWorkingOnComments = "";
         getProjectFacade().edit(currentProject);
-        return "/dnp_rejection";
+        return "";
     }
 
     public String toCabinetSubmission() {
@@ -1062,8 +1071,11 @@ public class WebUserController implements Serializable {
             return "";
         }
         currentProject.setCabinetSubmittedOn(new Date());
+        projectStageWorkingOn = ProjectStageType.Awaiting_Cabinet_Submission;
+        projectStageWorkingOnDate = new Date();
+        projectStageWorkingOnComments = "";
         getProjectFacade().edit(currentProject);
-        return "/cabinet_submission";
+        return "";
     }
 
     public String toCabinetApproval() {
@@ -1072,8 +1084,11 @@ public class WebUserController implements Serializable {
             return "";
         }
         currentProject.setCabinetApprovalOn(new Date());
+        projectStageWorkingOn = ProjectStageType.Awaiting_Cabinet_Approval;
+        projectStageWorkingOnDate = new Date();
+        projectStageWorkingOnComments = "";
         getProjectFacade().edit(currentProject);
-        return "/cabinet_approval";
+        return "";
     }
 
     public String toCabinetRejection() {
@@ -1082,8 +1097,11 @@ public class WebUserController implements Serializable {
             return "";
         }
         currentProject.setCabinetRejectedOn(new Date());
+        projectStageWorkingOn = ProjectStageType.Cabinet_Rejected;
+        projectStageWorkingOnDate = new Date();
+        projectStageWorkingOnComments = "";
         getProjectFacade().edit(currentProject);
-        return "/cabinet_rejection";
+        return "";
     }
 
     /**
