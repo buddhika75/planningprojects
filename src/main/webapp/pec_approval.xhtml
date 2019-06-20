@@ -119,19 +119,19 @@
                                     </h:panelGroup>
 
                                     <h:outputText value="PEC Approval Comments"/>
-                                    <h:outputText value="#{webUserController.currentProject.pecApprovalRecommendation}" title="ProjectComments"/>
+                                    <h:outputText value="#{webUserController.currentProject.pecRecommendationComments}" title="ProjectComments"/>
 
 
                                     <h:outputText value="PEC Approval Documentation:"/>
                                     <h:panelGroup >
                                         <h:outputText value="By "/>
-                                        <h:outputText value="#{webUserController.currentProject.pecApprovedUser.webUserPerson.nameWithTitle}" title="Creater"/>
+                                        <h:outputText value="#{webUserController.currentProject.pecRecommendationRecordedBy}" title="Creater"/>
                                         <h:outputText value=" at "/>
-                                        <h:outputText value="#{webUserController.currentProject.pecApprovedAt}" title="CreatedAt">
+                                        <h:outputText value="#{webUserController.currentProject.pecRecommendationRecordedAt}" title="CreatedAt">
                                             <f:convertDateTime pattern="HH:mm a" />
                                         </h:outputText>
                                         <h:outputText value=" on "/>
-                                        <h:outputText value="#{webUserController.currentProject.pecApprovedAt}" title="CreatedAt">
+                                        <h:outputText value="#{webUserController.currentProject.pecRecommendationRecordedAt}" title="CreatedAt">
                                             <f:convertDateTime pattern="dd/MMMM/yyyy" />
                                         </h:outputText>
                                         <h:outputText value="."/>
@@ -149,11 +149,11 @@
                         <div class="w3-container w3-third w3-card" style="text-align: center;" >
                             <h:panelGrid columns="1" >
                                 <h:outputLabel value="PEC Approved Date" ></h:outputLabel>
-                                <p:calendar value="#{webUserController.currentProject.pecApprovedDate}" pattern="dd MMMM yyyy" >
+                                <p:calendar value="#{webUserController.currentProject.pecRecommendedOn}" pattern="dd MMMM yyyy" >
                                 </p:calendar>
 
                                 <h:outputLabel value="PEC Recommendation" ></h:outputLabel>
-                                <h:inputTextarea value="#{webUserController.currentProject.pecApprovalRecommendation}" 
+                                <h:inputTextarea value="#{webUserController.currentProject.pecRecommendationComments}" 
                                                  title="Project Description" class="btn350" style="height: 150px;"
                                                  />
                                 <h:commandLink  action="#{webUserController.markAsPecApproved()}" 
@@ -163,7 +163,7 @@
                                         <div style="float: right;">Approve</div>
                                     </div>
                                 </h:commandLink> 
-                                <h:commandLink rendered="#{webUserController.currentProject.pecApproved}"
+                                <h:commandLink rendered="#{webUserController.currentProject.pecRecomended}"
                                                class="w3-btn w3-amber w3-margin  btn350">
                                     <p:printer target="details" ></p:printer>
                                     <div>
