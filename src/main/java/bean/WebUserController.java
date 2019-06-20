@@ -159,9 +159,39 @@ public class WebUserController implements Serializable {
 
     private String locale;
 
+    private ProjectStageType projectStageWorkingOn;
+    private String projectStageWorkingOnComments;
+    private Date projectStageWorkingOnDate;
+    private String projectStageWorkingOnTitle;
+    private String projectStageWorkingOnButtonTitle;
+    private String projectStageWorkingOnDateTitle;
+    private String projectStageWorkingOnCommentTitle;
+    private String projectStageWorkingOnPeriodTitle;
+
     @PostConstruct
     public void init() {
         emptyModel = new DefaultMapModel();
+    }
+
+    private void createProjectStageTitles() {
+
+        if (projectStageWorkingOn == null) {
+            projectStageWorkingOnButtonTitle = "";
+            projectStageWorkingOnDateTitle = "";
+            projectStageWorkingOnCommentTitle = "";
+            projectStageWorkingOnPeriodTitle = null;
+            return;
+        }
+
+        switch (projectStageWorkingOn) {
+            case Awaiting_PEC_Approval:
+                projectStageWorkingOnButtonTitle = "Mark as PEC Approved";
+                projectStageWorkingOnDateTitle = "PEC Recommended Date";
+                projectStageWorkingOnCommentTitle = "PEC Recommendation";
+                projectStageWorkingOnPeriodTitle = null;
+
+                break;
+        }
     }
 
     public void removeProjectProvince() {
@@ -173,8 +203,8 @@ public class WebUserController implements Serializable {
         getProjectAreaFacade().remove(removingProjectProvince);
         removingProjectProvince = null;
     }
-    
-     public void removeProjectDistrict() {
+
+    public void removeProjectDistrict() {
         if (removingProjectDistrict == null) {
             JsfUtil.addErrorMessage("Nothing to remove");
             return;
@@ -183,9 +213,8 @@ public class WebUserController implements Serializable {
         getProjectAreaFacade().remove(removingProjectDistrict);
         removingProjectDistrict = null;
     }
-     
-     
-     public void removeProjectLocation() {
+
+    public void removeProjectLocation() {
         if (removingProjectInstitution == null) {
             JsfUtil.addErrorMessage("Nothing to remove");
             return;
@@ -195,8 +224,7 @@ public class WebUserController implements Serializable {
         removingProjectInstitution = null;
     }
 
-     
-      public void removeProjectSourceOfFunds() {
+    public void removeProjectSourceOfFunds() {
         if (removingProjectSourceOfFund == null) {
             JsfUtil.addErrorMessage("Nothing to remove");
             return;
@@ -205,7 +233,7 @@ public class WebUserController implements Serializable {
         getProjectSourceOfFundFacade().remove(removingProjectSourceOfFund);
         removingProjectSourceOfFund = null;
     }
-     
+
     public List<Area> getAreas(AreaType areaType, List<Area> superAreas) {
         String j;
         Map m = new HashMap();
@@ -891,9 +919,10 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
-        currentProject.setPecRecommendedOn(new Date());
-        getProjectFacade().edit(currentProject);
-        return "/pec_approval";
+        projectStageWorkingOn = ProjectStageType.Awaiting_PEC_Approval;
+        projectStageWorkingOnDate = new Date();
+        projectStageWorkingOnComments = "";
+        return "";
     }
 
     public String toPecRejection() {
@@ -901,9 +930,10 @@ public class WebUserController implements Serializable {
             JsfUtil.addErrorMessage("Nothing to update");
             return "";
         }
-        currentProject.setPecRejectedOn(new Date());
-        getProjectFacade().edit(currentProject);
-        return "/pec_rejection";
+        projectStageWorkingOn = ProjectStageType.PEC_Rejected;
+        projectStageWorkingOnDate = new Date();
+        projectStageWorkingOnComments = "";
+        return "";
     }
 
     public String toDnpSubmission() {
@@ -980,6 +1010,23 @@ public class WebUserController implements Serializable {
      *
      *
      */
+    public void markAsCompleted() {
+        if(projectStageWorkingOn==null){
+            JsfUtil.addErrorMessage("Nothing to change");
+            return;
+        }
+        
+        switch (projectStageWorkingOn) {
+            case Awaiting_Cabinet_Approval:
+                markAsPecApproved();
+                break;
+            case PEC_Rejected:
+                markAsPecRejected();
+                break;
+
+        }
+    }
+
     public void markAsPecApproved() {
         if (currentProject == null) {
             JsfUtil.addErrorMessage("Nothing selected");
@@ -989,6 +1036,9 @@ public class WebUserController implements Serializable {
         getCurrentProject().setPecRecommendationRecordedBy(loggedUser);
         getCurrentProject().setPecRecommendationRecordedAt(new Date());
         getCurrentProject().setPecRecomended(true);
+        getCurrentProject().setPecRecommendation(comments);
+        getCurrentProject().setPecRecommendationComments(projectStageWorkingOnComments);
+        getCurrentProject().setPecRecommendedOn(projectStageWorkingOnDate);
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as PEC Approved.");
     }
@@ -2082,6 +2132,55 @@ public class WebUserController implements Serializable {
 
     public void setRemovingProjectSourceOfFund(ProjectSourceOfFund removingProjectSourceOfFund) {
         this.removingProjectSourceOfFund = removingProjectSourceOfFund;
+    }
+
+    public ProjectStageType getProjectStageWorkingOn() {
+        return projectStageWorkingOn;
+    }
+
+    public void setProjectStageWorkingOn(ProjectStageType projectStageWorkingOn) {
+        this.projectStageWorkingOn = projectStageWorkingOn;
+    }
+
+    public String getProjectStageWorkingOnComments() {
+        return projectStageWorkingOnComments;
+    }
+
+    public void setProjectStageWorkingOnComments(String projectStageWorkingOnComments) {
+        this.projectStageWorkingOnComments = projectStageWorkingOnComments;
+    }
+
+    public Date getProjectStageWorkingOnDate() {
+        return projectStageWorkingOnDate;
+    }
+
+    public void setProjectStageWorkingOnDate(Date projectStageWorkingOnDate) {
+        this.projectStageWorkingOnDate = projectStageWorkingOnDate;
+    }
+
+    public String getProjectStageWorkingOnTitle() {
+        createProjectStageTitles();
+        return projectStageWorkingOnTitle;
+    }
+
+    public String getProjectStageWorkingOnButtonTitle() {
+        createProjectStageTitles();
+        return projectStageWorkingOnButtonTitle;
+    }
+
+    public String getProjectStageWorkingOnDateTitle() {
+        createProjectStageTitles();
+        return projectStageWorkingOnDateTitle;
+    }
+
+    public String getProjectStageWorkingOnCommentTitle() {
+        createProjectStageTitles();
+        return projectStageWorkingOnCommentTitle;
+    }
+
+    public String getProjectStageWorkingOnPeriodTitle() {
+        createProjectStageTitles();
+        return projectStageWorkingOnPeriodTitle;
     }
 
     /**

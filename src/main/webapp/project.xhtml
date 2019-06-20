@@ -133,8 +133,8 @@
                                     <p:autoComplete value="#{webUserController.selectedLocation}"
                                                     completeMethod="#{institutionController.completeInstitutions}"
                                                     var="ins" forceSelection="true" id="acLoc" 
-                                                    
-                                                    
+
+
                                                     placeholder="Search Location by typing few letters ..."
                                                     itemLabel="#{ins.name}" inputStyle="width:300px;" style="width: 300px;"
                                                     itemValue="#{ins}"></p:autoComplete>
@@ -244,6 +244,12 @@
 
                             </p:panelGrid>
 
+
+
+
+
+
+
                             <p:panelGrid columns="1" styleClass="alignTop" >
 
                                 <h:commandLink  action="#{webUserController.updateProject()}" 
@@ -263,22 +269,28 @@
                                     </div>  
                                 </h:commandLink>
 
-                                <h:commandLink action="#{webUserController.toPecApproval()}" 
+
+
+                                <p:commandLink action="#{webUserController.toPecApproval()}" oncomplete="PF('dlg1').show();"
                                                rendered="#{webUserController.currentProject.canApproveAtPec}"
-                                               class="w3-btn w3-amber w3-margin  btn350" >
+                                               class="w3-btn w3-amber w3-margin  btn350" 
+                                               >
+                                    <f:ajax execute="@this" render="dlg1" ></f:ajax>
                                     <div>
                                         <i class="fas far fa-thumbs-up" style='float: left; font-size:24px;color:yellow;'></i>
                                         <div style="float: right;">To Approve at PEC</div>
                                     </div>
-                                </h:commandLink> 
-                                <h:commandLink action="#{webUserController.toPecRejection()}" 
+                                </p:commandLink> 
+                                <p:commandLink action="#{webUserController.toPecRejection()}"  oncomplete="PF('dlg1').show();"
+
                                                rendered="#{webUserController.currentProject.canRejectAtPec}"
                                                class="w3-btn w3-amber w3-margin  btn350" >
+                                    <f:ajax execute="@this" render="dlg1" ></f:ajax>
                                     <div>
                                         <i class="fas far fa-thumbs-down" style='float: left; font-size:24px;color:yellow;'></i>
                                         <div style="float: right;">To Reject at PEC</div>
                                     </div>
-                                </h:commandLink> 
+                                </p:commandLink> 
 
                                 <h:commandLink action="#{webUserController.toDnpSubmission()}" 
                                                rendered="#{webUserController.currentProject.canSubmitToNdp}"
@@ -330,6 +342,35 @@
                                     </div>
                                 </h:commandLink> 
                             </p:panelGrid>
+
+
+                            <p:dialog id="dlg1" header="Basic Dialog" widgetVar="dlg1" minHeight="40">
+                                <p:panel header="#{webUserController.projectStageWorkingOnTitle}" >
+                                    <p:panelGrid columns="2" >
+
+                                        <p:outputLabel value="#{webUserController.projectStageWorkingOnDateTitle}" >
+                                        </p:outputLabel>
+                                        <p:calendar pattern="dd MMMM yyyy" value="#{webUserController.projectStageWorkingOnDate}" >
+                                        </p:calendar>
+
+                                        <p:outputLabel value="#{webUserController.projectStageWorkingOnCommentTitle}" >
+                                        </p:outputLabel>
+                                        <p:inputTextarea value="#{webUserController.projectStageWorkingOnComments}" >
+                                        </p:inputTextarea>
+
+                                        <p:spacer ></p:spacer>
+                                        <p:commandButton ajax="false" action="#{webUserController.markAsCompleted()}" 
+                                                         value="#{webUserController.projectStageWorkingOnButtonTitle}">
+                                        </p:commandButton>
+
+
+                                    </p:panelGrid>
+
+                                </p:panel>
+
+
+
+                            </p:dialog>
 
                         </p:panelGrid>
 
