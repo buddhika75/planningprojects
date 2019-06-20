@@ -185,12 +185,68 @@ public class WebUserController implements Serializable {
 
         switch (projectStageWorkingOn) {
             case Awaiting_PEC_Approval:
-                projectStageWorkingOnButtonTitle = "Mark as PEC Approved";
+                projectStageWorkingOnButtonTitle = "Mark as PEC Recommended";
                 projectStageWorkingOnDateTitle = "PEC Recommended Date";
                 projectStageWorkingOnCommentTitle = "PEC Recommendation";
                 projectStageWorkingOnPeriodTitle = null;
-
                 break;
+            case PEC_Rejected:
+                projectStageWorkingOnButtonTitle = "Mark as PEC Rejected";
+                projectStageWorkingOnDateTitle = "PEC Rejected Date";
+                projectStageWorkingOnCommentTitle = "PEC Rejection Comments";
+                projectStageWorkingOnPeriodTitle = null;
+                break;
+            
+                
+            case Awaiting_Cabinet_Approval:
+                projectStageWorkingOnButtonTitle = "Mark as Cabinet Approved";
+                projectStageWorkingOnDateTitle = "Cabinet Approved Date";
+                projectStageWorkingOnCommentTitle = "Cabinet Approval Comments";
+                projectStageWorkingOnPeriodTitle = null;
+                break;
+                
+                
+            case Awaiting_Cabinet_Submission:
+                projectStageWorkingOnButtonTitle = "Mark as Submitted to Cabinet";
+                projectStageWorkingOnDateTitle = "Cabinet Submitted Date";
+                projectStageWorkingOnCommentTitle = "Cabinet Submitted Date";
+                projectStageWorkingOnPeriodTitle = null;
+                break;
+                
+                
+            case Awaiting_DNP_Approval:
+                projectStageWorkingOnButtonTitle = "Mark as Recommended by NDP";
+                projectStageWorkingOnDateTitle = "NDP Recommended Date";
+                projectStageWorkingOnCommentTitle = "NDP Recommendation";
+                projectStageWorkingOnPeriodTitle = null;
+                break;
+                
+                
+            case Awaiting_DNP_Submission:
+                projectStageWorkingOnButtonTitle = "Mark as Submitted to NDP";
+                projectStageWorkingOnDateTitle = "NDP Submission Date";
+                projectStageWorkingOnCommentTitle = "NDP Submission Comments";
+                projectStageWorkingOnPeriodTitle = null;
+                break;
+                
+            case Cabinet_Approved:
+                
+                
+            case Cabinet_Rejected:
+                
+            case Completed:
+                
+            case DNP_Rejected:
+                
+            case DNP_Revision:
+                
+                
+            case Funds_Allocated:
+                
+            case Incomplete_Pcp:
+                
+            case Ongoing:
+                
         }
     }
 
@@ -1042,12 +1098,16 @@ public class WebUserController implements Serializable {
                 markAsCabinetRejected();
                 break;
             case Funds_Allocated:
+                markAsFundsAllocated();
                 break;
             case Ongoing:
+                markAsOngoing();
                 break;
             case Completed:
+                markAsCompleted();
                 break;
             case Awaiting_PEC_Approval:
+                
                 break;
             case DNP_Revision:
                 break;
@@ -1178,6 +1238,50 @@ public class WebUserController implements Serializable {
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as Cabinet Rejected.");
     }
+    
+    
+    
+    public void markAsFundsAllocated() {
+        if (currentProject == null) {
+            JsfUtil.addErrorMessage("Nothing selected");
+            return;
+        }
+        getCurrentProject().setCurrentStageType(ProjectStageType.Funds_Allocated);
+        getCurrentProject().setFundAllocationDoneRecordedBy(loggedUser);
+        getCurrentProject().setFundAllocationRecordedAt(new Date());
+        getCurrentProject().setFundsAllocated(true);
+        
+        getCurrentProject().setFundAllocationComments(projectStageWorkingOnComments);
+        getCurrentProject().setFundsAllocatedOn(projectStageWorkingOnDate);
+        
+        getProjectFacade().edit(currentProject);
+        JsfUtil.addSuccessMessage("Marked as Cabinet Rejected.");
+    }
+    
+    
+    public void markAsOngoing() {
+        if (currentProject == null) {
+            JsfUtil.addErrorMessage("Nothing selected");
+            return;
+        }
+        getCurrentProject().setCurrentStageType(ProjectStageType.Ongoing);
+        getCurrentProject().setOngoingMarkedUser(loggedUser);
+        getCurrentProject().setOngoingMarkedAt(new Date());
+        getCurrentProject().setOnoing(true);
+        
+        getCurrentProject().setOngoingRecommendation(projectStageWorkingOnComments);
+        getCurrentProject().setOngoingStartedOn(projectStageWorkingOnDate);
+        
+        getProjectFacade().edit(currentProject);
+        JsfUtil.addSuccessMessage("Marked as Cabinet Rejected.");
+    }
+    
+    
+     
+    
+    
+    
+    
 
     /**
      *
