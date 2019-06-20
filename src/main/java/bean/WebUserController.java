@@ -230,22 +230,56 @@ public class WebUserController implements Serializable {
                 break;
                 
             case Cabinet_Approved:
+                projectStageWorkingOnButtonTitle = "Mark as Cabinet Approved";
+                projectStageWorkingOnDateTitle = "Cabinet Approved Date";
+                projectStageWorkingOnCommentTitle = "Cabinet Approval Comments";
+                projectStageWorkingOnPeriodTitle = null;
+                break;
                 
                 
             case Cabinet_Rejected:
+                projectStageWorkingOnButtonTitle = "Mark as Rejected by Cabinet";
+                projectStageWorkingOnDateTitle = "Rejected on";
+                projectStageWorkingOnCommentTitle = "Rejection Comment";
+                projectStageWorkingOnPeriodTitle = null;
+                break;
                 
             case Completed:
+                projectStageWorkingOnButtonTitle = "Mark as Completed";
+                projectStageWorkingOnDateTitle = "Compelted Date";
+                projectStageWorkingOnCommentTitle = "Comments";
+                projectStageWorkingOnPeriodTitle = null;
+                break;
                 
             case DNP_Rejected:
+                projectStageWorkingOnButtonTitle = "Mark as Rejected by NDP";
+                projectStageWorkingOnDateTitle = "NDP Rejection Date";
+                projectStageWorkingOnCommentTitle = "Comments";
+                projectStageWorkingOnPeriodTitle = null;
+                break;
                 
             case DNP_Revision:
-                
+                projectStageWorkingOnButtonTitle = "Mark as Under NDP Revision";
+                projectStageWorkingOnDateTitle = "Date";
+                projectStageWorkingOnCommentTitle = "Comments";
+                projectStageWorkingOnPeriodTitle = null;
+                break;
                 
             case Funds_Allocated:
+                projectStageWorkingOnButtonTitle = "Mark as Funds Allocated";
+                projectStageWorkingOnDateTitle = "Funds Allocated Date";
+                projectStageWorkingOnCommentTitle = "Comments";
+                projectStageWorkingOnPeriodTitle = null;
+                break;
                 
             case Incomplete_Pcp:
                 
             case Ongoing:
+                projectStageWorkingOnButtonTitle = "Mark as Ongoing";
+                projectStageWorkingOnDateTitle = "Started Date";
+                projectStageWorkingOnCommentTitle = "Comments";
+                projectStageWorkingOnPeriodTitle = null;
+                break;
                 
         }
     }
@@ -1074,7 +1108,7 @@ public class WebUserController implements Serializable {
 
         switch (projectStageWorkingOn) {
             case Awaiting_Cabinet_Approval:
-                markAsPecApproved();
+                markAsCabinetApproved();
                 break;
             case PEC_Rejected:
                 markAsPecRejected();
@@ -1107,7 +1141,7 @@ public class WebUserController implements Serializable {
                 markAsCompleted();
                 break;
             case Awaiting_PEC_Approval:
-                
+                markAsPecApproved();
                 break;
             case DNP_Revision:
                 break;
