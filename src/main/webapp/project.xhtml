@@ -53,6 +53,14 @@
                                 <p:spacer></p:spacer>
 
 
+                                <h:outputLabel value="Proposal Date"  />
+                                <p:calendar value="#{webUserController.currentProject.proposalDate}" pattern="dd MMMM yyyy" >
+                                </p:calendar>
+                                <h:panelGroup>
+                                    <h:inputTextarea id="txtPdComments" value="#{webUserController.currentProject.proposalDateComments}"  ></h:inputTextarea>
+                                    <p:watermark value="Enter Proposal Date Comments" for="txtPdComments" ></p:watermark>
+                                </h:panelGroup>
+
                                 <h:outputLabel value="Title" for="projectTitle" />
                                 <h:inputText style="width:95%;" id="projectTitle" value="#{webUserController.currentProject.projectTitle}" title="ProjectTitle" />
                                 <p:spacer></p:spacer>
@@ -61,6 +69,7 @@
                                 <h:outputLabel value="File Number" for="fileNo" />
                                 <h:inputText id="fileNo"  style="width:55%;"  value="#{webUserController.currentProject.fileNumber}" title="CurrentStageType" />
                                 <p:spacer></p:spacer>
+
 
                                 <h:outputLabel value="Provinces" for="provinces" />
                                 <p:dataTable id="tblPs" emptyMessage="No Province"
@@ -211,11 +220,6 @@
 
 
 
-                                <h:outputLabel value="Proposal Date"  />
-                                <p:calendar value="#{webUserController.currentProject.proposalDate}" pattern="dd MMMM yyyy" >
-                                </p:calendar>
-                                <p:spacer></p:spacer>
-
                                 <h:outputLabel value="PCP First Received Date"  />
                                 <p:calendar value="#{webUserController.currentProject.pcpFirstReceivedDate}" pattern="dd MMMM yyyy" >
                                 </p:calendar>
@@ -257,6 +261,13 @@
                                     <div>
                                         <i class='fas fa-save' style='float: left; font-size:24px;color:green;'></i>
                                         <div style="float: right;">Save</div>
+                                    </div>
+                                </h:commandLink> 
+                                <h:commandLink  action="#{webUserController.deleteProject()}" 
+                                                class="w3-btn w3-deep-orange w3-margin btn350"  >
+                                    <div>
+                                        <i class='fas fa-trash' style='float: left; font-size:24px;color:green;'></i>
+                                        <div style="float: right;">Delete</div>
                                     </div>
                                 </h:commandLink> 
                                 <h:commandLink 
@@ -351,7 +362,7 @@
                                         <div style="float: right;">Reject at Cabinet</div>
                                     </div>
                                 </p:commandLink> 
-                                
+
                                 <p:commandLink action="#{webUserController.toAllocateFunds()}"  oncomplete="PF('dlg1').show();"
                                                process="@this" update="dlg1"
                                                rendered="#{webUserController.currentProject.canAllocateFunds}"
@@ -361,8 +372,8 @@
                                         <div style="float: right;">Allocate Funds</div>
                                     </div>
                                 </p:commandLink> 
-                                
-                                
+
+
                                 <p:commandLink action="#{webUserController.toMarkOngoing()}"  oncomplete="PF('dlg1').show();"
                                                rendered="#{webUserController.currentProject.canMarkAsOngoing}"
                                                process="@this" update="dlg1"
@@ -372,7 +383,7 @@
                                         <div style="float: right;">Mark as Ongoing</div>
                                     </div>
                                 </p:commandLink> 
-                                
+
                                 <p:commandLink action="#{webUserController.toMarkAsCompleted()}"  oncomplete="PF('dlg1').show();"
                                                rendered="#{webUserController.currentProject.canMarkAsCompleted}"
                                                class="w3-btn w3-amber w3-margin  btn350" >
@@ -381,8 +392,8 @@
                                         <div style="float: right;">To Mark as Completed</div>
                                     </div>
                                 </p:commandLink> 
-                                
-                                
+
+
                             </p:panelGrid>
 
 

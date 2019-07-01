@@ -72,6 +72,9 @@ public class Project implements Serializable {
 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date proposalDate;
+    
+    @Lob
+    private String proposalDateComments;
 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date pcpFirstReceivedDate;
@@ -1348,4 +1351,14 @@ public class Project implements Serializable {
         return sourcesOfFundsStr;
     }
 
+    public String getProposalDateComments() {
+        return proposalDateComments;
+    }
+
+    public void setProposalDateComments(String proposalDateComments) {
+        this.proposalDateComments = proposalDateComments;
+    }
+
+    
+    
 }

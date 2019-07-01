@@ -726,7 +726,7 @@ public class WebUserController implements Serializable {
     public String searchProjectsByTitle() {
         allIslandProjects = false;
         if (searchKeyword != null && !searchKeyword.trim().equals("")) {
-            String j = "select p from Project p where lower(p.projectTitle) like :fn ";
+            String j = "select p from Project p where p.retired=false and lower(p.projectTitle) like :fn ";
             Map m = new HashMap();
             if (year != null) {
                 j += " and p.projectYear=:y ";
@@ -745,7 +745,7 @@ public class WebUserController implements Serializable {
     public String searchProjectsByFileNumber() {
         allIslandProjects = false;
         if (searchKeyword != null && !searchKeyword.trim().equals("")) {
-            String j = "select p from Project p where lower(p.fileNumber) like :fn ";
+            String j = "select p from Project p where p.retired=false and lower(p.fileNumber) like :fn ";
             Map m = new HashMap();
             j += " order by p.id";
             m.put("fn", "%" + searchKeyword.trim().toLowerCase() + "%");
@@ -766,7 +766,7 @@ public class WebUserController implements Serializable {
         c.setTime(getToDate());
         c.add(Calendar.DATE, 2);
         String j = "select p from Project p "
-                + " where p.currentStageType=:t "
+                + " where p.retired=false and p.currentStageType=:t "
                 + " order by p.id";
         Map m = new HashMap();
         m.put("t", type);
@@ -783,7 +783,7 @@ public class WebUserController implements Serializable {
         c.setTime(getToDate());
         c.add(Calendar.DATE, 2);
         String j = "select p from Project p "
-                + " where p.id <> :f ";
+                + " where p.retired=false and p.id <> :f ";
 
         Map m = new HashMap();
         m.put("f", 0);
@@ -839,7 +839,7 @@ public class WebUserController implements Serializable {
         Calendar c = Calendar.getInstance();
         c.setTime(getToDate());
         c.add(Calendar.DATE, 2);
-        String j = "select p from Project p "
+        String j = "select p from Project p where p.retired=false "
                 + " order by p.id";
         return getProjectFacade().findBySQL(j);
     }
@@ -909,7 +909,7 @@ public class WebUserController implements Serializable {
 
     public Project getLastProject(WebUser webUser) {
         String j = "Select p from Project p "
-                + " where p.client=:ins "
+                + " where p.client=:ins and p.retired=false "
                 + " order by p.id desc";
         Map m = new HashMap();
         m.put("ins", webUser.getInstitution());
@@ -986,6 +986,26 @@ public class WebUserController implements Serializable {
             currentProject.setLastEditor(loggedUser);
             getProjectFacade().edit(currentProject);
             JsfUtil.addSuccessMessage("Updated");
+        }
+
+    }
+    
+    
+    public String deleteProject() {
+        if (currentProject == null) {
+            JsfUtil.addErrorMessage("Nothing to Delete");
+            return "";
+        }
+        if (currentProject.getId() == null) {
+            JsfUtil.addErrorMessage("Nothing to Delete");
+            return "";
+        } else {
+            currentProject.setRetired(true);
+            currentProject.setRetiredAt(new Date());
+            currentProject.setRetirer(loggedUser);
+            getProjectFacade().edit(currentProject);
+            JsfUtil.addSuccessMessage("Deleted");
+            return "/index";
         }
 
     }
