@@ -18,35 +18,35 @@
 
             <ui:define name="right">
                 <h:form>
-                    <p:panelGrid columns="2" columnClasses="alignLeft alignLeft" class="pageCenter">
 
-                        <f:facet name="header" >
-                            Edit Institution Details
-                        </f:facet>
+                    <p:panel header="View Details" >
+                        <p:panelGrid columns="2" columnClasses="alignLeft alignLeft" class="pageCenter">
 
 
-                        <h:outputLabel value="#{bundle.EditWebUserLabel_name}" for="name" />
-                        <h:outputLabel id="name" value="#{institutionController.current.name}" title="#{bundle.EditWebUserTitle_name}" />
 
 
-                        <h:outputLabel value="#{bundle.EditWebUserLabel_email}" for="email" />
-                        <h:outputLabel id="email" value="#{institutionController.current.email}" title="#{bundle.EditWebUserTitle_email}" />
-
-                        <h:outputLabel value="#{bundle.EditWebUserLabel_telNo}" for="telNo" />
-                        <h:outputLabel id="telNo" value="#{institutionController.current.phone}" title="#{bundle.EditWebUserTitle_telNo}" />
+                            <h:outputLabel value="Name" for="name" />
+                            <h:outputLabel id="name" value="#{institutionController.current.name}" title="#{bundle.EditWebUserTitle_name}" />
 
 
-                        <h:outputLabel value="Address" for="addresse" />
-                        <h:outputLabel id="address" value="#{institutionController.current.address}" title="#{bundle.EditWebUserTitle_name}" />
+                            <h:outputLabel value="Email" for="email" />
+                            <h:outputLabel id="email" value="#{institutionController.current.email}" title="#{bundle.EditWebUserTitle_email}" />
+
+                            <h:outputLabel value="Phone" for="telNo" />
+                            <h:outputLabel id="telNo" value="#{institutionController.current.phone}" title="#{bundle.EditWebUserTitle_telNo}" />
 
 
-                        <h:outputLabel value="Type" for="type" />
-                        <h:outputLabel id="type" value="#{institutionController.current.institutionType}" >
-                        </h:outputLabel>
+                            <h:outputLabel value="Address" for="addresse" />
+                            <h:outputLabel id="address" value="#{institutionController.current.address}" title="#{bundle.EditWebUserTitle_name}" />
 
 
-                    </p:panelGrid>
+                            <h:outputLabel value="Type" for="type" />
+                            <h:outputLabel id="type" value="#{institutionController.current.institutionType}" >
+                            </h:outputLabel>
 
+
+                        </p:panelGrid>
+                    </p:panel>
                 </h:form>
             </ui:define>
         </ui:composition>

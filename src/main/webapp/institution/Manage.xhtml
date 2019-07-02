@@ -21,7 +21,7 @@
                 <table >
                     <tr>
                         <td>
-                            <h3>Manage Providers</h3>
+                            <h3>Manage Institutions</h3>
                         </td>
                     </tr>
                     <tr>
@@ -41,9 +41,9 @@
                                              style="border:solid 1px">
 
 
-                                    <p:column>
+                                    <p:column sortBy="#{item.name}">
                                         <f:facet name="header">
-                                            <h:outputText value="#{bundle.ListWebUserTitle_name}"/>
+                                            <h:outputText value="Name"/>
                                         </f:facet>
                                         <h:outputText value="#{item.name}"/>
                                     </p:column>
@@ -57,13 +57,13 @@
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header">
-                                            <h:outputText value="#{bundle.ListWebUserTitle_email}"/>
+                                            <h:outputText value="Email"/>
                                         </f:facet>
                                         <h:outputText value="#{item.email}"/>
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header">
-                                            <h:outputText value="#{bundle.ListWebUserTitle_telNo}"/>
+                                            <h:outputText value="Phone"/>
                                         </f:facet>
                                         <h:outputText value="#{item.phone}"/>
                                     </p:column>

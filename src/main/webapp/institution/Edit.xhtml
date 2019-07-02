@@ -25,20 +25,24 @@
                         </f:facet>
 
 
-                        <h:outputLabel value="#{bundle.EditWebUserLabel_name}" for="name" />
-                        <h:inputText id="name" value="#{institutionController.current.name}" title="#{bundle.EditWebUserTitle_name}" required="true" requiredMessage="#{bundle.EditWebUserRequiredMessage_name}"/>
+                          <h:outputLabel value="Name" for="name" />
+                        <h:inputText id="name" value="#{institutionController.current.name}" 
+                                     title="Name" required="true" 
+                                     requiredMessage="Name is required"/>
 
 
-                        <h:outputLabel value="#{bundle.EditWebUserLabel_email}" for="email" />
-                        <h:inputText id="email" value="#{institutionController.current.email}" title="#{bundle.EditWebUserTitle_email}" />
+                        <h:outputLabel value="Email" for="email" />
+                        <h:inputText id="email" value="#{institutionController.current.email}" 
+                                     title="Email" />
 
-                        <h:outputLabel value="#{bundle.EditWebUserLabel_telNo}" for="telNo" />
-                        <h:inputText id="telNo" value="#{institutionController.current.phone}" title="#{bundle.EditWebUserTitle_telNo}" />
+                        <h:outputLabel value="Telephone No" for="telNo" />
+                        <h:inputText id="telNo" value="#{institutionController.current.phone}"
+                                     title="Telephone Number" />
 
 
                         <h:outputLabel value="Address" for="addresse" />
-                        <h:inputText id="address" value="#{institutionController.current.address}" title="#{bundle.EditWebUserTitle_name}" required="true" requiredMessage="#{bundle.EditWebUserRequiredMessage_name}"/>
-
+                        <h:inputText id="address" value="#{institutionController.current.address}" 
+                                     title="Address" />
 
 
 
