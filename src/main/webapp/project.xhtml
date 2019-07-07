@@ -45,7 +45,11 @@
 
                                 <h:outputLabel value="Stage" for="projectStage" />
                                 <h:outputLabel id="projectStage" value="#{webUserController.currentProject.currentStageType.label}"  />
-                                <p:spacer></p:spacer>
+                                <h:panelGroup >
+                                    <h:outputLabel value="Need Additional Details Before Going to PEC" rendered="#{webUserController.currentProject.incompletePcp}"></h:outputLabel>
+                                    <p:spacer></p:spacer>
+                                </h:panelGroup>
+                                
 
 
                                 <h:outputLabel value="Year" for="projectYear" />
@@ -218,7 +222,13 @@
                                 </h:panelGrid>
 
 
-
+                                <h:outputLabel value="PCP received By"  />
+                                <p:autoComplete value="#{webUserController.currentProject.pcpReceivedBy}"
+                                                completeMethod="#{institutionController.completeInstitutions}"
+                                                var="insr" forceSelection="true" id="acLocR" 
+                                                placeholder="Search Location by typing few letters ..."
+                                                itemLabel="#{insr.name}" inputStyle="width:300px;" style="width: 300px;"
+                                                itemValue="#{insr}"></p:autoComplete>
 
                                 <h:outputLabel value="PCP First Received Date"  />
                                 <p:calendar value="#{webUserController.currentProject.pcpFirstReceivedDate}" pattern="dd MMMM yyyy" >

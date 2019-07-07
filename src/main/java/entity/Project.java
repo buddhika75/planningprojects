@@ -76,6 +76,9 @@ public class Project implements Serializable {
     @Lob
     private String proposalDateComments;
 
+    @ManyToOne
+    private Institution pcpReceivedBy;
+    
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date pcpFirstReceivedDate;
 
@@ -356,6 +359,9 @@ public class Project implements Serializable {
         return true;
     }
 
+    
+    
+    
     @Override
     public String toString() {
         return "Ref No " + fileNumber + " ";
@@ -1357,6 +1363,14 @@ public class Project implements Serializable {
 
     public void setProposalDateComments(String proposalDateComments) {
         this.proposalDateComments = proposalDateComments;
+    }
+
+    public Institution getPcpReceivedBy() {
+        return pcpReceivedBy;
+    }
+
+    public void setPcpReceivedBy(Institution pcpReceivedBy) {
+        this.pcpReceivedBy = pcpReceivedBy;
     }
 
     

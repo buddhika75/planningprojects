@@ -1241,6 +1241,8 @@ public class WebUserController implements Serializable {
         getCurrentProject().setPecRecomended(true);
         getCurrentProject().setPecRecommendationComments(projectStageWorkingOnComments);
         getCurrentProject().setPecRecommendedOn(projectStageWorkingOnDate);
+        getCurrentProject().setIncompletePcp(false);
+     
         getProjectFacade().edit(currentProject);
         JsfUtil.addSuccessMessage("Marked as PEC Approved.");
     }
