@@ -27,6 +27,12 @@
                     <tr>
                         <td>
                             <h:form styleClass="jsfcrud_list_form">
+                                
+                                
+                                <p:commandButton value="Add New Institution" ajax="false" action="#{institutionController.prepareCreate()}" >
+                                    
+                                </p:commandButton>
+                                
                                 <p:dataTable value="#{institutionController.items}" var="item"  
 
                                              rowKey="#{item.id}" 

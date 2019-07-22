@@ -49,7 +49,7 @@
                                     <h:outputLabel value="Need Additional Details Before Going to PEC" rendered="#{webUserController.currentProject.incompletePcp}"></h:outputLabel>
                                     <p:spacer></p:spacer>
                                 </h:panelGroup>
-                                
+
 
 
                                 <h:outputLabel value="Year" for="projectYear" />
@@ -230,6 +230,8 @@
                                                 itemLabel="#{insr.name}" inputStyle="width:300px;" style="width: 300px;"
                                                 itemValue="#{insr}"></p:autoComplete>
 
+                                <p:spacer></p:spacer>
+
                                 <h:outputLabel value="PCP First Received Date"  />
                                 <p:calendar value="#{webUserController.currentProject.pcpFirstReceivedDate}" pattern="dd MMMM yyyy" >
                                 </p:calendar>
@@ -267,21 +269,24 @@
                             <p:panelGrid columns="1" styleClass="alignTop" >
 
                                 <h:commandLink  action="#{webUserController.updateProject()}" 
-                                                class="w3-btn w3-amber w3-margin btn350"  >
+                                                class="w3-btn w3-green w3-margin btn350"  
+                                                >
                                     <div>
                                         <i class='fas fa-save' style='float: left; font-size:24px;color:green;'></i>
                                         <div style="float: right;">Save</div>
                                     </div>
                                 </h:commandLink> 
                                 <h:commandLink  action="#{webUserController.deleteProject()}" 
-                                                class="w3-btn w3-deep-orange w3-margin btn350"  >
+                                                class="w3-btn w3-deep-orange w3-margin btn350" 
+                                                onclick="if (!confirm('Really want to do Delete?'))
+                                                            return false">
                                     <div>
                                         <i class='fas fa-trash' style='float: left; font-size:24px;color:green;'></i>
                                         <div style="float: right;">Delete</div>
                                     </div>
                                 </h:commandLink> 
                                 <h:commandLink 
-                                    class="w3-btn w3-amber w3-margin  btn350" 
+                                    class="w3-btn w3-purple w3-margin  btn350" 
                                     action="/upload_files_to_project_proposal" 
                                     >
                                     <div>
@@ -317,7 +322,7 @@
                                 </p:commandLink> 
 
                                 <p:commandLink action="#{webUserController.toDnpSubmission()}"  oncomplete="PF('dlg1').show();"
-                                               process="@this" update="dlg1"     rendered="#{webUserController.currentProject.canSubmitToNdp}"
+                                               process="@this" update="dlg1"     rendered="#{webUserController.currentProject.canApproveAtPec}"
                                                class="w3-btn w3-amber w3-margin  btn350 " >
                                     <div>
                                         <i class="fa fa-arrow-right" style='float: left; font-size:24px;color:blueviolet ;'></i>
@@ -404,8 +409,153 @@
                                 </p:commandLink> 
 
 
+                                <h:commandLink 
+                                               class="w3-btn w3-blue w3-margin  btn350">
+                                    <p:printer target="details" ></p:printer>
+                                    <div>
+                                        <i class='fa fa-print' style='float: left; font-size:24px;color:green;'></i>
+                                        <div style="float: right;">Print</div>
+                                    </div>  
+                                </h:commandLink>
+
                             </p:panelGrid>
 
+
+
+                            <p:panel header="Project Submission to DNP" id="details" >
+
+                                <p:panelGrid columns="2">
+
+                                    <h:outputText value="Project Stage"/>
+                                    <h:outputText value="#{webUserController.currentProject.currentStageType}"/>
+
+                                    <h:outputText value="Project Year:"/>
+                                    <h:outputText value="#{webUserController.currentProject.projectYear}" title="ProjectYear"/>
+
+                                    <h:outputText value="File Number:"/>
+                                    <h:outputText value="#{webUserController.currentProject.fileNumber}" title="FileNumber"/>
+
+
+                                    <h:outputText value="Title:"/>
+                                    <h:outputText value="#{webUserController.currentProject.projectTitle}" title="ProjectTitle"/>
+
+                                    <h:outputText value="Province:"/>
+                                    <h:panelGroup >
+                                        <h:outputText value="#{webUserController.currentProject.province.name}" title="Province"/>
+                                        <h:outputText value="#{webUserController.currentProject.allIsland?'All Island':''}" title="AllIsland"/>
+                                    </h:panelGroup>
+
+
+                                    <h:outputText value="District:"/>
+                                    <h:outputText value="#{webUserController.currentProject.district.name}" title="District"/>
+
+
+                                    <h:outputText value="Project Location:"/>
+                                    <h:outputText value="#{webUserController.currentProject.projectLocation.name}" title="ProjectLocation"/>
+
+                                    <h:outputText value="Engineer's Estimate Available:"/>
+                                    <h:outputText value="#{webUserController.currentProject.engineersEstimateAvailable?'Yes':'No'}" title="EngineersEstimateAvailable"/>
+                                    <h:outputText value="Master Plan Available:"/>
+                                    <h:outputText value="#{webUserController.currentProject.masterPlanAvailable?'Yes':'No'}" title="MasterPlanAvailable"/>
+                                    <h:outputText value="Building Plan Available:"/>
+                                    <h:outputText value="#{webUserController.currentProject.buildingPlanAvailable?'Yes':'No'}" title="BuildingPlanAvailable"/>
+
+
+
+                                    <h:outputText value="Description:"/>
+                                    <h:outputText value="#{webUserController.currentProject.projectDescription}" title="ProjectDescription"/>
+
+                                    <h:outputText value="Project Cost:"/>
+                                    <h:panelGroup>
+                                        <h:outputText value="#{webUserController.currentProject.projectCost}" title="ProjectCost">
+                                            <f:convertNumber pattern="#,##0.00" ></f:convertNumber>
+                                        </h:outputText>
+                                        <h:outputText value=" "/>
+                                        <h:outputText value="#{webUserController.currentProject.projectCostUnit.name}" title="ProjectCostUnit"/>
+                                    </h:panelGroup>
+
+                                    <h:outputText value="Source Of Funds:"/>
+                                    <h:outputText value="#{webUserController.currentProject.sourceOfFunds.name}" title="SourceOfFunds"/>
+
+                                    <h:outputText value="Proposal Date:"/>
+                                    <h:outputText value="#{webUserController.currentProject.proposalDate}" title="ProposalDate">
+                                        <f:convertDateTime pattern="dd/MMMM/yyyy" />
+                                    </h:outputText>
+
+
+
+
+                                    <h:outputText value="Initial Data Entry:"/>
+                                    <h:panelGroup >
+                                        <h:outputText value="By "/>
+                                        <h:outputText value="#{webUserController.currentProject.creater.webUserPerson.nameWithTitle}" title="Creater"/>
+                                        <h:outputText value=" at "/>
+                                        <h:outputText value="#{webUserController.currentProject.createdAt}" title="CreatedAt">
+                                            <f:convertDateTime pattern="HH:mm a" />
+                                        </h:outputText>
+                                        <h:outputText value=" on "/>
+                                        <h:outputText value="#{webUserController.currentProject.createdAt}" title="CreatedAt">
+                                            <f:convertDateTime pattern="dd/MMMM/yyyy" />
+                                        </h:outputText>
+                                        <h:outputText value="."/>
+                                    </h:panelGroup>
+
+                                    <h:outputText value="Last Edit:"/>
+                                    <h:panelGroup >
+                                        <h:outputText value="By "/>
+                                        <h:outputText value="#{webUserController.currentProject.lastEditor.webUserPerson.nameWithTitle}" title="Creater"/>
+                                        <h:outputText value=" at "/>
+                                        <h:outputText value="#{webUserController.currentProject.lastEditAt}" title="CreatedAt">
+                                            <f:convertDateTime pattern="HH:mm a" />
+                                        </h:outputText>
+                                        <h:outputText value=" on "/>
+                                        <h:outputText value="#{webUserController.currentProject.lastEditAt}" title="CreatedAt">
+                                            <f:convertDateTime pattern="dd/MMMM/yyyy" />
+                                        </h:outputText>
+                                        <h:outputText value="."/>
+                                    </h:panelGroup>
+
+                                    <h:outputText value="PEC Approval Comments"/>
+                                    <h:outputText value="#{webUserController.currentProject.pecRecommendationComments}" title="ProjectComments"/>
+
+
+                                    <h:outputText value="PEC Approval Documentation:"/>
+                                    <h:panelGroup >
+                                        <h:outputText value="By "/>
+                                        <h:outputText value="#{webUserController.currentProject.pecRecommendationRecordedBy.webUserPerson.nameWithTitle}" title="Creater"/>
+                                        <h:outputText value=" at "/>
+                                        <h:outputText value="#{webUserController.currentProject.pecRecommendationRecordedAt}" title="CreatedAt">
+                                            <f:convertDateTime pattern="HH:mm a" />
+                                        </h:outputText>
+                                        <h:outputText value=" on "/>
+                                        <h:outputText value="#{webUserController.currentProject.pecRecommendationRecordedAt}" title="CreatedAt">
+                                            <f:convertDateTime pattern="dd/MMMM/yyyy" />
+                                        </h:outputText>
+                                        <h:outputText value="."/>
+                                    </h:panelGroup>
+
+
+                                    <h:outputText value="PEC Approval Comments"/>
+                                    <h:outputText value="#{webUserController.currentProject.pecRecommendationComments}" title="ProjectComments"/>
+
+
+                                    <h:outputText value="PEC Approval Documentation:"/>
+                                    <h:panelGroup >
+                                        <h:outputText value="By "/>
+                                        <h:outputText value="#{webUserController.currentProject.pecRecommendationRecordedBy.webUserPerson.nameWithTitle}" title="Creater"/>
+                                        <h:outputText value=" at "/>
+                                        <h:outputText value="#{webUserController.currentProject.pecRecommendationRecordedBy}" title="CreatedAt">
+                                        </h:outputText>
+                                        <h:outputText value=" on "/>
+                                        <h:outputText value="#{webUserController.currentProject.pecRecommendationRecordedAt}" title="CreatedAt">
+                                            <f:convertDateTime pattern="dd/MMMM/yyyy" />
+                                        </h:outputText>
+                                        <h:outputText value="."/>
+                                    </h:panelGroup>
+
+                                </p:panelGrid>
+
+                            </p:panel>
 
                             <p:dialog id="dlg1" header="#{webUserController.projectStageWorkingOnTitle}" widgetVar="dlg1" minHeight="40">
                                 <p:panel header="#{webUserController.projectStageWorkingOnTitle}" >

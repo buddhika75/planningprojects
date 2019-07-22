@@ -955,7 +955,7 @@ public class Project implements Serializable {
     }
 
     public boolean isCanApproveAtNdp() {
-        if (currentStageType == ProjectStageType.Awaiting_DNP_Approval) {
+        if (currentStageType == ProjectStageType.Awaiting_DNP_Approval||currentStageType == ProjectStageType.DNP_Rejected||currentStageType == ProjectStageType.DNP_Revision) {
             canApproveAtNdp = true;
         } else {
             canApproveAtNdp = false;
@@ -964,7 +964,7 @@ public class Project implements Serializable {
     }
 
     public boolean isCanRejectAtNdp() {
-        if (currentStageType == ProjectStageType.Awaiting_DNP_Approval) {
+        if (currentStageType == ProjectStageType.Awaiting_DNP_Approval||currentStageType == ProjectStageType.DNP_Revision) {
             canRejectAtNdp = true;
         } else {
             canRejectAtNdp = false;
