@@ -707,13 +707,13 @@ public class WebUserController implements Serializable {
     public String searchProjectsByDistrict() {
         allIslandProjects = false;
         if (district != null) {
-            String j = "select pp.project from ProjectDistrict p where p.district=:district ";
+            String j = "select p.project from ProjectDistrict p where p.district=:district ";
             Map m = new HashMap();
             if (year != null) {
-                j += " and pp.project.projectYear=:y ";
+                j += " and p.project.projectYear=:y ";
                 m.put("y", year);
             }
-            j += " order by pp.project.id";
+            j += " order by p.project.id";
 
             m.put("district", district);
             listOfProjects = getProjectFacade().findBySQL(j, m);

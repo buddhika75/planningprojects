@@ -322,7 +322,7 @@
                                 </p:commandLink> 
 
                                 <p:commandLink action="#{webUserController.toDnpSubmission()}"  oncomplete="PF('dlg1').show();"
-                                               process="@this" update="dlg1"     rendered="#{webUserController.currentProject.canApproveAtPec}"
+                                               process="@this" update="dlg1"     rendered="#{webUserController.currentProject.canSubmitToNdp}"
                                                class="w3-btn w3-amber w3-margin  btn350 " >
                                     <div>
                                         <i class="fa fa-arrow-right" style='float: left; font-size:24px;color:blueviolet ;'></i>
