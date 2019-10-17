@@ -688,7 +688,7 @@ public class WebUserController implements Serializable {
     public String searchProjectsByProvince() {
         allIslandProjects = false;
         if (province != null) {
-            String j = "select pp.project from ProjectProvince pp where pp.area=:province ";
+            String j = "select pp.project from ProjectProvince pp where pp.area=:province  and p.retired=false ";
             Map m = new HashMap();
             if (year != null) {
                 j += " and pp.project.projectYear=:y ";
@@ -707,7 +707,7 @@ public class WebUserController implements Serializable {
     public String searchProjectsByDistrict() {
         allIslandProjects = false;
         if (district != null) {
-            String j = "select p.project from ProjectDistrict p where p.area=:district ";
+            String j = "select p.project from ProjectDistrict p where p.area=:district and p.project.retired=false ";
             Map m = new HashMap();
             if (year != null) {
                 j += " and p.project.projectYear=:y ";
@@ -726,7 +726,7 @@ public class WebUserController implements Serializable {
     public String searchProjectsByTitle() {
         allIslandProjects = false;
         if (searchKeyword != null && !searchKeyword.trim().equals("")) {
-            String j = "select p from Project p where p.retired=false and lower(p.projectTitle) like :fn ";
+            String j = "select p from Project p where p.retired=false and lower(p.projectTitle) like :fn  and p.retired=false ";
             Map m = new HashMap();
             if (year != null) {
                 j += " and p.projectYear=:y ";
@@ -745,7 +745,7 @@ public class WebUserController implements Serializable {
     public String searchProjectsByFileNumber() {
         allIslandProjects = false;
         if (searchKeyword != null && !searchKeyword.trim().equals("")) {
-            String j = "select p from Project p where p.retired=false and lower(p.fileNumber) like :fn ";
+            String j = "select p from Project p where p.retired=false and lower(p.fileNumber) like :fn  and p.retired=false ";
             Map m = new HashMap();
             j += " order by p.id";
             m.put("fn", "%" + searchKeyword.trim().toLowerCase() + "%");

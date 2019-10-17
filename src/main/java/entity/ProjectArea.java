@@ -25,14 +25,11 @@ public class ProjectArea implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     @ManyToOne
     private Project project;
     @ManyToOne
     private Area area;
-    
-    
-    
 
     public Long getId() {
         return id;
@@ -64,7 +61,11 @@ public class ProjectArea implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.ProjectArea[ id=" + id + " ]";
+        if (area != null) {
+            return area.getName();
+        } else {
+            return "entity.ProjectArea[ id=" + id + " ]";
+        }
     }
 
     public Project getProject() {
@@ -82,5 +83,5 @@ public class ProjectArea implements Serializable {
     public void setArea(Area area) {
         this.area = area;
     }
-    
+
 }

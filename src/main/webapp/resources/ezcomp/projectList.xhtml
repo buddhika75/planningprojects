@@ -17,7 +17,7 @@
         <h:form >
             <h:panelGrid columns="1" >
                 <h:panelGrid columns="3" >
-                    <h:commandLink class="w3-btn w3-amber w3-margin  btn150" >
+                    <h:commandLink class="w3-btn w3-blue w3-margin  btn150" >
                         <div>
                             <i class='fa fa-file-excel-o' style='float: left; font-size:24px;color:green;'></i>
                             <div style="float: right;">Download</div>
@@ -25,7 +25,7 @@
                         <p:dataExporter target="tblDetails" type="xls" fileName="list of projects" ></p:dataExporter>
                     </h:commandLink>
                     <h:commandLink 
-                        class="w3-btn w3-amber w3-margin  btn150" 
+                        class="w3-btn w3-blue w3-margin  btn150" 
                         action="/upload_files_to_project_proposal" >
                         <div>
                             <i class='fa fa-print' style='float: left; font-size:24px;color:green;'></i>
@@ -69,11 +69,11 @@
                     <h:outputLabel value=" #{p.projectCostUnit.name}" ></h:outputLabel>
                 </p:column>
                 <p:column headerText="Province"  >
-                    <h:outputLabel value="#{p.province.name}" >
+                    <h:outputLabel value="#{p.projectProvinces}" >
                     </h:outputLabel>
                 </p:column>
                 <p:column headerText="District"  >
-                    <h:outputLabel value="#{p.district.name}" >
+                    <h:outputLabel value="#{p.projectDistricts}" >
                     </h:outputLabel>
                 </p:column>
                 <p:column headerText="Submitted Date" >
